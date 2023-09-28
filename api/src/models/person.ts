@@ -37,6 +37,7 @@ const getAll: any = async () => {
 
 const insert: any = async (
   rut: string,
+  name: string,
   paternalLastName: string,
   maternalLastName: string,
   address: string,
@@ -47,6 +48,7 @@ const insert: any = async (
   try {
     const result = await pool.query(_insert, [
       rut,
+      name,
       paternalLastName,
       maternalLastName,
       address,
@@ -63,6 +65,7 @@ const insert: any = async (
 const updateById: any = async (
   id: number,
   rut: string,
+  name: string,
   paternalLastName: string,
   maternalLastName: string,
   address: string,
@@ -74,6 +77,7 @@ const updateById: any = async (
     const result = await pool.query(_updateById, [
       id,
       rut,
+      name,
       paternalLastName,
       maternalLastName,
       address,

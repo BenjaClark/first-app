@@ -7,7 +7,7 @@ PersonRouter.get("/getByRut/:rut", PersonController.getByRut)
 PersonRouter.get("/getById/:id", PersonController.getById)
 PersonRouter.get("/getAll", PersonController.getAll)
 PersonRouter.post("/upsert", PersonController.upsert)
-PersonRouter.put("/deleteById", PersonController.deleteById)
+PersonRouter.delete("/deleteById/:id", PersonController.deleteById)
 
 
 export default PersonRouter;
