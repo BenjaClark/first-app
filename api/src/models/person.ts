@@ -56,7 +56,7 @@ const insert: any = async (
       email,
       phone,
     ]);
-    return { success: true, data: null, error: null };
+    return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -85,7 +85,7 @@ const updateById: any = async (
       email,
       phone,
     ]);
-    return { success: true, data: null, error: null };
+    return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -100,4 +100,4 @@ const deleteById: any = async (id: number) => {
   }
 };
 
-export { getByRut, getById, getAll, insert, updateById, deleteById };
+export { getByRut, getById, getAll, insert, updateById, deleteById, };

@@ -19,6 +19,7 @@ class App {
 
     routes() {
         this.server.use("/api/person", routes.PersonRouter);
+        this.server.use("/api/user", routes.UserRouter);
         
 
     }

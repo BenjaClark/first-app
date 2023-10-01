@@ -116,7 +116,19 @@ const upsert = async (req: any, res: any) => {
       return;
     }
 
-    res.status(200).json({ success: true, data: "Insertado correctamente", error: null });
+    const data = {
+      id: result.data.id,
+      rut,
+      name,
+      paternalLastName,
+      maternalLastName,
+      address,
+      district,
+      email,
+      phone
+    }
+
+    res.status(200).json({ success: true, data , error: null });
     return;
   }
 
@@ -133,11 +145,23 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!result.success) {
-      res.status(500).json({ success: false, data: null, error: result.error });
+      res.status(500).json({ success: false, result , error: result.error });
       return;
     }
 
-    res.status(200).json({ success: true, data: "Editado correctamente", error: null });
+    const data = {
+      id: resultGetByRut.data.id,
+      rut,
+      name,
+      paternalLastName,
+      maternalLastName,
+      address,
+      district,
+      email,
+      phone,
+    }
+
+    res.status(200).json({ success: true, data , error: null });
     return;
   }
 
