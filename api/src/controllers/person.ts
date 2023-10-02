@@ -9,7 +9,16 @@ const getByRut = async (req: any, res: any) => {
     return;
   }
 
-  const { id, name, paternallastname, maternallastname, address, district, email, phone } = result.data;
+  const {
+    id,
+    name,
+    paternallastname,
+    maternallastname,
+    address,
+    district,
+    email,
+    phone,
+  } = result.data;
 
   const data = {
     id,
@@ -22,7 +31,7 @@ const getByRut = async (req: any, res: any) => {
     email,
     phone,
   };
-  
+
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -36,7 +45,16 @@ const getById = async (req: any, res: any) => {
     return;
   }
 
-  const { rut, name, paternallastname, maternallastname, address, district, email, phone } = result.data;
+  const {
+    rut,
+    name,
+    paternallastname,
+    maternallastname,
+    address,
+    district,
+    email,
+    phone,
+  } = result.data;
 
   const data = {
     id,
@@ -49,7 +67,7 @@ const getById = async (req: any, res: any) => {
     email,
     phone,
   };
-  
+
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -62,19 +80,18 @@ const getAll = async (req: any, res: any) => {
     return;
   }
 
-const data = result.data.map((person: any) => {
-  return {
-    rut: person.rut,
-    name: person.name,
-    paternalLastName: person.paternallastname,
-    maternalLastName: person.maternallastname,
-    address: person.address,
-    district: person.district,
-    email: person.email,
-    phone: person.phone,
-  };
-
-});
+  const data = result.data.map((person: any) => {
+    return {
+      rut: person.rut,
+      name: person.name,
+      paternalLastName: person.paternallastname,
+      maternalLastName: person.maternallastname,
+      address: person.address,
+      district: person.district,
+      email: person.email,
+      phone: person.phone,
+    };
+  });
 
   res.status(200).json({ success: true, data, error: null });
   return;
@@ -95,11 +112,13 @@ const upsert = async (req: any, res: any) => {
   const resultGetByRut = await PersonModel.getByRut(rut);
 
   if (!resultGetByRut.success) {
-    res.status(500).json({ success: false, data: null, error: resultGetByRut.error });
+    res
+      .status(500)
+      .json({ success: false, data: null, error: resultGetByRut.error });
     return;
   }
 
-    if (!resultGetByRut.data) {
+  if (!resultGetByRut.data) {
     const result = await PersonModel.insert(
       rut,
       name,
@@ -125,46 +144,45 @@ const upsert = async (req: any, res: any) => {
       address,
       district,
       email,
-      phone
-    }
-
-    res.status(200).json({ success: true, data , error: null });
-    return;
-  }
-
-    const result = await PersonModel.updateById(
-      resultGetByRut.data.id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!result.success) {
-      res.status(500).json({ success: false, result , error: result.error });
-      return;
-    }
-
-    const data = {
-      id: resultGetByRut.data.id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
       phone,
-    }
+    };
 
-    res.status(200).json({ success: true, data , error: null });
+    res.status(200).json({ success: true, data, error: null });
     return;
   }
 
+  const result = await PersonModel.updateById(
+    resultGetByRut.data.id,
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone
+  );
+
+  if (!result.success) {
+    res.status(500).json({ success: false, result, error: result.error });
+    return;
+  }
+
+  const data = {
+    id: resultGetByRut.data.id,
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone,
+  };
+
+  res.status(200).json({ success: true, data, error: null });
+  return;
+};
 
 const deleteById = async (req: any, res: any) => {
   const { id } = req.params;
@@ -175,7 +193,9 @@ const deleteById = async (req: any, res: any) => {
     return;
   }
 
-  res.status(200).json({ success: true, data: "Eliminado correctamente", error: null });
+  res
+    .status(200)
+    .json({ success: true, data: "Eliminado correctamente", error: null });
   return;
 };
 

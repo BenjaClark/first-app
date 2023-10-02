@@ -188,20 +188,16 @@ const upsert = async (req: any, res: any) => {
   }
 
 
-  const resultUpdateUserById = await UserModel.updateUserById(
+  const resultUpdateById = await UserModel.updateById(
     resultGetByRut.data.id,
     "usuario editado",
-    login
+    email
   );
 
-  if (!result.success) {
-    res.status(500).json({ success: false, data: null, error: resultUpdateUserById.error });
+  if (!resultUpdateById.success) {
+    res.status(500).json({ success: false, data: null, error: resultUpdateById.error });
     return;
   }
-  
-
-
-
 
   const data = {
     id: result.data.id,
@@ -209,7 +205,7 @@ const upsert = async (req: any, res: any) => {
     login,
   };
 
-  res.status(200).json({ success: true, data: "usuario editado", error: null });
+  res.status(200).json({ success: true, data: "Usuario con id: "+data.id+" Editado", error: null });
   return;
 };
 
