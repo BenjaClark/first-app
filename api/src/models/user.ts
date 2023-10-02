@@ -8,6 +8,7 @@ import {
   _getAll,
   _deleteById,
   _updateById,
+  _getById,
 } from "../queries/user";
 
 const getByRut: any = async (rut: string) => {
@@ -31,6 +32,15 @@ const getAll: any = async () => {
 const getByLogin: any = async (login: string) => {
   try {
     const result = await pool.query(_getByLogin, [login]);
+    return { success: true, data: result.rows[0], error: null };
+  } catch (e) {
+    return { success: false, data: null, error: (e as Error).message };
+  }
+};
+
+const getById: any = async (id: string) => {
+  try {
+    const result = await pool.query(_getById, [id]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -103,4 +113,5 @@ export {
   getAll,
   deleteById,
   updateById,
+  getById
 };

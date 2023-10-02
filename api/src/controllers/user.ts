@@ -36,6 +36,34 @@ const getByRut = async (req: any, res: any) => {
   return;
 };
 
+const getById = async (req: any, res: any) => {
+  const { id } = req.params;
+  const result = await UserModel.getById(id);
+
+  if (!result.success) {
+    res.status(500).json({ success: false, data: null, error: result.error });
+    return;
+  }
+
+  const {
+
+    person_id,
+    login,
+    hash,
+    
+  } = result.data;
+
+  const data = {
+    id,
+    person_id,
+    login,
+    hash,
+  };
+
+  res.status(200).json({ success: true, data, error: null });
+  return;
+};
+
 const getByLogin = async (req: any, res: any) => {
   const { email } = req.params;
   const result = await UserModel.getByLogin(email);
@@ -209,4 +237,4 @@ const upsert = async (req: any, res: any) => {
   return;
 };
 
-export { upsert, getByRut, getByLogin, getAll, deleteById };
+export { upsert, getByRut, getByLogin, getAll, deleteById, getById };

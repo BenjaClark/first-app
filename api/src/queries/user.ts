@@ -1,3 +1,5 @@
+export const _getById = "SELECT id, person_id, login, hash FROM app.user WHERE id = $1";
+
 export const _getByRut = "SELECT id, rut, name, paternallastname, maternallastname, address, district, email, phone FROM app.person WHERE rut = $1";
 
 export const _getByLogin = "SELECT id, person_id, login, hash FROM app.user WHERE login = $1";
