@@ -21,6 +21,7 @@ class App {
         this.server.use("/api/person", routes.PersonRouter);
         this.server.use("/api/user", routes.UserRouter);
         this.server.use("/api/company", routes.CompanyRouter);
+        this.server.use("/api/customer", routes.CustomerRouter);
         
 
     }

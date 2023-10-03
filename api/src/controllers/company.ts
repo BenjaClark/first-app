@@ -96,7 +96,7 @@ const upsert = async (req: any, res: any) => {
 
   if (!resultGetByRut.data) {
     const result = await CompanyModel.insert(
-        rut,
+      rut,
       fantasyName,
       name,
       activity,
