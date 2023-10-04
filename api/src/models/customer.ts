@@ -50,9 +50,9 @@ const getCustomerById: any = async (id: string) => {
   }
 };
 
-const insertCustomer: any = async (person_id: number, login: string) => {
+const insertCustomer: any = async (type: string, person_id: string, company_id: string) => {
   try {
-    const result = await pool.query(_insertCustomer, [person_id, login]);
+    const result = await pool.query(_insertCustomer, [type, person_id, company_id]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };

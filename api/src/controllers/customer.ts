@@ -139,7 +139,7 @@ const upsert = async (req: any, res: any) => {
     }
 
     const data = {
-      id: resultInsertCompany.data.id,
+      id: resultInsertCompany.data,
       rut,
       fantasyName,
       name,
@@ -153,9 +153,8 @@ const upsert = async (req: any, res: any) => {
   }
 
   const resultGetByRut2 = await CustomerModel.getByRut(rut)
-
   const resultUpdateCompanyById = await CustomerModel.updateCompanyById(
-    resultGetByRut2.data.id,
+    resultGetByRut2.data,
     rut,
     fantasyName,
     name,
@@ -175,8 +174,8 @@ const upsert = async (req: any, res: any) => {
 
   const resultInsertCustomer = await CustomerModel.insertCustomer(
     type,
-    "",
-    resultGetByRut.data.id
+    1,
+    resultGetByRut2.data
   );
 
   if (!resultInsertCustomer.success) {
