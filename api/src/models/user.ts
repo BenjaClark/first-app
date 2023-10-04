@@ -11,10 +11,19 @@ import {
   _getById,
 } from "../queries/user";
 
+const getById: any = async (id: string) => {
+  try {
+    const result = await pool.query(_getById, [id]);
+    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
+  } catch (e) {
+    return { success: false, data: null, error: (e as Error).message };
+  }
+};
+
 const getByRut: any = async (rut: string) => {
   try {
     const result = await pool.query(_getByRut, [rut]);
-    return { success: true, data: result.rows[0], error: null };
+    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -38,14 +47,7 @@ const getByLogin: any = async (login: string) => {
   }
 };
 
-const getById: any = async (id: string) => {
-  try {
-    const result = await pool.query(_getById, [id]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
+
 
 const insertPerson: any = async (
   rut: string,
@@ -95,10 +97,10 @@ const deleteById: any = async (id: number) => {
 const updateById: any = async (
   id: number,
   person_id: string,
-  hash: string
+  
 ) => {
   try {
-    const result = await pool.query(_updateById, [id, person_id, hash]);
+    const result = await pool.query(_updateById, [id, person_id]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };

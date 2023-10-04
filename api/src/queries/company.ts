@@ -1,6 +1,6 @@
 export const _getById = "SELECT id, rut, fantasyname, name, activity, address, district, email, phone FROM app.company WHERE id = $1";
 
-export const _getAll = "SELECT id, rut, fantasyname, name, activity, address, district, email, phone FROM app.company WHERE isActive = true ORDER BY name";
+export const _getAll = "SELECT id, rut, fantasyname, name, activity, address, district, email, phone FROM app.company WHERE isActive = true ORDER BY name, fantasyname";
 
 export const _getByRut = "SELECT id, rut, fantasyname, name, activity, address, district, email, phone FROM app.company WHERE rut = $1";
 

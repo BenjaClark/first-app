@@ -8,6 +8,10 @@ const getByRut = async (req: any, res: any) => {
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
+  if (!result.data) {
+    res.status(200).json({ success: true, data: result.data, error: null });
+    return;
+  }
 
   const {
     id,
@@ -42,6 +46,10 @@ const getById = async (req: any, res: any) => {
 
   if (!result.success) {
     res.status(500).json({ success: false, data: null, error: result.error });
+    return;
+  }
+  if (!result.data) {
+    res.status(200).json({ success: true, data: result.data, error: null });
     return;
   }
 

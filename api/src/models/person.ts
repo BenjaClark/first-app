@@ -11,7 +11,7 @@ import {
 const getByRut: any = async (rut: string) => {
   try {
     const result = await pool.query(_getByRut, [rut]);
-    return { success: true, data: result.rows[0], error: null };
+    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -20,7 +20,7 @@ const getByRut: any = async (rut: string) => {
 const getById: any = async (id: string) => {
   try {
     const result = await pool.query(_getById, [id]);
-    return { success: true, data: result.rows[0], error: null };
+    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }

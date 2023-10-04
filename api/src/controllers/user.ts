@@ -1,4 +1,52 @@
 import * as UserModel from "../models/user";
+import * as PersonModel from "../models/person";
+
+const getById = async (req: any, res: any) => {
+  const { id } = req.params;
+  const result = await UserModel.getById(id);
+
+  if (!result.success) {
+    res.status(500).json({ success: false, data: null, error: result.error });
+    return;
+  }
+
+  if (!result.data) {
+    res
+      .status(200)
+      .json({ success: true, data: result.data, error: result.error });
+    return;
+  }
+
+  const {
+    person_id,
+    login,
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone,
+  } = result.data;
+
+  const data = {
+    id,
+    person_id,
+    login,
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone,
+  };
+
+  res.status(200).json({ success: true, data, error: null });
+  return;
+};
 
 const getByRut = async (req: any, res: any) => {
   const { rut } = req.params;
@@ -8,9 +56,17 @@ const getByRut = async (req: any, res: any) => {
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
+  if (!result.data) {
+    res
+      .status(200)
+      .json({ success: true, data: result.data, error: result.error });
+    return;
+  }
 
   const {
     id,
+    person_id,
+    login,
     name,
     paternallastname,
     maternallastname,
@@ -22,6 +78,8 @@ const getByRut = async (req: any, res: any) => {
 
   const data = {
     id,
+    person_id,
+    login,
     rut,
     name,
     paternalLastName: paternallastname,
@@ -30,34 +88,6 @@ const getByRut = async (req: any, res: any) => {
     district,
     email,
     phone,
-  };
-
-  res.status(200).json({ success: true, data, error: null });
-  return;
-};
-
-const getById = async (req: any, res: any) => {
-  const { id } = req.params;
-  const result = await UserModel.getById(id);
-
-  if (!result.success) {
-    res.status(500).json({ success: false, data: null, error: result.error });
-    return;
-  }
-
-  const {
-
-    person_id,
-    login,
-    hash,
-    
-  } = result.data;
-
-  const data = {
-    id,
-    person_id,
-    login,
-    hash,
   };
 
   res.status(200).json({ success: true, data, error: null });
@@ -99,7 +129,14 @@ const getAll = async (req: any, res: any) => {
       id: user.id,
       person_id: user.person_id,
       login: user.email,
-      hash: user.hash,
+      rut: user.rut,
+      name: user.name,
+      paternalLastName: user.paternallastname,
+      maternalLastName: user.maternallastname,
+      address: user.address,
+      district: user.district,
+      email: user.email,
+      phone: user.phone,
     };
   });
 
@@ -134,7 +171,7 @@ const upsert = async (req: any, res: any) => {
     phone,
   } = req.body;
 
-  const resultGetByRut = await UserModel.getByRut(rut);
+  const resultGetByRut = await PersonModel.getByRut(rut);
 
   if (!resultGetByRut.success) {
     res
@@ -142,7 +179,6 @@ const upsert = async (req: any, res: any) => {
       .json({ success: false, data: null, error: resultGetByRut.error });
     return;
   }
-  
 
   if (!resultGetByRut.data) {
     const resultInsertPerson = await UserModel.insertPerson(
@@ -163,77 +199,125 @@ const upsert = async (req: any, res: any) => {
       return;
     }
 
-    const result = await UserModel.getByRut(rut);
+    const person_id = resultInsertPerson.data.id;
+
+    const result = await UserModel.getByLogin(email);
     if (!result.success) {
+      res.status(500).json({ success: false, data: null, error: result.error });
+      return;
+    }
+
+    if (!result.data) {
+      const resultInsertUser = await UserModel.insertUser(person_id, email);
+
+      if (!resultInsertUser.success) {
+        res
+          .status(500)
+          .json({ success: false, data: null, error: result.error });
+        return;
+      }
+
+      const data = {
+        id: resultInsertPerson.data.id,
+        person_id: resultInsertPerson.data.person_id,
+        login: email,
+        rut,
+        name,
+        paternalLastName,
+        maternalLastName,
+        address,
+        district,
+        email,
+        phone,
+      };
+
+      if (result.success) {
+        res.status(200).json({
+          success: true,
+          data,
+          error: null,
+        });
+        return;
+      }
+    }
+
+    const resultGetByLogin = await UserModel.getByLogin(email);
+    if (!resultGetByLogin.success) {
       res
         .status(500)
-        .json({ success: false, data: null, error: result.error });
+        .json({ success: false, data: null, error: resultGetByLogin.error });
       return;
     }
 
-    const resultInsertUser = await UserModel.insertUser(
-      result.data.id,
-      result.data.email
-    );
+    if (!resultGetByLogin.data) {
+      const resultInsertUser = await UserModel.insertUser(person_id, email);
 
-    if (!resultInsertUser.success) {
+      if (!resultInsertUser.success) {
+        res
+          .status(500)
+          .json({ success: false, data: null, error: resultInsertUser.error });
+        return;
+      }
+
+      const data = {
+        id: resultGetByRut.data.id,
+        person_id: resultGetByRut.data.person_id,
+        login: email,
+        rut,
+        name,
+        paternalLastName,
+        maternalLastName,
+        address,
+        district,
+        email,
+        phone,
+      };
+
+      res.status(200).json({ success: true, data, error: null });
+      return;
+    }
+    
+  }
+
+  const resultGetByLogin = await UserModel.getByLogin(email);
+    if (!resultGetByLogin.success) {
       res
         .status(500)
-        .json({ success: false, data: null, error: resultInsertUser.error });
+        .json({ success: false, data: null, error: resultGetByLogin.error });
       return;
     }
-    if (resultInsertUser.success) {
-    res.status(200).json({ success: true, data: "Usuario y Persona insertados", error: null });
-    return;
-    }
-  }
-
-  const { hash, login } = req.body;
-
-  const result = await UserModel.getByLogin(email);
-
-  if (!result.success) {
-    res.status(500).json({ success: false, data: null, error: result.error });
-    return;
-  }
-
-  if (!result.data) {
-    const resultInsertUser = await UserModel.insertUser(
-      resultGetByRut.data.id,
-      email
-    );
-
-    if (!resultInsertUser.success) {
-      res
-        .status(500)
-        .json({ success: false, data: null, error: resultInsertUser.error });
-      return;
-    }
-    if (resultInsertUser.success) {
-      res.status(200).json({ success: true, data: "Usuario insertado", error: null });
-      return;
-    }
-  }
-
 
   const resultUpdateById = await UserModel.updateById(
-    resultGetByRut.data.id,
-    "usuario editado",
+    resultGetByLogin.data.id,
     email
   );
 
   if (!resultUpdateById.success) {
-    res.status(500).json({ success: false, data: null, error: resultUpdateById.error });
+    res
+      .status(500)
+      .json({ success: false, data: null, error: resultUpdateById.error });
     return;
   }
 
   const data = {
-    id: result.data.id,
-    hash,
-    login,
+    id: resultGetByLogin.data.id,
+    person_id: resultGetByLogin.data.person_id,
+    login: email,
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone,
   };
 
-  res.status(200).json({ success: true, data: "Usuario con id: "+data.id+" Editado", error: null });
+  res.status(200).json({
+    success: true,
+    data,
+    error: null,
+  });
   return;
 };
 
