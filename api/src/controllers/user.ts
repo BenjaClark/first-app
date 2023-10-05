@@ -207,7 +207,7 @@ const upsert = async (req: any, res: any) => {
     }
 
     const data = {
-      id: result.data.id,
+      id: resultInsertUser.data.id,
       person_id: person_id,
       login: email,
       rut,
@@ -267,8 +267,8 @@ const upsert = async (req: any, res: any) => {
       return;
     }
     const data = {
-      id: resultGetByRut.data.id,
-      person_id: resultGetByRut.data.person_id,
+      id: resultInsertUser.data.id,
+      person_id: person_id,
       login: email,
       rut,
       name,
@@ -292,8 +292,8 @@ const upsert = async (req: any, res: any) => {
     return;
   }
   const data = {
-    id: resultGetByRut.data.id,
-    person_id: resultGetByRut.data.person_id,
+    id: resultUpdate.data.id,
+    person_id: person_id,
     login: email,
     rut,
     name,
