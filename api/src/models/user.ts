@@ -3,8 +3,7 @@ import pool from "../utils/database";
 import {
   _getByLogin,
   _getByRut,
-  _insertPerson,
-  _insertUser,
+  _insert,
   _getAll,
   _deleteById,
   _updateById,
@@ -14,7 +13,11 @@ import {
 const getById: any = async (id: string) => {
   try {
     const result = await pool.query(_getById, [id]);
-    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
+    return {
+      success: true,
+      data: result.rows.length > 0 ? result.rows[0] : null,
+      error: null,
+    };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -23,7 +26,11 @@ const getById: any = async (id: string) => {
 const getByRut: any = async (rut: string) => {
   try {
     const result = await pool.query(_getByRut, [rut]);
-    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
+    return {
+      success: true,
+      data: result.rows.length > 0 ? result.rows[0] : null,
+      error: null,
+    };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -47,38 +54,9 @@ const getByLogin: any = async (login: string) => {
   }
 };
 
-
-
-const insertPerson: any = async (
-  rut: string,
-  name: string,
-  paternalLastName: string,
-  maternalLastName: string,
-  address: string,
-  district: string,
-  email: string,
-  phone: string
-) => {
+const insert: any = async (person_id: number, login: string) => {
   try {
-    const result = await pool.query(_insertPerson, [
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    ]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
-
-const insertUser: any = async (person_id: number, login: string) => {
-  try {
-    const result = await pool.query(_insertUser, [person_id, login]);
+    const result = await pool.query(_insert, [person_id, login]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -94,11 +72,7 @@ const deleteById: any = async (id: number) => {
   }
 };
 
-const updateById: any = async (
-  id: number,
-  person_id: string,
-  
-) => {
+const updateById: any = async (id: number, person_id: string) => {
   try {
     const result = await pool.query(_updateById, [id, person_id]);
     return { success: true, data: result.rows[0], error: null };
@@ -109,11 +83,10 @@ const updateById: any = async (
 
 export {
   getByRut,
-  insertPerson,
-  insertUser,
+  insert,
   getByLogin,
   getAll,
   deleteById,
   updateById,
-  getById
+  getById,
 };

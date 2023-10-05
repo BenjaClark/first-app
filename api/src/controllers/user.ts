@@ -199,15 +199,15 @@ const upsert = async (req: any, res: any) => {
 
     const person_id = result.data.id;
 
-    const resultInsertUser = await UserModel.insertUser(person_id, email);
+    const resultInsert = await UserModel.insert(person_id, email);
 
-    if (!resultInsertUser.success) {
+    if (!resultInsert.success) {
       res.status(500).json({ success: false, data: null, error: result.error });
       return;
     }
 
     const data = {
-      id: resultInsertUser.data.id,
+      id: resultInsert.data.id,
       person_id: person_id,
       login: email,
       rut,
@@ -258,16 +258,16 @@ const upsert = async (req: any, res: any) => {
   }
 
   if (!resultGetByLogin.data) {
-    const resultInsertUser = await UserModel.insertUser(person_id, email);
+    const resultInsert = await UserModel.insert(person_id, email);
 
-    if (!resultInsertUser.success) {
+    if (!resultInsert.success) {
       res
         .status(500)
-        .json({ success: false, data: null, error: resultInsertUser.error });
+        .json({ success: false, data: null, error: resultInsert.error });
       return;
     }
     const data = {
-      id: resultInsertUser.data.id,
+      id: resultInsert.data.id,
       person_id: person_id,
       login: email,
       rut,
