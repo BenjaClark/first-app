@@ -1,62 +1,6 @@
 import * as CustomerModel from "../models/customer";
-
-const getByRut = async (req: any, res: any) => {
-  const { rut } = req.params;
-  const result = await CustomerModel.getByRut(rut);
-
-  if (!result.success) {
-    res.status(500).json({ success: false, data: null, error: result.error });
-    return;
-  }
-
-  const {
-    id,
-    name,
-    paternallastname,
-    maternallastname,
-    address,
-    district,
-    email,
-    phone,
-  } = result.data;
-
-  const data = {
-    id,
-    rut,
-    name,
-    paternalLastName: paternallastname,
-    maternalLastName: maternallastname,
-    address,
-    district,
-    email,
-    phone,
-  };
-
-  res.status(200).json({ success: true, data, error: null });
-  return;
-};
-
-const getById = async (req: any, res: any) => {
-  const { id } = req.params;
-  const result = await CustomerModel.getById(id);
-
-  if (!result.success) {
-    res.status(500).json({ success: false, data: null, error: result.error });
-    return;
-  }
-
-  const { person_id, login, hash } = result.data;
-
-  const data = {
-    id,
-    person_id,
-    login,
-    hash,
-  };
-
-  res.status(200).json({ success: true, data, error: null });
-  return;
-};
+import * as CompanyModel from "../models/company";
+import * as PersonModel from "../models/person";
 
 const getAll = async (req: any, res: any) => {
   const result = await CustomerModel.getAll();
@@ -66,14 +10,50 @@ const getAll = async (req: any, res: any) => {
     return;
   }
 
-  const data = result.data.map((user: any) => {
+  const data = result.data.map((customer: any) => {
     return {
-      id: user.id,
-      person_id: user.person_id,
-      login: user.email,
-      hash: user.hash,
+      id: customer.id,
+      type: customer.type,
+      rut: customer.rut,
+      name: customer.name,
+      address: customer.address,
+      district: customer.district,
+      email: customer.email,
+      phone: customer.phone,
     };
   });
+
+  res.status(200).json({ success: true, data, error: null });
+  return;
+};
+
+const getByRut = async (req: any, res: any) => {
+  const { rut } = req.params;
+  const result = await CustomerModel.getByRut(rut);
+
+  if (!result.success) {
+    res.status(500).json({ success: false, data: null, error: result.error });
+    return;
+  }
+  if (!result.data) {
+    res
+      .status(200)
+      .json({ success: true, data: result.data, error: result.error });
+    return;
+  }
+
+  const { id, type, name, address, district, email, phone } = result.data;
+
+  const data = {
+    id,
+    type,
+    rut,
+    name,
+    address,
+    district,
+    email,
+    phone,
+  };
 
   res.status(200).json({ success: true, data, error: null });
   return;
@@ -119,8 +99,7 @@ const upsert = async (req: any, res: any) => {
   }
 
   if (!resultGetByRut.data && type === "C") {
-    //AQUI VA EL UPSERT DE COMPANY
-    const resultInsertCompany = await CustomerModel.insertCompany(
+    const resultInsertCompany = await CompanyModel.insert(
       rut,
       fantasyName,
       name,
@@ -138,67 +117,48 @@ const upsert = async (req: any, res: any) => {
       return;
     }
 
+    const company_id = resultInsertCompany.data.id;
+
+    const resultInsert = await CustomerModel.insert(
+      type,
+      resultInsertCompany.data.id,
+      resultInsertCompany.data.id
+    );
+
+    if (!resultInsert.success) {
+      res.status(500).json({
+        success: false,
+        data: null,
+        error: resultInsert.error,
+      });
+      return;
+    }
+
     const data = {
-      id: resultInsertCompany.data,
+      id: resultInsert.data.id,
+      type,
+      company_id: company_id,
       rut,
-      fantasyName,
       name,
-      activity,
+      fantasyName,
       address,
       district,
       email,
       phone,
     };
 
-  }
-
-  const resultGetByRut2 = await CustomerModel.getByRut(rut)
-  const resultUpdateCompanyById = await CustomerModel.updateCompanyById(
-    resultGetByRut2.data,
-    rut,
-    fantasyName,
-    name,
-    activity,
-    address,
-    district,
-    email,
-    phone
-  );
-
-  if (!resultUpdateCompanyById.success) {
-    res
-      .status(500)
-      .json({ success: false, data: null, error: resultUpdateCompanyById.error });
-    return;
-  }
-
-  const resultInsertCustomer = await CustomerModel.insertCustomer(
-    type,
-    1,
-    resultGetByRut2.data
-  );
-
-  if (!resultInsertCustomer.success) {
-    res.status(500).json({
-      success: false,
-      data: null,
-      error: resultInsertCustomer.error,
-    });
-    return;
-  }
-
-  if (resultInsertCustomer.success) {
-    res.status(200).json({
-      success: true,
-      data: "Customer y Company insertados",
-      error: null,
-    });
-    return;
+    if (resultInsert.success) {
+      res.status(200).json({
+        success: true,
+        data,
+        error: null,
+      });
+      return;
+    }
   }
 
   if (!resultGetByRut.data && type === "P") {
-    //AQUI VA EL UPSERT DE PERSON
-    const resultInsertPerson = await CustomerModel.insertPerson(
+    const resultInsertPerson = await PersonModel.insert(
       rut,
       name,
       paternalLastName,
@@ -216,8 +176,27 @@ const upsert = async (req: any, res: any) => {
       return;
     }
 
+    const person_id = resultInsertPerson.data.id;
+
+    const resultInsert = await CustomerModel.insert(
+      type,
+      resultInsertPerson.data.id,
+      resultInsertPerson.data.id
+    );
+
+    if (!resultInsert.success) {
+      res.status(500).json({
+        success: false,
+        data: null,
+        error: resultInsert.error,
+      });
+      return;
+    }
+
     const data = {
-      id: resultInsertPerson.data.id,
+      id: resultInsert.data.id,
+      type,
+      person_id,
       rut,
       name,
       paternalLastName,
@@ -228,54 +207,19 @@ const upsert = async (req: any, res: any) => {
       phone,
     };
 
-    res.status(200).json({ success: true, data, error: null });
-    return;
-  }
-
-  const resultUpdatePersonById = await CustomerModel.updatePersonById(
-    resultGetByRut.data.id,
-    rut,
-    name,
-    paternalLastName,
-    maternalLastName,
-    address,
-    district,
-    email,
-    phone
-  );
-
-  if (!resultUpdatePersonById.success) {
-    res.status(500).json({ success: false, data: null , error: resultUpdatePersonById.error });
-    return;
-  }
-
-  const resultInsertCustomer2 = await CustomerModel.insertCustomer(
-    type,
-    resultGetByRut.data.id,
-    ""
-  );
-
-  if (!resultInsertCustomer2.success) {
-    res.status(500).json({
-      success: false,
-      data: null,
-      error: resultInsertCustomer2.error,
-    });
-    return;
-  }
-
-  if (resultInsertCustomer2.success) {
-    res.status(200).json({
-      success: true,
-      data: "Customer y Person insertados",
-      error: null,
-    });
-    return;
+    if (resultInsert.success) {
+      res.status(200).json({
+        success: true,
+        data,
+        error: null,
+      });
+      return;
+    }
   }
 
   if (resultGetByRut.data && type === "C") {
-    //AQUI VA EL UPSERT DE COMPANY
-    const resultInsertCompany = await CustomerModel.insertCompany(
+    const result = await CompanyModel.updateById(
+      resultGetByRut.data.id,
       rut,
       fantasyName,
       name,
@@ -284,176 +228,186 @@ const upsert = async (req: any, res: any) => {
       district,
       email,
       phone
-    );
-
-    if (!resultInsertCompany.success) {
-      res
-        .status(500)
-        .json({ success: false, data: null, error: resultInsertCompany.error });
-      return;
-    }
-
-    const data = {
-      id: resultInsertCompany.data.id,
-      rut,
-      fantasyName,
-      name,
-      activity,
-      address,
-      district,
-      email,
-      phone,
-    };
-
-    res.status(200).json({ success: true, data, error: null });
-    return;
-  }
-
-  const resultUpdateCompanyById3 = await CustomerModel.updateCompanyById(
-    resultGetByRut.data.id,
-    rut,
-    fantasyName,
-    name,
-    activity,
-    address,
-    district,
-    email,
-    phone
-  );
-
-  if (!resultUpdateCompanyById3.success) {
-    res
-      .status(500)
-      .json({ success: false, data: null, error: resultUpdateCompanyById3.error });
-    return;
-  }
-
-  const resultGetCustomerById = await CustomerModel.getCustomerById(
-    resultGetByRut.id
-  );
-
-  if (!resultGetCustomerById.data) {
-    const result = await CustomerModel.insertCustomer(
-      type,
-      "",
-      resultGetByRut.data.id
     );
 
     if (!result.success) {
-      res.status(500).json({ success: false, data: null, error: result.error });
+      res.status(500).json({ success: false, result, error: result.error });
       return;
     }
 
-    res
-      .status(200)
-      .json({ success: true, data: "Customer insertado", error: null });
-    return;
-  }
+    const company_id = result.data.id;
 
-  const resultUpdateCompanyById2 = await CustomerModel.updateCompanyById(
-    resultGetByRut.data.id,
-    rut,
-    fantasyName,
-    name,
-    activity,
-    address,
-    district,
-    email,
-    phone
-  );
+    const resultGetByRut2 = await CustomerModel.getByRut(rut);
 
-  if (!resultUpdateCompanyById2.success) {
-    res
-      .status(500)
-      .json({ success: false, data: null, error: resultUpdateCompanyById2.error });
-    return;
-  }
-  if (resultUpdateCompanyById2.success) {
-  res
-    .status(200)
-    .json({ success: true, data: "Customer actualizado", error: null });
-  return;
-  }
+    if (!resultGetByRut2.data) {
+      const resultInsert = await CustomerModel.insert(
+        type,
+        company_id,
+        company_id
+      );
 
-  if (resultGetByRut.data && type === "P") {
-    //AQUI VA EL UPSERT DE PERSON
-    const resultInsertPerson = await CustomerModel.insertPerson(
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone
+      if (!resultInsert.success) {
+        res.status(500).json({
+          success: false,
+          data: null,
+          error: resultInsert.error,
+        });
+        return;
+      }
+
+      const data = {
+        id: resultInsert.data.id,
+        type,
+        company_id: company_id,
+        rut,
+        name,
+        fantasyName,
+        address,
+        district,
+        email,
+        phone,
+      };
+
+      if (resultInsert.success) {
+        res.status(200).json({
+          success: true,
+          data,
+          error: null,
+        });
+        return;
+      }
+    }
+
+    const resultUpdate = await CustomerModel.updateById(
+      resultGetByRut2.data.id,
+      company_id,
+      company_id
     );
-
-    if (!resultInsertPerson.success) {
-      res
-        .status(500)
-        .json({ success: false, data: null, error: resultInsertPerson.error });
+    if (!resultUpdate.success) {
+      res.status(500).json({
+        success: false,
+        data: null,
+        error: resultUpdate.error,
+      });
       return;
     }
 
     const data = {
-      id: resultInsertPerson.data.id,
+      id: resultGetByRut2.data.id,
+      type,
+      company_id,
       rut,
       name,
-      paternalLastName,
-      maternalLastName,
+      fantasyName,
       address,
       district,
       email,
       phone,
     };
 
-    res.status(200).json({ success: true, data, error: null });
-    return;
-  }
-
-  const resultUpdateById = await CustomerModel.updateById(
-    resultGetByRut.data.id,
-    rut,
-    name,
-    paternalLastName,
-    maternalLastName,
-    address,
-    district,
-    email,
-    phone
-  );
-
-  if (!resultUpdateById.success) {
-    res.status(500).json({ success: false, data: null, error: resultUpdateById.error });
-    return;
-  }
-
-  const resultInsertCustomerPerson2 = await CustomerModel.insertCustomer(
-    type,
-    resultGetByRut.data.id,
-    ""
-  );
-
-  if (!resultInsertCustomerPerson2.success) {
-    res.status(500).json({
-      success: false,
-      data: null,
-      error: resultInsertCustomerPerson2.error,
-    });
-    return;
-  }
-
-  if (resultInsertCustomerPerson2.success) {
     res.status(200).json({
       success: true,
-      data: "Customer y Person insertados",
+      data: data,
       error: null,
     });
     return;
   }
-  
-  
-} 
 
+  if (resultGetByRut.data && type === "P") {
+    const result = await PersonModel.updateById(
+      resultGetByRut.data.id,
+      rut,
+      name,
+      paternalLastName,
+      maternalLastName,
+      address,
+      district,
+      email,
+      phone
+    );
 
-export { upsert, getByRut, getAll, deleteById, getById };
+    if (!result.success) {
+      res.status(500).json({ success: false, result, error: result.error });
+      return;
+    }
+
+    const person_id = result.data.id;
+
+    const resultGetByRut2 = await PersonModel.getByRut(rut);
+
+    if (!resultGetByRut2.data) {
+      const resultInsert = await CustomerModel.insert(
+        type,
+        person_id,
+        person_id
+      );
+
+      if (!resultInsert.success) {
+        res.status(500).json({
+          success: false,
+          data: null,
+          error: resultInsert.error,
+        });
+        return;
+      }
+
+      const data = {
+        id: resultInsert.data.id,
+        type,
+        person_id,
+        rut,
+        name,
+        address,
+        district,
+        email,
+        phone,
+      };
+
+      if (resultInsert.success) {
+        res.status(200).json({
+          success: true,
+          data,
+          error: null,
+        });
+        return;
+      }
+    }
+
+    const resultUpdate = await CustomerModel.updateById(
+      resultGetByRut2.data.id,
+      person_id,
+      person_id
+    );
+    if (!resultUpdate.success) {
+      res.status(500).json({
+        success: false,
+        data: null,
+        error: resultUpdate.error,
+      });
+      return;
+    }
+
+    const data = {
+      id: resultGetByRut2.data.id,
+      type,
+      person_id,
+      rut,
+      name,
+      paternalLastName,
+      maternalLastName,
+      address,
+      district,
+      email,
+      phone,
+    };
+
+    res.status(200).json({
+      success: true,
+      data: data,
+      error: null,
+    });
+    return;
+  }
+};
+
+export { getAll, getByRut, deleteById, upsert };

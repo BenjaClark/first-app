@@ -1,21 +1,12 @@
-export const _getById = "SELECT id, type, person_id, company_id FROM app.customer WHERE id = $1";
+export const _getById = "SELECT usr.id, usr.login, per.id as person_id, per.rut, per.name, per.paternallastname, per.maternallastname, per.address, per.district, per.email, per.phone FROM app.user usr INNER JOIN app.person per ON usr.person_id = per.id WHERE usr.id = $1";
 
-export const _getByRut = "SELECT id FROM (SELECT id FROM app.person WHERE rut = $1 UNION SELECT id FROM app.company WHERE rut = $1) AS subquery";
+export const _getByRut = "SELECT per.id, cus.type, per.rut, concat(per.name,' ', per.paternallastname,' ', per.maternallastname) as name, per.address, per.district, per.email, per.phone FROM app.customer cus INNER JOIN app.person per ON cus.person_id = per.id WHERE cus.type = 'P' and cus.isactive = true and per.rut = $1 union all select com.id, cus.type, com.rut, com.name, com.address, com.district, com.email, com.phone from app.customer cus inner join app.company com on cus.company_id = com.id where cus.type = 'C' and cus.isactive = true and com.rut = $1";
 
-export const _getAll = "SELECT id, person_id, login, hash FROM app.user WHERE isactive = true";
+export const _getAll = "SELECT per.id,cus.type,per.rut,concat(per.name,' ', per.paternallastname,' ', per.maternallastname) as name,per.address,per.district,per.email,per.phone FROM app.customer cus INNER JOIN app.person per ON cus.person_id = per.id WHERE cus.type = 'P' and cus.isactive = true union all select com.id,cus.type,com.rut,com.name,com.address,com.district,com.email, com.phone from app.customer cus inner join app.company com on cus.company_id = com.id where cus.type = 'C' and cus.isactive = true";
 
-export const _getCustomerById = "SELECT id, type, person_id, company_id FROM app.customer WHERE person_id OR company_id = $1";
-
-export const _insertCustomer = "INSERT INTO app.customer (type, person_id, company_id) VALUES ($1, $2, $3) RETURNING *"
-
-export const _insertCompany = "INSERT INTO app.company (rut, fantasyname, name, activity, address, district, email, phone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
-
-export const _insertPerson = "INSERT INTO app.person (rut, name, paternallastname, maternallastname, address, district, email, phone) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *";
+export const _insert = "INSERT INTO app.customer (type, person_id, company_id) VALUES ($1, $2, $3) RETURNING *";
 
 export const _deleteById = "UPDATE app.customer SET isactive = false WHERE id= $1";
 
-export const _updateById = "UPDATE app.customer SET type = $2, person_id = $3, company_id = $4 WHERE person_id = $1 RETURNING *";
+export const _updateById = "UPDATE app.customer SET person_id = $2 , company_id = $3 WHERE id = $1 RETURNING *";
 
-export const _updatePersonById = "UPDATE app.person SET rut= $2, name = $3, paternallastname = $4, maternallastname = $5, address = $6, district = $7, email = $8, phone = $9 WHERE id = $1 RETURNING *";
-
-export const _updateCompanyById = "UPDATE app.company SET rut= $2, fantasyname = $3, name = $4, activity = $5, address = $6, district = $7, email = $8, phone = $9 WHERE id = $1 RETURNING *";

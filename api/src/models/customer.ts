@@ -1,27 +1,6 @@
 import pool from "../utils/database";
 
-import {
-  _getByRut,
-  _getAll,
-  _getById,
-  _getCustomerById,
-  _insertCustomer,
-  _insertCompany,
-  _insertPerson,
-  _updateById,
-  _updatePersonById,
-  _updateCompanyById,
-  _deleteById,
-} from "../queries/customer";
-
-const getByRut: any = async (rut: string) => {
-  try {
-    const result = await pool.query(_getByRut, [rut]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
+import { _getAll, _getByRut, _deleteById, _insert, _updateById } from "../queries/customer";
 
 const getAll: any = async () => {
   try {
@@ -32,81 +11,31 @@ const getAll: any = async () => {
   }
 };
 
-const getById: any = async (id: string) => {
+const getByRut: any = async (rut: string) => {
   try {
-    const result = await pool.query(_getById, [id]);
+    const result = await pool.query(_getByRut, [rut]);
+    return {
+      success: true,
+      data: result.rows.length > 0 ? result.rows[0] : null,
+      error: null,
+    };
+  } catch (e) {
+    return { success: false, data: null, error: (e as Error).message };
+  }
+};
+
+const insert: any = async (type: string, person_id: number, company_id: number) => {
+  try {
+    const result = await pool.query(_insert, [type, person_id, company_id]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
 };
 
-const getCustomerById: any = async (id: string) => {
+const updateById: any = async (id: number, person_id: number, company_id: number) => {
   try {
-    const result = await pool.query(_getCustomerById, [id]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
-
-const insertCustomer: any = async (type: string, person_id: string, company_id: string) => {
-  try {
-    const result = await pool.query(_insertCustomer, [type, person_id, company_id]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
-
-const insertCompany: any = async (
-  rut: string,
-  fantasyName: string,
-  name: string,
-  activity: string,
-  address: string,
-  district: string,
-  email: string,
-  phone: string
-) => {
-  try {
-    const result = await pool.query(_insertCompany, [
-      rut,
-      fantasyName,
-      name,
-      activity,
-      address,
-      district,
-      email,
-      phone,
-    ]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
-
-const insertPerson: any = async (
-  rut: string,
-  name: string,
-  paternalLastName: string,
-  maternalLastName: string,
-  address: string,
-  district: string,
-  email: string,
-  phone: string
-) => {
-  try {
-    const result = await pool.query(_insertPerson, [
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    ]);
+    const result = await pool.query(_updateById, [id, person_id, company_id]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -122,93 +51,4 @@ const deleteById: any = async (id: number) => {
   }
 };
 
-const updateById: any = async (
-  id: number,
-  type: string,
-  person_id: string,
-  company_id: string
-) => {
-  try {
-    const result = await pool.query(_updateById, [
-      id,
-      type,
-      person_id,
-      company_id,
-    ]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
-
-const updatePersonById: any = async (
-  id: number,
-  rut: string,
-  name: string,
-  paternalLastName: string,
-  maternalLastName: string,
-  address: string,
-  district: string,
-  email: string,
-  phone: string
-) => {
-  try {
-    const result = await pool.query(_updatePersonById, [
-      id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    ]);
-    return { success: true, data: result.rows[0], error: null };
-  } catch (e) {
-    return { success: false, data: null, error: (e as Error).message };
-  }
-};
-
-const updateCompanyById: any = async (
-    id: number,
-    rut: string,
-    fantasyName: string,
-    name: string,
-    activity: string,
-    address: string,
-    district: string,
-    email: string,
-    phone: string
-  ) => {
-    try {
-      const result = await pool.query(_updateCompanyById, [
-        id,
-        rut,
-        fantasyName,
-        name,
-        activity,
-        address,
-        district,
-        email,
-        phone,
-      ]);
-      return { success: true, data: result.rows[0], error: null };
-    } catch (e) {
-      return { success: false, data: null, error: (e as Error).message };
-    }
-  };
-
-export {
-  getByRut,
-  getAll,
-  getById,
-  getCustomerById,
-  insertCustomer,
-  insertCompany,
-  insertPerson,
-  updateById,
-  updatePersonById,
-  updateCompanyById,
-  deleteById,
-};
+export { getAll, getByRut, deleteById, insert, updateById}
