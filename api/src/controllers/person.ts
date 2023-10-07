@@ -90,6 +90,7 @@ const getAll = async (req: any, res: any) => {
 
   const data = result.data.map((person: any) => {
     return {
+      id: person.id,
       rut: person.rut,
       name: person.name,
       paternalLastName: person.paternallastname,
@@ -203,7 +204,7 @@ const deleteById = async (req: any, res: any) => {
 
   res
     .status(200)
-    .json({ success: true, data: "Eliminado correctamente", error: null });
+    .json({ success: true, data: result.data+" registro(s) eliminado(s)", error: null });
   return;
 };
 

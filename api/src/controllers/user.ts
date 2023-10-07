@@ -1,5 +1,6 @@
 import * as UserModel from "../models/user";
 import * as PersonModel from "../models/person";
+import bcrypt from "bcrypt";
 
 const getById = async (req: any, res: any) => {
   const { id } = req.params;
@@ -22,8 +23,8 @@ const getById = async (req: any, res: any) => {
     login,
     rut,
     name,
-    paternalLastName,
-    maternalLastName,
+    paternallastname,
+    maternallastname,
     address,
     district,
     email,
@@ -36,8 +37,8 @@ const getById = async (req: any, res: any) => {
     login,
     rut,
     name,
-    paternalLastName,
-    maternalLastName,
+    paternalLastName: paternallastname,
+    maternalLastName: maternallastname,
     address,
     district,
     email,
@@ -95,21 +96,19 @@ const getByRut = async (req: any, res: any) => {
 };
 
 const getByLogin = async (req: any, res: any) => {
-  const { email } = req.params;
-  const result = await UserModel.getByLogin(email);
+  const { login } = req.params;
+  const result = await UserModel.getByLogin(login);
 
   if (!result.success) {
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
 
-  const { id, login, person_id, hash } = result.data;
-
   const data = {
-    id,
-    person_id,
-    login,
-    hash,
+    id: result.data.id,
+    person_id: result.data.person_id,
+    email: result.data.email,
+    hash: result.data.hash,
   };
 
   res.status(200).json({ success: true, data, error: null });
@@ -153,9 +152,11 @@ const deleteById = async (req: any, res: any) => {
     return;
   }
 
-  res
-    .status(200)
-    .json({ success: true, data: "Eliminado correctamente", error: null });
+  res.status(200).json({
+    success: true,
+    data: result.data + " registro(s) eliminado(s)",
+    error: null,
+  });
   return;
 };
 
@@ -247,7 +248,9 @@ const upsert = async (req: any, res: any) => {
     return;
   }
 
-  const resultGetByLogin = await UserModel.getByLogin(resultGetByRut.data.email);
+  const resultGetByLogin = await UserModel.getByLogin(
+    resultGetByRut.data.email
+  );
   const person_id = resultGetByRut.data.id;
 
   if (!resultGetByLogin.success) {
@@ -309,4 +312,89 @@ const upsert = async (req: any, res: any) => {
   return;
 };
 
-export { upsert, getByRut, getByLogin, getAll, deleteById, getById };
+const assignPassword = async (req: any, res: any) => {
+  const { login, password } = req.body;
+
+  const resultGetByLogin = await UserModel.getByLogin(login);
+  if (!resultGetByLogin.success) {
+    res
+      .status(500)
+      .json({ success: false, data: null, error: resultGetByLogin.error });
+    return;
+  }
+
+  if (!resultGetByLogin.data) {
+    res.status(403).json({ error: "Usuario no valido" });
+    return;
+  }
+
+  if (!resultGetByLogin.data.hash) {
+    const user_id = resultGetByLogin.data.id;
+
+    const result = await UserModel.assignPasword(user_id, password);
+
+    if (!result.success) {
+      res.status(500).json({ success: false, data: null, error: result.error });
+      return;
+    }
+
+    res.status(200).json({
+      success: true,
+      data: "Contraseña modificada",
+      error: result.error,
+    });
+    return;
+  }
+  res.status(200).json({
+    success: true,
+    data: "El usuario ya tiene Hash!",
+    error: null,
+  });
+  return;
+};
+
+const validate = async (req: any, res: any) => {
+  const { login, password } = req.body;
+
+  const resultGetByLogin = await UserModel.getByLogin(login);
+  if (!resultGetByLogin.data) {
+    res
+      .status(500)
+      .json({ success: false, data: null, error: "Usuario no valido" });
+    return;
+  }
+
+  if (!resultGetByLogin.data.hash ) {
+    res.status(403).json({ error: "Usuario no valido" });
+    return;
+  }
+  
+  const hash = resultGetByLogin.data.hash;
+
+  const isValid = await bcrypt.compare(password, resultGetByLogin.data.hash);
+  if (!isValid) {
+    res
+      .status(403)
+      .json({ success: false, data: null, error: "Usuario no valido" });
+    return;
+  }
+
+  res.status(200).json({
+    success: true,
+    data: "Validado correctamente",
+    error: null,
+  });
+  return;
+
+};
+
+export {
+  upsert,
+  getByRut,
+  getByLogin,
+  getAll,
+  deleteById,
+  getById,
+  assignPassword,
+  validate,
+};

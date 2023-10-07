@@ -45,7 +45,7 @@ const updateById: any = async (id: number, person_id: number, company_id: number
 const deleteById: any = async (id: number) => {
   try {
     const result = await pool.query(_deleteById, [id]);
-    return { success: true, data: null, error: null };
+    return { success: true, data: result.rowCount, error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }

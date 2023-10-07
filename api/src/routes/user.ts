@@ -10,5 +10,8 @@ UserRouter.get("/getAll", UserController.getAll)
 UserRouter.post("/upsert", UserController.upsert)
 UserRouter.delete("/deleteById/:id", UserController.deleteById)
 
+UserRouter.post("/assignPassword", UserController.assignPassword)
+UserRouter.post("/validate", UserController.validate)
+
 
 export default UserRouter;

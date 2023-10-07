@@ -70,7 +70,11 @@ const deleteById = async (req: any, res: any) => {
 
   res
     .status(200)
-    .json({ success: true, data: "Eliminado correctamente", error: null });
+    .json({
+      success: true,
+      data: result.data + " registro(s) eliminado(s)",
+      error: null,
+    });
   return;
 };
 
@@ -121,7 +125,7 @@ const upsert = async (req: any, res: any) => {
 
     const resultInsert = await CustomerModel.insert(
       type,
-      resultInsertCompany.data.id,
+      null,
       resultInsertCompany.data.id
     );
 
@@ -181,7 +185,7 @@ const upsert = async (req: any, res: any) => {
     const resultInsert = await CustomerModel.insert(
       type,
       resultInsertPerson.data.id,
-      resultInsertPerson.data.id
+      null
     );
 
     if (!resultInsert.success) {
@@ -240,11 +244,7 @@ const upsert = async (req: any, res: any) => {
     const resultGetByRut2 = await CustomerModel.getByRut(rut);
 
     if (!resultGetByRut2.data) {
-      const resultInsert = await CustomerModel.insert(
-        type,
-        company_id,
-        company_id
-      );
+      const resultInsert = await CustomerModel.insert(type, null, company_id);
 
       if (!resultInsert.success) {
         res.status(500).json({
@@ -262,6 +262,7 @@ const upsert = async (req: any, res: any) => {
         rut,
         name,
         fantasyName,
+        activity,
         address,
         district,
         email,
@@ -299,6 +300,7 @@ const upsert = async (req: any, res: any) => {
       rut,
       name,
       fantasyName,
+      activity,
       address,
       district,
       email,
@@ -336,11 +338,7 @@ const upsert = async (req: any, res: any) => {
     const resultGetByRut2 = await PersonModel.getByRut(rut);
 
     if (!resultGetByRut2.data) {
-      const resultInsert = await CustomerModel.insert(
-        type,
-        person_id,
-        person_id
-      );
+      const resultInsert = await CustomerModel.insert(type, person_id, null);
 
       if (!resultInsert.success) {
         res.status(500).json({
@@ -376,7 +374,7 @@ const upsert = async (req: any, res: any) => {
     const resultUpdate = await CustomerModel.updateById(
       resultGetByRut2.data.id,
       person_id,
-      person_id
+      null
     );
     if (!resultUpdate.success) {
       res.status(500).json({
@@ -408,6 +406,13 @@ const upsert = async (req: any, res: any) => {
     });
     return;
   }
+
+  res.status(500).json({
+    success: false,
+    data: null,
+    error: null,
+  });
+  return;
 };
 
 export { getAll, getByRut, deleteById, upsert };

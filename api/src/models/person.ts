@@ -17,7 +17,7 @@ const getByRut: any = async (rut: string) => {
   }
 };
 
-const getById: any = async (id: string) => {
+const getById: any = async (id: number) => {
   try {
     const result = await pool.query(_getById, [id]);
     return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
@@ -94,7 +94,7 @@ const updateById: any = async (
 const deleteById: any = async (id: number) => {
   try {
     const result = await pool.query(_deleteById, [id]);
-    return { success: true, data: null, error: null };
+    return { success: true, data: result.rowCount, error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }

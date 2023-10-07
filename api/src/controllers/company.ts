@@ -45,11 +45,12 @@ const getById = async (req: any, res: any) => {
     return;
   }
 
-  const { fantasyname, name, activity, address, district, email, phone } =
+  const { rut, fantasyname, name, activity, address, district, email, phone } =
     result.data;
 
   const data = {
     id,
+    rut,
     fantasyname,
     name,
     activity,
@@ -75,7 +76,7 @@ const getAll = async (req: any, res: any) => {
     return {
       id: company.id,
       rut: company.rut,
-      fantasyName: company.fantasyName,
+      fantasyName: company.fantasyname,
       name: company.name,
       activity: company.activity,
       address: company.address,
@@ -179,7 +180,7 @@ const deleteById = async (req: any, res: any) => {
 
   res
     .status(200)
-    .json({ success: true, data: "Eliminado correctamente", error: null });
+    .json({ success: true, data: result.data+" registro(s) eliminado(s)", error: null });
   return;
 };
 

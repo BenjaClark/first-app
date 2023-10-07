@@ -1,5 +1,5 @@
 import pool from "../utils/database";
-
+import bcrypt from "bcrypt";
 import {
   _getByLogin,
   _getByRut,
@@ -66,7 +66,7 @@ const insert: any = async (person_id: number, login: string) => {
 const deleteById: any = async (id: number) => {
   try {
     const result = await pool.query(_deleteById, [id]);
-    return { success: true, data: null, error: null };
+    return { success: true, data: result.rowCount, error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -81,6 +81,20 @@ const updateById: any = async (id: number, person_id: string) => {
   }
 };
 
+const assignPasword: any = async (id: string, password: string) => {
+  try {
+    const saltRounds = 10;
+    const hash = await bcrypt.hash(password, saltRounds);
+
+    await pool.query("UPDATE app.user SET hash = $2 WHERE id = $1", [id, hash]);
+
+    return { success: true, data: "Password modificada", error: null };
+  } catch (e) {
+    return { success: false, data: null, error: (e as Error).message };
+  }
+};
+
+
 export {
   getByRut,
   insert,
@@ -89,4 +103,6 @@ export {
   deleteById,
   updateById,
   getById,
+  assignPasword,
+  
 };
