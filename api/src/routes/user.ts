@@ -12,6 +12,9 @@ UserRouter.delete("/deleteById/:id", UserController.deleteById)
 
 UserRouter.post("/assignPassword", UserController.assignPassword)
 UserRouter.post("/validate", UserController.validate)
+UserRouter.post("/updatePassword", UserController.updatePassword)
+UserRouter.post("/sendPassword", UserController.sendPassword)
+
 
 
 export default UserRouter;

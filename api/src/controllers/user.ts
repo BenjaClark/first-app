@@ -356,6 +356,13 @@ const assignPassword = async (req: any, res: any) => {
 const validate = async (req: any, res: any) => {
   const { login, password } = req.body;
 
+  if(!login || !password){
+    res
+      .status(500)
+      .json({ success: false, data: null, error: "Falta ingresar login o password" });
+    return;
+  }
+
   const resultGetByLogin = await UserModel.getByLogin(login);
   if (!resultGetByLogin.data) {
     res
@@ -364,11 +371,11 @@ const validate = async (req: any, res: any) => {
     return;
   }
 
-  if (!resultGetByLogin.data.hash ) {
+  if (!resultGetByLogin.data.hash) {
     res.status(403).json({ error: "Usuario no valido" });
     return;
   }
-  
+
   const hash = resultGetByLogin.data.hash;
 
   const isValid = await bcrypt.compare(password, resultGetByLogin.data.hash);
@@ -385,7 +392,102 @@ const validate = async (req: any, res: any) => {
     error: null,
   });
   return;
+};
 
+const updatePassword = async (req: any, res: any) => {
+  const { login, password, newPassword } = req.body;
+
+  if(!login || !password || !newPassword){
+    res
+      .status(500)
+      .json({ success: false, data: null, error: "Falta ingresar datos" });
+    return;
+  }
+
+  const resultGetByLogin = await UserModel.getByLogin(login);
+  if (!resultGetByLogin.data) {
+    res
+      .status(500)
+      .json({ success: false, data: null, error: "Usuario no valido" });
+    return;
+  }
+
+  if (!resultGetByLogin.data.hash) {
+    res.status(403).json({ error: "Usuario no valido" });
+    return;
+  }
+
+  const hash = resultGetByLogin.data.hash;
+  const user_id = resultGetByLogin.data.id;
+
+  const isValid = await bcrypt.compare(password, hash);
+  if (!isValid) {
+    res
+      .status(403)
+      .json({ success: false, data: null, error: "Usuario no valido" });
+    return;
+  }
+
+  const result = await UserModel.assignPasword(user_id, newPassword);
+  if (!result.success) {
+    res.status(500).json({ success: false, data: null, error: result.error });
+    return;
+  }
+
+  res.status(200).json({
+    success: true,
+    data: "Contraseña modificada",
+    error: null,
+  });
+  return;
+};
+
+const generatePassword = (longitud: number): string => {
+  const caracteres =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let newPassword = "";
+
+  for (let i = 0; i < longitud; i++) {
+    const indice = Math.floor(Math.random() * caracteres.length);
+    newPassword += caracteres.charAt(indice);
+  }
+
+  return newPassword;
+};
+
+const sendPassword = async (req: any, res: any) => {
+  const { login } = req.body;
+
+  const resultGetByLogin = await UserModel.getByLogin(login);
+  if (!resultGetByLogin.success) {
+    res
+      .status(500)
+      .json({ success: false, data: null, error: resultGetByLogin.error });
+    return;
+  }
+
+  if (!resultGetByLogin.data) {
+    res.status(403).json({ error: "Usuario no valido" });
+    return;
+  }
+
+  if (!resultGetByLogin.data.hash) {
+    res.status(403).json({ error: "El Usuario no tiene contraseña" });
+    return;
+  }
+
+  const user_id = resultGetByLogin.data.id;
+  const newPassword = generatePassword(5);
+
+  const result = await UserModel.assignPasword(user_id, newPassword);
+
+  if (!result.success) {
+    res.status(500).json({ success: false, data: null, error: result.error });
+    return;
+  }
+  
+  res.status(200).json({ success: true, data: "La nueva contraseña es: "+newPassword, error: null});
+  return;
 };
 
 export {
@@ -397,4 +499,6 @@ export {
   getById,
   assignPassword,
   validate,
+  updatePassword,
+  sendPassword
 };
