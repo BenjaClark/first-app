@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer, {Transporter} from "nodemailer";
 import UtilsConfig from "../utils/config";
 
 const sendEmail: any = async (login: string, newPassword: string) => {
@@ -9,11 +9,8 @@ const sendEmail: any = async (login: string, newPassword: string) => {
 
     const config = {
       host,
-      port,
-      auth : {
-        user,
-        pass,
-      },
+      port : parseInt(port),
+      auth : {user,pass}
     };
 
     const mensaje = {
