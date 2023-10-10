@@ -1,5 +1,6 @@
 import * as UserModel from "../models/user";
 import * as PersonModel from "../models/person";
+import * as EmailModel from "../../../api-email/src/models/email"
 import bcrypt from "bcrypt";
 
 const getById = async (req: any, res: any) => {
@@ -484,10 +485,14 @@ const sendPassword = async (req: any, res: any) => {
   if (!result.success) {
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
-  }
+  };
   
-  res.status(200).json({ success: true, data: "La nueva contraseña es: "+newPassword, error: null});
-  return;
+  const resultSendEmail = await EmailModel.sendEmail(login, newPassword)
+  if(!resultSendEmail.success) {
+    res.status(500).json({ success: false, data: null, error: resultSendEmail.error});
+  };
+  
+  res.status(200).json({ success: true, data: "Se ha enviado un correo con su nueva contraseña", error: null});
 };
 
 export {

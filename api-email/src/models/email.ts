@@ -1,18 +1,23 @@
 import nodemailer from "nodemailer";
+import UtilsConfig from "../utils/config";
 
 const sendEmail: any = async (login: string, newPassword: string) => {
   try {
+
+    const { host, port, user, pass, from } = UtilsConfig.config;
+
+
     const config = {
-      host : 'smtp.gmail.com',
-      port : 587,
+      host,
+      port,
       auth : {
-        user : "benja.vasquez017@gmail.com",
-        pass : "tudq pupw cbgy ewsb",
+        user,
+        pass,
       },
     };
 
     const mensaje = {
-      from : "benja.vasquez017@gmail.com",
+      from,
       to : login,
       subject : "Solicitud de nueva contraseña",
       text : "Su nueva contraseña para iniciar sesión es: " + newPassword,
