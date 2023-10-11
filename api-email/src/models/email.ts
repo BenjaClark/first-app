@@ -1,13 +1,13 @@
 import nodemailer, {Transporter} from "nodemailer";
-import UtilsConfig from "../utils/config";
+import config from "../utils/config";
 
-const sendEmail: any = async (login: string, newPassword: string) => {
+const send: any = async ( to: string, subject: string, text: string ) => {
   try {
 
-    const { host, port, user, pass, from } = UtilsConfig.config;
+    const { host, port, user, pass, from } = config;
 
 
-    const config = {
+    const transportConfig = {
       host,
       port : parseInt(port),
       auth : {user,pass}
@@ -15,12 +15,12 @@ const sendEmail: any = async (login: string, newPassword: string) => {
 
     const mensaje = {
       from,
-      to : login,
-      subject : "Solicitud de nueva contraseña",
-      text : "Su nueva contraseña para iniciar sesión es: " + newPassword,
+      to,
+      subject,
+      text,
     };
 
-    const transport = nodemailer.createTransport(config);
+    const transport = nodemailer.createTransport(transportConfig);
     const info = await transport.sendMail(mensaje);
 
     return { success: true, data: info, error: null };
@@ -29,4 +29,4 @@ const sendEmail: any = async (login: string, newPassword: string) => {
   }
 };
 
-export { sendEmail }
+export { send }

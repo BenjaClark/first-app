@@ -1,13 +1,16 @@
+import config from "./config"
 import pg from "pg";
 
 const { Pool } = pg;
 
+const { dbUser, dbHost, dbName, dbPassword, dbPort} = config
+
 const pool = new Pool({
-    user: 'postgres',
-    host: '138.197.7.205',
-    database: 'test',
-    password: 'P0rt4lF1rm4$',
-    port: 5432,
+    user: dbUser,
+    host: dbHost,
+    database: dbName,
+    password: dbPassword,
+    port: parseInt(dbPort),
     keepAlive: true
 });
 

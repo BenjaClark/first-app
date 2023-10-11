@@ -1,7 +1,8 @@
 import * as UserModel from "../models/user";
 import * as PersonModel from "../models/person";
-import * as EmailModel from "../../../api-email/src/models/email"
+import axios from "axios";
 import bcrypt from "bcrypt";
+import config from "../utils/config"
 
 const getById = async (req: any, res: any) => {
   const { id } = req.params;
@@ -357,10 +358,14 @@ const assignPassword = async (req: any, res: any) => {
 const validate = async (req: any, res: any) => {
   const { login, password } = req.body;
 
-  if(!login || !password){
+  if (!login || !password) {
     res
       .status(500)
-      .json({ success: false, data: null, error: "Falta ingresar login o password" });
+      .json({
+        success: false,
+        data: null,
+        error: "Falta ingresar login o password",
+      });
     return;
   }
 
@@ -398,7 +403,7 @@ const validate = async (req: any, res: any) => {
 const updatePassword = async (req: any, res: any) => {
   const { login, password, newPassword } = req.body;
 
-  if(!login || !password || !newPassword){
+  if (!login || !password || !newPassword) {
     res
       .status(500)
       .json({ success: false, data: null, error: "Falta ingresar datos" });
@@ -457,42 +462,59 @@ const generatePassword = (longitud: number): string => {
 };
 
 const sendPassword = async (req: any, res: any) => {
-  const { login } = req.body;
+  try {
+    const { login } = req.body;
 
-  const resultGetByLogin = await UserModel.getByLogin(login);
-  if (!resultGetByLogin.success) {
+    const resultGetByLogin = await UserModel.getByLogin(login);
+    if (!resultGetByLogin.success) {
+      res
+        .status(500)
+        .json({ success: false, data: null, error: resultGetByLogin.error });
+      return;
+    }
+
+    if (!resultGetByLogin.data) {
+      res.status(403).json({ error: "Usuario no valido" });
+      return;
+    }
+
+    const user_id = resultGetByLogin.data.id;
+    const newPassword = generatePassword(5);
+
+    const result = await UserModel.assignPasword(user_id, newPassword);
+
+    if (!result.success) {
+      res.status(500).json({ success: false, data: null, error: result.error });
+      return;
+    }
+
+    const resultSendEmail = await axios.post(
+      `${config.apiEmailUrl}/email/email`,
+      {
+        to: login,
+        subject: "Nueva contraseña",
+        text: `Su nueva contraseña es: ${newPassword}`,
+      }
+    );
+
+    const {
+      success: sendMainSuccess,
+      data: sendMainData,
+      error: sendMainError,
+    } = resultSendEmail.data;
+
+    if (!sendMainSuccess) {
+      res
+        .status(500)
+        .json({ success: false, data: null, error: sendMainError });
+    }
+
+    res.status(200).json({ success: true, data: sendMainData, error: null });
+  } catch (e) {
     res
       .status(500)
-      .json({ success: false, data: null, error: resultGetByLogin.error });
-    return;
+      .json({ success: false, data: null, error: (e as Error).message });
   }
-
-  if (!resultGetByLogin.data) {
-    res.status(403).json({ error: "Usuario no valido" });
-    return;
-  }
-
-  if (!resultGetByLogin.data.hash) {
-    res.status(403).json({ error: "El Usuario no tiene contraseña" });
-    return;
-  }
-
-  const user_id = resultGetByLogin.data.id;
-  const newPassword = generatePassword(5);
-
-  const result = await UserModel.assignPasword(user_id, newPassword);
-
-  if (!result.success) {
-    res.status(500).json({ success: false, data: null, error: result.error });
-    return;
-  };
-  
-  const resultSendEmail = await EmailModel.sendEmail(login, newPassword)
-  if(!resultSendEmail.success) {
-    res.status(500).json({ success: false, data: null, error: resultSendEmail.error});
-  };
-  
-  res.status(200).json({ success: true, data: "Se ha enviado un correo con su nueva contraseña", error: null});
 };
 
 export {
@@ -505,5 +527,5 @@ export {
   assignPassword,
   validate,
   updatePassword,
-  sendPassword
+  sendPassword,
 };

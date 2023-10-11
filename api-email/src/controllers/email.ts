@@ -1,11 +1,11 @@
 import * as EmailModel from "../models/email";
 
 
-const sendEmail = async (req: any, res: any) => {
+const send = async (req: any, res: any) => {
 
-    const { login, newPassword} = req.body;
+    const { to, subject, text } = req.body;
 
-    const result : any = await EmailModel.sendEmail(login, newPassword);
+    const result : any = await EmailModel.send( to, subject, text );
 
     if(!result.success){
       res.status(500).json({ success: false, data: null , error: result.data });
@@ -16,4 +16,4 @@ const sendEmail = async (req: any, res: any) => {
   return;
 }
 
-export {sendEmail}
+export { send }
