@@ -81,7 +81,7 @@ const updateById: any = async (id: number, person_id: string) => {
   }
 };
 
-const assignPasword: any = async (id: string, password: string) => {
+const assignPassword: any = async (id: string, password: string) => {
   try {
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
@@ -103,7 +103,7 @@ export {
   deleteById,
   updateById,
   getById,
-  assignPasword,
+  assignPassword,
   
   
 };

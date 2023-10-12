@@ -1,0 +1,35 @@
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:02:00"}
+{"level":"error","message":{"error":"duplicate key value violates unique constraint \"company_rut_idx\"","model":"company/insert"},"timestamp":"2023-10-12 18:02:01"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:02:17"}
+{"level":"error","message":{"error":"duplicate key value violates unique constraint \"company_rut_idx\"","model":"company/insert"},"timestamp":"2023-10-12 18:02:18"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:02:20"}
+{"level":"error","message":{"error":"duplicate key value violates unique constraint \"company_rut_idx\"","model":"company/insert"},"timestamp":"2023-10-12 18:02:20"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:03:35"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:03:51"}
+{"level":"error","message":{"error":"duplicate key value violates unique constraint \"company_rut_idx\"","model":"company/insert"},"timestamp":"2023-10-12 18:03:52"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:05:19"}
+{"level":"error","message":{"error":"duplicate key value violates unique constraint \"company_rut_idx\"","model":"company/insert"},"timestamp":"2023-10-12 18:05:20"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117111","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:05:51"}
+{"controller":"customer/upsert","level":"info","message":"OK","timestamp":"2023-10-12 18:05:52"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117111","type":"P"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:07:59"}
+{"level":"info","message":{"body":{"activity":"ventas","address":"calle 2","email":"bbva@BBVA.cl","fantasyName":"BANCO A","name":"sucursal a ","phone":"11111111","rut":"77117111","type":"P"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-12 18:09:23"}
+{"controller":"customer/upsert","level":"info","message":"OK","timestamp":"2023-10-12 18:09:24"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez017@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-12 18:12:46"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-10-12 18:12:47"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/user/getAll/"},"timestamp":"2023-10-12 18:13:21"}
+{"controller":"user/getAll","level":"info","message":"OK","timestamp":"2023-10-12 18:13:22"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-12 18:14:11"}
+{"controller":"person/upsert","level":"info","message":"OK","timestamp":"2023-10-12 18:14:12"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getAll/"},"timestamp":"2023-10-12 18:14:29"}
+{"controller":"person/getAll","level":"info","message":"OK","timestamp":"2023-10-12 18:14:30"}
+{"level":"info","message":{"body":{"login":"benja.vasquez017@gmail.com","password":"hola"},"method":"POST","params":"","query":"","url":"/api/user/assignPassword/"},"timestamp":"2023-10-12 18:14:53"}
+{"controller":"user/assignPassword","level":"info","message":"OK","timestamp":"2023-10-12 18:14:54"}
+{"level":"info","message":{"body":{"login":"benja.vasquez017@gmail.com","password":"hola"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-10-12 18:15:01"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-10-12 18:15:02"}
+{"level":"info","message":{"body":{"login":"benja.vasquez017@gmail.com","password":"hol66a"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-10-12 18:15:07"}
+{"level":"info","message":{"body":{"login":"benja.vasquez017@gmail.com","newPassword":"adios","password":"hola"},"method":"POST","params":"","query":"","url":"/api/user/updatePassword/"},"timestamp":"2023-10-12 18:15:15"}
+{"controller":"user/updatePassword","level":"info","message":"OK","timestamp":"2023-10-12 18:15:16"}
+{"level":"info","message":{"body":{"login":"benja.vasquez017@gmail.com","password":"adios"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-10-12 18:15:23"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-10-12 18:15:23"}
+{"level":"info","message":{"body":{"login":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api/user/sendPassword/"},"timestamp":"2023-10-12 18:15:29"}
+{"controller":"user/sendPassword","level":"info","message":"OK","timestamp":"2023-10-12 18:15:32"}

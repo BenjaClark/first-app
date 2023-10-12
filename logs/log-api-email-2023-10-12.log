@@ -1,0 +1,12 @@
+{"level":"info","message":{"body":{"subject":"Email de prueba","text":"hola este es un correo de prueba","to":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api-email/email/email"},"timestamp":"2023-10-12 15:28:17"}
+{"controller":"email/send","level":"error","message":"OK","timestamp":"2023-10-12 15:28:20"}
+{"level":"info","message":{"body":{"subject":"Email de prueba","text":"hola este es un correo de prueba","to":"benja00.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api-email/email/email"},"timestamp":"2023-10-12 15:29:11"}
+{"controller":"email/send","level":"error","message":"OK","timestamp":"2023-10-12 15:29:13"}
+{"level":"info","message":{"body":{"subject":"Nueva contraseña","text":"Su nueva contraseña es: PQ390","to":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api-email/email/email"},"timestamp":"2023-10-12 15:30:05"}
+{"controller":"email/send","level":"error","message":"OK","timestamp":"2023-10-12 15:30:09"}
+{"level":"info","message":{"body":{"subject":"Nueva contraseña","text":"Su nueva contraseña es: szHLf","to":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api-email/email/email"},"timestamp":"2023-10-12 15:39:37"}
+{"controller":"email/send","level":"error","message":"OK","timestamp":"2023-10-12 15:39:40"}
+{"level":"info","message":{"body":{"subject":"Nueva contraseña","text":"Su nueva contraseña es: vpe0J","to":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api-email/email/email"},"timestamp":"2023-10-12 15:45:35"}
+{"controller":"email/send","level":"error","message":"OK","timestamp":"2023-10-12 15:45:38"}
+{"level":"info","message":{"body":{"subject":"Email de prueba","text":"hola este es un correo de prueba","to":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api-email/email/email"},"timestamp":"2023-10-12 17:47:36"}
+{"controller":"email/send","level":"info","message":"OK","timestamp":"2023-10-12 17:47:39"}

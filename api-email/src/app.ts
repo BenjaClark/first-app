@@ -1,5 +1,5 @@
 const express = require('express')
-import reqLogger from "./middlewares/logger"
+import {reqLogger} from "./middlewares/logger"
 
 import * as routes from "./routes"; 
 

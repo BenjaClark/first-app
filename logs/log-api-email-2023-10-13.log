@@ -1,0 +1,2 @@
+{"level":"info","message":{"body":{"subject":"Nueva contraseña","text":"Su nueva contraseña es: PYoFp","to":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api-email/email/email"},"timestamp":"2023-10-12 18:15:30"}
+{"controller":"email/send","level":"info","message":"OK","timestamp":"2023-10-12 18:15:32"}

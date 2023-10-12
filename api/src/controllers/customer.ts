@@ -1,11 +1,16 @@
 import * as CustomerModel from "../models/customer";
 import * as CompanyModel from "../models/company";
 import * as PersonModel from "../models/person";
+import createLogger from "../utils/logger";
 
 const getAll = async (req: any, res: any) => {
   const result = await CustomerModel.getAll();
 
   if (!result.success) {
+    createLogger.error({
+      model: "customer/getAll",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
@@ -22,7 +27,10 @@ const getAll = async (req: any, res: any) => {
       phone: customer.phone,
     };
   });
-
+  createLogger.info({
+    controller: "customer/getAll",
+    message: "OK",
+  });
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -32,6 +40,10 @@ const getByRut = async (req: any, res: any) => {
   const result = await CustomerModel.getByRut(rut);
 
   if (!result.success) {
+    createLogger.error({
+      model: "customer/getByRut",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
@@ -54,7 +66,10 @@ const getByRut = async (req: any, res: any) => {
     email,
     phone,
   };
-
+  createLogger.info({
+    controller: "customer/getByRut",
+    message: "OK",
+  });
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -64,17 +79,22 @@ const deleteById = async (req: any, res: any) => {
   const result = await CustomerModel.deleteById(id);
 
   if (!result.success) {
+    createLogger.error({
+      model: "customer/deleteById",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
-
-  res
-    .status(200)
-    .json({
-      success: true,
-      data: result.data + " registro(s) eliminado(s)",
-      error: null,
-    });
+  createLogger.info({
+    controller: "customer/deteleById",
+    message: "OK",
+  });
+  res.status(200).json({
+    success: true,
+    data: result.data + " registro(s) eliminado(s)",
+    error: null,
+  });
   return;
 };
 
@@ -96,6 +116,10 @@ const upsert = async (req: any, res: any) => {
   const resultGetByRut = await CustomerModel.getByRut(rut);
 
   if (!resultGetByRut.success) {
+    createLogger.error({
+      model: "customer/getByRut",
+      error: resultGetByRut.error,
+    });
     res
       .status(500)
       .json({ success: false, data: null, error: resultGetByRut.error });
@@ -115,6 +139,10 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!resultInsertCompany.success) {
+      createLogger.error({
+        model: "company/insert",
+        error: resultInsertCompany.error,
+      });
       res
         .status(500)
         .json({ success: false, data: null, error: resultInsertCompany.error });
@@ -130,6 +158,10 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!resultInsert.success) {
+      createLogger.error({
+        model: "customer/insert",
+        error: resultInsert.error,
+      });
       res.status(500).json({
         success: false,
         data: null,
@@ -152,6 +184,10 @@ const upsert = async (req: any, res: any) => {
     };
 
     if (resultInsert.success) {
+      createLogger.info({
+        controller: "customer/upsert",
+        message: "OK",
+      });
       res.status(200).json({
         success: true,
         data,
@@ -174,6 +210,10 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!resultInsertPerson.success) {
+      createLogger.error({
+        model: "person/insert",
+        error: resultInsertPerson.error,
+      });
       res
         .status(500)
         .json({ success: false, data: null, error: resultInsertPerson.error });
@@ -189,6 +229,10 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!resultInsert.success) {
+      createLogger.error({
+        model: "customer/insert",
+        error: resultInsert.error,
+      });
       res.status(500).json({
         success: false,
         data: null,
@@ -212,6 +256,10 @@ const upsert = async (req: any, res: any) => {
     };
 
     if (resultInsert.success) {
+      createLogger.info({
+        controller: "customer/upsert",
+        message: "OK",
+      });
       res.status(200).json({
         success: true,
         data,
@@ -235,6 +283,10 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!result.success) {
+      createLogger.error({
+        model: "company/updateById",
+        error: result.error,
+      });
       res.status(500).json({ success: false, result, error: result.error });
       return;
     }
@@ -247,6 +299,10 @@ const upsert = async (req: any, res: any) => {
       const resultInsert = await CustomerModel.insert(type, null, company_id);
 
       if (!resultInsert.success) {
+        createLogger.error({
+          model: "customer/insert",
+          error: result.error,
+        });
         res.status(500).json({
           success: false,
           data: null,
@@ -270,6 +326,10 @@ const upsert = async (req: any, res: any) => {
       };
 
       if (resultInsert.success) {
+        createLogger.info({
+          controller: "customer/upsert",
+          message: "OK",
+        });
         res.status(200).json({
           success: true,
           data,
@@ -281,10 +341,14 @@ const upsert = async (req: any, res: any) => {
 
     const resultUpdate = await CustomerModel.updateById(
       resultGetByRut2.data.id,
-      company_id,
+      null,
       company_id
     );
     if (!resultUpdate.success) {
+      createLogger.error({
+        model: "customer/updateById",
+        error: resultUpdate.error,
+      });
       res.status(500).json({
         success: false,
         data: null,
@@ -307,6 +371,10 @@ const upsert = async (req: any, res: any) => {
       phone,
     };
 
+    createLogger.info({
+      controller: "customer/upsert",
+      message: "OK",
+    });
     res.status(200).json({
       success: true,
       data: data,
@@ -329,11 +397,15 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!result.success) {
+      createLogger.error({
+        model: "person/updateById",
+        error: result.error,
+      });
       res.status(500).json({ success: false, result, error: result.error });
       return;
     }
 
-    const person_id = result.data.id;
+    const person_id = resultGetByRut.data.id;
 
     const resultGetByRut2 = await PersonModel.getByRut(rut);
 
@@ -341,6 +413,10 @@ const upsert = async (req: any, res: any) => {
       const resultInsert = await CustomerModel.insert(type, person_id, null);
 
       if (!resultInsert.success) {
+        createLogger.error({
+          model: "customer/insert",
+          error: resultInsert.error,
+        });
         res.status(500).json({
           success: false,
           data: null,
@@ -360,7 +436,10 @@ const upsert = async (req: any, res: any) => {
         email,
         phone,
       };
-
+      createLogger.info({
+        controller: "customer/upsert",
+        message: "OK",
+      });
       if (resultInsert.success) {
         res.status(200).json({
           success: true,
@@ -377,6 +456,10 @@ const upsert = async (req: any, res: any) => {
       null
     );
     if (!resultUpdate.success) {
+      createLogger.error({
+        model: "customer/updateById",
+        error: resultUpdate.error,
+      });
       res.status(500).json({
         success: false,
         data: null,
@@ -398,7 +481,10 @@ const upsert = async (req: any, res: any) => {
       email,
       phone,
     };
-
+    createLogger.info({
+      controller: "customer/upsert",
+      message: "OK",
+    });
     res.status(200).json({
       success: true,
       data: data,
@@ -408,7 +494,7 @@ const upsert = async (req: any, res: any) => {
   }
 
   res.status(500).json({
-    success: false,
+    success: true,
     data: null,
     error: null,
   });

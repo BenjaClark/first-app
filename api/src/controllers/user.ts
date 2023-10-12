@@ -2,13 +2,18 @@ import * as UserModel from "../models/user";
 import * as PersonModel from "../models/person";
 import axios from "axios";
 import bcrypt from "bcrypt";
-import config from "../utils/config"
+import config from "../utils/config";
+import createLogger from "../utils/logger";
 
 const getById = async (req: any, res: any) => {
   const { id } = req.params;
   const result = await UserModel.getById(id);
 
   if (!result.success) {
+    createLogger.error({
+      model: "user/getById",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
@@ -47,6 +52,10 @@ const getById = async (req: any, res: any) => {
     phone,
   };
 
+  createLogger.info({
+    controller: "user/getById",
+    message: "OK",
+  });
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -56,6 +65,10 @@ const getByRut = async (req: any, res: any) => {
   const result = await UserModel.getByRut(rut);
 
   if (!result.success) {
+    createLogger.error({
+      model: "user/getByRut",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
@@ -92,7 +105,10 @@ const getByRut = async (req: any, res: any) => {
     email,
     phone,
   };
-
+  createLogger.info({
+    controller: "user/getByRut",
+    message: "OK",
+  });
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -102,6 +118,10 @@ const getByLogin = async (req: any, res: any) => {
   const result = await UserModel.getByLogin(login);
 
   if (!result.success) {
+    createLogger.error({
+      model: "user/getByLogin",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
@@ -112,7 +132,10 @@ const getByLogin = async (req: any, res: any) => {
     email: result.data.email,
     hash: result.data.hash,
   };
-
+  createLogger.info({
+    controller: "user/getByLogin",
+    message: "OK",
+  });
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -121,6 +144,10 @@ const getAll = async (req: any, res: any) => {
   const result = await UserModel.getAll();
 
   if (!result.success) {
+    createLogger.error({
+      model: "user/getAll",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
@@ -140,7 +167,10 @@ const getAll = async (req: any, res: any) => {
       phone: user.phone,
     };
   });
-
+  createLogger.info({
+    controller: "user/getAll",
+    message: "OK",
+  });
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -150,10 +180,17 @@ const deleteById = async (req: any, res: any) => {
   const result = await UserModel.deleteById(id);
 
   if (!result.success) {
+    createLogger.error({
+      model: "user/deleteById",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
-
+  createLogger.info({
+    controller: "user/deleteById",
+    message: "OK",
+  });
   res.status(200).json({
     success: true,
     data: result.data + " registro(s) eliminado(s)",
@@ -177,6 +214,10 @@ const upsert = async (req: any, res: any) => {
   const resultGetByRut = await PersonModel.getByRut(rut);
 
   if (!resultGetByRut.success) {
+    createLogger.error({
+      model: "person/getByRut",
+      error: resultGetByRut.error,
+    });
     res
       .status(500)
       .json({ success: false, data: null, error: resultGetByRut.error });
@@ -196,6 +237,10 @@ const upsert = async (req: any, res: any) => {
     );
 
     if (!result.success) {
+      createLogger.error({
+        model: "person/insert",
+        error: result.error,
+      });
       res.status(500).json({ success: false, data: null, error: result.error });
       return;
     }
@@ -205,6 +250,10 @@ const upsert = async (req: any, res: any) => {
     const resultInsert = await UserModel.insert(person_id, email);
 
     if (!resultInsert.success) {
+      createLogger.error({
+        model: "user/insert",
+        error: resultInsert.error,
+      });
       res.status(500).json({ success: false, data: null, error: result.error });
       return;
     }
@@ -222,7 +271,10 @@ const upsert = async (req: any, res: any) => {
       email,
       phone,
     };
-
+    createLogger.info({
+      controller: "user/upsert",
+      message: "OK",
+    });
     if (result.success) {
       res.status(200).json({
         success: true,
@@ -246,6 +298,10 @@ const upsert = async (req: any, res: any) => {
   );
 
   if (!result.success) {
+    createLogger.error({
+      model: "person/updateById",
+      error: result.error,
+    });
     res.status(500).json({ success: false, result, error: result.error });
     return;
   }
@@ -256,6 +312,10 @@ const upsert = async (req: any, res: any) => {
   const person_id = resultGetByRut.data.id;
 
   if (!resultGetByLogin.success) {
+    createLogger.error({
+      model: "user/getByLogin",
+      error: resultGetByLogin.error,
+    });
     res
       .status(500)
       .json({ success: false, data: null, error: resultGetByLogin.error });
@@ -266,6 +326,10 @@ const upsert = async (req: any, res: any) => {
     const resultInsert = await UserModel.insert(person_id, email);
 
     if (!resultInsert.success) {
+      createLogger.error({
+        model: "user/insert",
+        error: resultInsert.error,
+      });
       res
         .status(500)
         .json({ success: false, data: null, error: resultInsert.error });
@@ -284,13 +348,20 @@ const upsert = async (req: any, res: any) => {
       email,
       phone,
     };
-
+    createLogger.info({
+      controller: "user/upsert",
+      message: "OK",
+    });
     res.status(200).json({ success: true, data, error: null });
     return;
   }
 
   const resultUpdate = await UserModel.updateById(person_id, email);
   if (!resultUpdate.success) {
+    createLogger.error({
+      model: "user/updateById",
+      error: resultUpdate.error,
+    });
     res
       .status(500)
       .json({ success: false, data: null, error: resultUpdate.error });
@@ -309,7 +380,10 @@ const upsert = async (req: any, res: any) => {
     email,
     phone,
   };
-
+  createLogger.info({
+    controller: "user/upsert",
+    message: "OK",
+  });
   res.status(200).json({ success: true, data, error: null });
   return;
 };
@@ -319,6 +393,10 @@ const assignPassword = async (req: any, res: any) => {
 
   const resultGetByLogin = await UserModel.getByLogin(login);
   if (!resultGetByLogin.success) {
+    createLogger.error({
+      model: "user/getByLogin",
+      error: resultGetByLogin.error,
+    });
     res
       .status(500)
       .json({ success: false, data: null, error: resultGetByLogin.error });
@@ -333,13 +411,20 @@ const assignPassword = async (req: any, res: any) => {
   if (!resultGetByLogin.data.hash) {
     const user_id = resultGetByLogin.data.id;
 
-    const result = await UserModel.assignPasword(user_id, password);
+    const result = await UserModel.assignPassword(user_id, password);
 
     if (!result.success) {
+      createLogger.error({
+        model: "user/assignPassword",
+        error: result.error,
+      });
       res.status(500).json({ success: false, data: null, error: result.error });
       return;
     }
-
+    createLogger.info({
+      controller: "user/assignPassword",
+      message: "OK",
+    });
     res.status(200).json({
       success: true,
       data: "Contraseña modificada",
@@ -347,7 +432,7 @@ const assignPassword = async (req: any, res: any) => {
     });
     return;
   }
-  res.status(200).json({
+  res.status(403).json({
     success: true,
     data: "El usuario ya tiene Hash!",
     error: null,
@@ -359,20 +444,28 @@ const validate = async (req: any, res: any) => {
   const { login, password } = req.body;
 
   if (!login || !password) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        data: null,
-        error: "Falta ingresar login o password",
-      });
+    res.status(500).json({
+      success: false,
+      data: null,
+      error: "Falta ingresar login o password",
+    });
     return;
   }
 
   const resultGetByLogin = await UserModel.getByLogin(login);
-  if (!resultGetByLogin.data) {
+  if (!resultGetByLogin.success) {
+    createLogger.error({
+      model: "user/getByLogin",
+      error: resultGetByLogin.error,
+    });
     res
       .status(500)
+      .json({ success: false, data: null, error: resultGetByLogin.error });
+    return;
+  }
+  if (!resultGetByLogin.data) {
+    res
+      .status(403)
       .json({ success: false, data: null, error: "Usuario no valido" });
     return;
   }
@@ -391,7 +484,10 @@ const validate = async (req: any, res: any) => {
       .json({ success: false, data: null, error: "Usuario no valido" });
     return;
   }
-
+  createLogger.info({
+    controller: "user/validate",
+    message: "OK",
+  });
   res.status(200).json({
     success: true,
     data: "Validado correctamente",
@@ -411,9 +507,21 @@ const updatePassword = async (req: any, res: any) => {
   }
 
   const resultGetByLogin = await UserModel.getByLogin(login);
-  if (!resultGetByLogin.data) {
+
+  if (!resultGetByLogin.success) {
+    createLogger.error({
+      model: "user/getByLogin",
+      error: resultGetByLogin.error,
+    });
     res
       .status(500)
+      .json({ success: false, data: null, error: resultGetByLogin.error });
+    return;
+  }
+
+  if (!resultGetByLogin.data) {
+    res
+      .status(403)
       .json({ success: false, data: null, error: "Usuario no valido" });
     return;
   }
@@ -434,12 +542,19 @@ const updatePassword = async (req: any, res: any) => {
     return;
   }
 
-  const result = await UserModel.assignPasword(user_id, newPassword);
+  const result = await UserModel.assignPassword(user_id, newPassword);
   if (!result.success) {
+    createLogger.error({
+      model: "user/getByLogin",
+      error: result.error,
+    });
     res.status(500).json({ success: false, data: null, error: result.error });
     return;
   }
-
+  createLogger.info({
+    controller: "user/updatePassword",
+    message: "OK",
+  });
   res.status(200).json({
     success: true,
     data: "Contraseña modificada",
@@ -467,6 +582,10 @@ const sendPassword = async (req: any, res: any) => {
 
     const resultGetByLogin = await UserModel.getByLogin(login);
     if (!resultGetByLogin.success) {
+      createLogger.error({
+        model: "user/getByLogin",
+        error: resultGetByLogin.error,
+      });
       res
         .status(500)
         .json({ success: false, data: null, error: resultGetByLogin.error });
@@ -481,9 +600,13 @@ const sendPassword = async (req: any, res: any) => {
     const user_id = resultGetByLogin.data.id;
     const newPassword = generatePassword(5);
 
-    const result = await UserModel.assignPasword(user_id, newPassword);
+    const result = await UserModel.assignPassword(user_id, newPassword);
 
     if (!result.success) {
+      createLogger.error({
+        model: "user/assignPassword",
+        error: result.error,
+      });
       res.status(500).json({ success: false, data: null, error: result.error });
       return;
     }
@@ -504,11 +627,18 @@ const sendPassword = async (req: any, res: any) => {
     } = resultSendEmail.data;
 
     if (!sendMainSuccess) {
+      createLogger.error({
+        model: "email/send",
+        error: sendMainError,
+      });
       res
         .status(500)
         .json({ success: false, data: null, error: sendMainError });
     }
-
+    createLogger.info({
+      controller: "user/sendPassword",
+      message: "OK",
+    });
     res.status(200).json({ success: true, data: sendMainData, error: null });
   } catch (e) {
     res
