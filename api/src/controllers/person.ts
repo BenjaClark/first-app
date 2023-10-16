@@ -1,4 +1,5 @@
 import * as PersonModel from "../models/person";
+import * as PersonService from "../services/person";
 import createLogger from "../utils/logger";
 
 const getByRut = async (req: any, res: any) => {
@@ -129,109 +130,21 @@ const getAll = async (req: any, res: any) => {
 };
 
 const upsert = async (req: any, res: any) => {
-  const {
-    rut,
-    name,
-    paternalLastName,
-    maternalLastName,
-    address,
-    district,
-    email,
-    phone,
-  } = req.body;
+  const personResult = await PersonService.upsert(req.body);
 
-  const resultGetByRut = await PersonModel.getByRut(rut);
-
-  if (!resultGetByRut.success) {
+  if (!personResult.success) {
     createLogger.error({
-      model: "person/getByRut",
-      error: resultGetByRut.error,
-    });
-    res
-      .status(500)
-      .json({ success: false, data: null, error: resultGetByRut.error });
-    return;
-  }
-
-  if (!resultGetByRut.data) {
-    const result = await PersonModel.insert(
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!result.success) {
-      createLogger.error({
-        model: "person/insert",
-        error: result.error,
-      });
-      res.status(500).json({ success: false, data: null, error: result.error });
-      return;
-    }
-
-    const data = {
-      id: result.data.id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    };
-    createLogger.info({
       controller: "person/upsert",
-      message: "OK",
+      error: personResult.error,
     });
-    res.status(200).json({ success: true, data, error: null });
-    return;
+
+    return res
+      .status(500)
+      .json({ success: false, data: null, error: personResult.error });
   }
-
-  const result = await PersonModel.updateById(
-    resultGetByRut.data.id,
-    rut,
-    name,
-    paternalLastName,
-    maternalLastName,
-    address,
-    district,
-    email,
-    phone
-  );
-
-  if (!result.success) {
-    createLogger.error({
-      model: "person/updateById",
-      error: result.error,
-    });
-    res.status(500).json({ success: false, result, error: result.error });
-    return;
-  }
-
-  const data = {
-    id: resultGetByRut.data.id,
-    rut,
-    name,
-    paternalLastName,
-    maternalLastName,
-    address,
-    district,
-    email,
-    phone,
-  };
-
-  createLogger.info({
-    controller: "person/upsert",
-    message: "OK",
-  });
-  res.status(200).json({ success: true, data, error: null });
-  return;
+  return res
+    .status(200)
+    .json({ success: true, data: personResult.data, error: null });
 };
 
 const deleteById = async (req: any, res: any) => {
@@ -250,13 +163,11 @@ const deleteById = async (req: any, res: any) => {
     controller: "person/deleteById",
     message: "OK",
   });
-  res
-    .status(200)
-    .json({
-      success: true,
-      data: result.data + " registro(s) eliminado(s)",
-      error: null,
-    });
+  res.status(200).json({
+    success: true,
+    data: result.data + " registro(s) eliminado(s)",
+    error: null,
+  });
   return;
 };
 

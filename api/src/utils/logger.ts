@@ -6,6 +6,8 @@ const datetoString = () => {
     return yourDate.toISOString().split("T")[0];
 };
 
+
+
 export default createLogger({
     format: format.combine(
         format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
@@ -19,3 +21,4 @@ export default createLogger({
         new transports.Console({ level: "debug" }),
     ],
 });
+

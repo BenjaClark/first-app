@@ -23,7 +23,8 @@ class App {
         this.server.use("/api/user", reqLogger, routes.UserRouter);
         this.server.use("/api/company", reqLogger, routes.CompanyRouter);
         this.server.use("/api/customer", reqLogger, routes.CustomerRouter);
-        
+        this.server.use("/api/product", reqLogger, routes.ProductRouter);
+        this.server.use("/api/invoice", reqLogger, routes.InvoiceRouter);
 
     }
 }

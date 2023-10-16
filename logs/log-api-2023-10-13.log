@@ -33,3 +33,46 @@
 {"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-10-12 18:15:23"}
 {"level":"info","message":{"body":{"login":"benja.vasquez017@gmail.com"},"method":"POST","params":"","query":"","url":"/api/user/sendPassword/"},"timestamp":"2023-10-12 18:15:29"}
 {"controller":"user/sendPassword","level":"info","message":"OK","timestamp":"2023-10-12 18:15:32"}
+{"level":"info","message":{"body":{"code":"0111","name":"Celular","price":100000},"method":"POST","params":"","query":"","url":"/api/product/upsert"},"timestamp":"2023-10-13 14:35:46"}
+{"level":"error","message":{"error":"bind message supplies 8 parameters, but prepared statement \"\" requires 3","model":"product/insert"},"timestamp":"2023-10-13 14:35:47"}
+{"level":"info","message":{"body":{"code":"0111","name":"Celular","price":100000},"method":"POST","params":"","query":"","url":"/api/product/upsert"},"timestamp":"2023-10-13 14:42:12"}
+{"controller":"product/upsert","level":"info","message":"OK","timestamp":"2023-10-13 14:42:13"}
+{"level":"info","message":{"body":{"code":"0112","name":"Carcasa","price":10000},"method":"POST","params":"","query":"","url":"/api/product/upsert"},"timestamp":"2023-10-13 14:42:43"}
+{"controller":"product/upsert","level":"info","message":"OK","timestamp":"2023-10-13 14:42:44"}
+{"level":"info","message":{"body":{"code":"0112","name":"Carcasa celular","price":10000},"method":"POST","params":"","query":"","url":"/api/product/upsert"},"timestamp":"2023-10-13 14:43:08"}
+{"controller":"product/upsert","level":"info","message":"OK","timestamp":"2023-10-13 14:43:09"}
+{"level":"info","message":{"body":{"code":"0113","name":"Cargador","price":10000},"method":"POST","params":"","query":"","url":"/api/product/upsert"},"timestamp":"2023-10-13 14:43:59"}
+{"controller":"product/upsert","level":"info","message":"OK","timestamp":"2023-10-13 14:44:00"}
+{"level":"info","message":{"body":{"code":"0113","name":"Cargador celular","price":10000},"method":"POST","params":"","query":"","url":"/api/product/upsert"},"timestamp":"2023-10-13 14:44:13"}
+{"controller":"product/upsert","level":"info","message":"OK","timestamp":"2023-10-13 14:44:14"}
+{"level":"info","message":{"body":{"code":"0113","name":"Cargador celular","price":9000},"method":"POST","params":"","query":"","url":"/api/product/upsert"},"timestamp":"2023-10-13 14:44:27"}
+{"controller":"product/upsert","level":"info","message":"OK","timestamp":"2023-10-13 14:44:28"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getAll/"},"timestamp":"2023-10-13 14:44:40"}
+{"controller":"person/getAll","level":"info","message":"OK","timestamp":"2023-10-13 14:44:41"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getAll/"},"timestamp":"2023-10-13 14:44:47"}
+{"level":"error","message":{"error":"column \"isactive\" does not exist","model":"product/getAll"},"timestamp":"2023-10-13 14:44:47"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getAll/"},"timestamp":"2023-10-13 14:46:03"}
+{"controller":"product/getAll","level":"info","message":"OK","timestamp":"2023-10-13 14:46:03"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getAll/"},"timestamp":"2023-10-13 14:47:05"}
+{"controller":"product/getAll","level":"info","message":"OK","timestamp":"2023-10-13 14:47:06"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/customer/getByCode/0111"},"timestamp":"2023-10-13 14:47:44"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getByCode/0111"},"timestamp":"2023-10-13 14:48:08"}
+{"controller":"product/getByCode","level":"info","message":"OK","timestamp":"2023-10-13 14:48:09"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getByCode/0112"},"timestamp":"2023-10-13 14:48:15"}
+{"controller":"product/getByCode","level":"info","message":"OK","timestamp":"2023-10-13 14:48:16"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getByCode/8ef8647d-b608-4f4c-bcd9-aa2355e5f23b"},"timestamp":"2023-10-13 14:48:43"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getByCode/0111"},"timestamp":"2023-10-13 14:49:06"}
+{"controller":"product/getByCode","level":"info","message":"OK","timestamp":"2023-10-13 14:49:07"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getById/8ef8647d-b608-4f4c-bcd9-aa2355e5f23b"},"timestamp":"2023-10-13 14:49:17"}
+{"controller":"product/getById","level":"info","message":"OK","timestamp":"2023-10-13 14:49:18"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/person/deleteById/3"},"timestamp":"2023-10-13 14:52:02"}
+{"level":"error","message":{"error":"invalid input syntax for type uuid: \"3\"","model":"person/deleteById"},"timestamp":"2023-10-13 14:52:02"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/person/deleteById/8ef8647d-b608-4f4c-bcd9-aa2355e5f23b"},"timestamp":"2023-10-13 14:52:10"}
+{"controller":"person/deleteById","level":"info","message":"OK","timestamp":"2023-10-13 14:52:10"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/person/deleteById/8ef8647d-b608-4f4c-bcd9-aa2355e5f23b"},"timestamp":"2023-10-13 14:52:58"}
+{"controller":"person/deleteById","level":"info","message":"OK","timestamp":"2023-10-13 14:52:58"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/product/deleteById/91101804-bdf6-4eb1-b1dd-207fa68f2b46"},"timestamp":"2023-10-13 14:53:16"}
+{"controller":"product/deteleById","level":"info","message":"OK","timestamp":"2023-10-13 14:53:16"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getById/91101804-bdf6-4eb1-b1dd-207fa68f2b46"},"timestamp":"2023-10-13 14:53:55"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getById/8ef8647d-b608-4f4c-bcd9-aa2355e5f23b"},"timestamp":"2023-10-13 14:54:06"}
+{"controller":"product/getById","level":"info","message":"OK","timestamp":"2023-10-13 14:54:06"}

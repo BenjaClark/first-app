@@ -1,0 +1,137 @@
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getByCustomerRut/77117111"},"timestamp":"2023-10-15 19:29:53"}
+{"controller":"customer/getByRut","level":"info","message":"OK","timestamp":"2023-10-15 19:29:54"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getAll/"},"timestamp":"2023-10-15 21:06:42"}
+{"controller":"user/getAll","level":"info","message":"OK","timestamp":"2023-10-15 21:06:43"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getById/00943eed-4b6e-4170-aab8-3a2e2c554bf4"},"timestamp":"2023-10-15 21:07:15"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-15 21:07:27"}
+{"controller":"invoideCab/getById","level":"info","message":"OK","timestamp":"2023-10-15 21:07:28"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getByCustomerRut/77117111"},"timestamp":"2023-10-15 21:07:38"}
+{"controller":"customer/getByRut","level":"info","message":"OK","timestamp":"2023-10-15 21:07:39"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getAll/"},"timestamp":"2023-10-15 21:11:34"}
+{"controller":"user/getAll","level":"info","message":"OK","timestamp":"2023-10-15 21:11:35"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-15 21:12:01"}
+{"controller":"invoideCab/getById","level":"info","message":"OK","timestamp":"2023-10-15 21:12:01"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getByCustomerRut/77117111"},"timestamp":"2023-10-15 21:12:10"}
+{"controller":"customer/getByRut","level":"info","message":"OK","timestamp":"2023-10-15 21:12:10"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getAll/"},"timestamp":"2023-10-16 10:59:35"}
+{"controller":"user/getAll","level":"info","message":"OK","timestamp":"2023-10-16 10:59:36"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:03:01"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:03:01"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/invoice/getAll/"},"timestamp":"2023-10-16 11:03:56"}
+{"controller":"user/getAll","level":"info","message":"OK","timestamp":"2023-10-16 11:03:57"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:16:38"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:16:39"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:16:58"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:16:59"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:17:41"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:17:42"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:17:43"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:17:43"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:20:24"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:20:31"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:20:34"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:20:34"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:20:36"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:20:36"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:21:28"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:21:29"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:21:30"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:21:31"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:22:04"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:22:04"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:29:32"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:29:33"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:29:41"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:29:42"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:29:43"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:29:43"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:30:01"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:30:01"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:30:35"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:30:36"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:30:37"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:30:37"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:31:07"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:31:08"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:31:52"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:31:53"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:31:54"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:31:54"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:32:38"}
+{"level":"error","message":{"error":"cannot insert multiple commands into a prepared statement","model":"user/deleteById"},"timestamp":"2023-10-16 11:32:39"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:32:45"}
+{"level":"error","message":{"error":"cannot insert multiple commands into a prepared statement","model":"user/deleteById"},"timestamp":"2023-10-16 11:32:46"}
+{"level":"info","message":{"body":"","method":"DELETE","params":{},"query":"","url":"/api/invoice/deleteById/f9b72278-f575-4223-9bc3-0aa82a3ad205"},"timestamp":"2023-10-16 11:34:05"}
+{"controller":"user/deleteById","level":"info","message":"OK","timestamp":"2023-10-16 11:34:05"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"77117711","type":"C"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 14:34:07"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:34:08"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"77117711","type":"P"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 14:39:06"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:39:08"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"77117711","type":"C"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 14:46:30"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:46:32"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"22332233","type":"C"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 14:48:12"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:48:13"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"77117111","type":"C"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 14:52:48"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:52:49"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/customer/getByRut/20395011k"},"timestamp":"2023-10-16 14:55:09"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/customer/getByRut/77117111"},"timestamp":"2023-10-16 14:55:18"}
+{"controller":"customer/getByRut","level":"info","message":"OK","timestamp":"2023-10-16 14:55:18"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"77117111","type":"C"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 14:55:43"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:55:44"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"77117111","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-16 14:57:41"}
+{"controller":"customer/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:57:42"}
+{"level":"info","message":{"body":{"activity":"creditos","address":"avda 22222","district":"Peñalolen","email":"banco@gmail.com","fantasyName":"Banco","name":"BV","phone":"74057293","rut":"882288","type":"C"},"method":"POST","params":"","query":"","url":"/api/customer/upsert/"},"timestamp":"2023-10-16 14:58:37"}
+{"controller":"customer/upsert","level":"info","message":"OK","timestamp":"2023-10-16 14:58:38"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:25:56"}
+{"level":"error","message":{"error":null,"model":"person/upsert"},"timestamp":"2023-10-16 16:25:57"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:27:06"}
+{"level":"error","message":{"error":null,"model":"person/upsert"},"timestamp":"2023-10-16 16:27:07"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:28:45"}
+{"level":"error","message":{"error":null,"model":"person/upsert"},"timestamp":"2023-10-16 16:28:46"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:28:49"}
+{"level":"error","message":{"error":null,"model":"person/upsert"},"timestamp":"2023-10-16 16:28:50"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:28:51"}
+{"level":"error","message":{"error":null,"model":"person/upsert"},"timestamp":"2023-10-16 16:28:51"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:28:52"}
+{"level":"error","message":{"error":null,"model":"person/upsert"},"timestamp":"2023-10-16 16:28:52"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:30:35"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:30:35"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"223322"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:30:44"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:30:54"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:30:54"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:30:55"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:30:55"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez1","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:31:04"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:31:04"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:33:18"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:33:19"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez000","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:33:43"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:33:44"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez000","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:37:45"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:37:45"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez000","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:37:54"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:37:55"}
+{"level":"info","message":{"body":{"address":"pje 372","district":"peñalolen","email":"ignacio@gmail.com","maternalLastName":"Zuloaga","name":"Ignacio","paternalLastName":"Vasquez000","phone":"11223344","rut":"22332211"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-10-16 16:38:26"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 16:38:27"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez017@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:06:34"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:06:35"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez017@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:07:14"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:07:15"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez018@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:07:33"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:07:34"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez018@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:08:23"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:08:24"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez018@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:10:10"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:10:11"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez018@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:17:42"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:17:43"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez017@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:18:14"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:18:15"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez018@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:18:23"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:18:23"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez017@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:18:52"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:18:53"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez017@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:23:41"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:23:42"}
+{"level":"info","message":{"body":{"address":"Casa 22222","district":"Peñalolen","email":"benja.vasquez017@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"555555","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert/"},"timestamp":"2023-10-16 17:25:05"}
+{"level":"error","message":{"controller":"person/upsert","error":null},"timestamp":"2023-10-16 17:25:06"}

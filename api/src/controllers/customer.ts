@@ -197,7 +197,7 @@ const upsert = async (req: any, res: any) => {
     }
   }
 
-  if (!resultGetByRut.data && type === "P") {
+ else if (!resultGetByRut.data && type === "P") {
     const resultInsertPerson = await PersonModel.insert(
       rut,
       name,
@@ -269,7 +269,7 @@ const upsert = async (req: any, res: any) => {
     }
   }
 
-  if (resultGetByRut.data && type === "C") {
+else if (resultGetByRut.data && type === "C") {
     const result = await CompanyModel.updateById(
       resultGetByRut.data.id,
       rut,
@@ -383,7 +383,7 @@ const upsert = async (req: any, res: any) => {
     return;
   }
 
-  if (resultGetByRut.data && type === "P") {
+  else if (resultGetByRut.data && type === "P") {
     const result = await PersonModel.updateById(
       resultGetByRut.data.id,
       rut,

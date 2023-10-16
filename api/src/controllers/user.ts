@@ -1,5 +1,6 @@
 import * as UserModel from "../models/user";
 import * as PersonModel from "../models/person";
+import * as PersonService from "../services/person";
 import axios from "axios";
 import bcrypt from "bcrypt";
 import config from "../utils/config";
@@ -211,105 +212,28 @@ const upsert = async (req: any, res: any) => {
     phone,
   } = req.body;
 
-  const resultGetByRut = await PersonModel.getByRut(rut);
+  const personResult = await PersonService.upsert(req.body);
 
-  if (!resultGetByRut.success) {
+  if (!personResult.success) {
     createLogger.error({
-      model: "person/getByRut",
-      error: resultGetByRut.error,
+      controller: "person/upsert",
+      error: personResult.error,
     });
-    res
+
+    return res
       .status(500)
-      .json({ success: false, data: null, error: resultGetByRut.error });
-    return;
+      .json({ success: false, data: null, error: personResult.error });
   }
 
-  if (!resultGetByRut.data) {
-    const result = await PersonModel.insert(
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!result.success) {
-      createLogger.error({
-        model: "person/insert",
-        error: result.error,
-      });
-      res.status(500).json({ success: false, data: null, error: result.error });
-      return;
-    }
-
-    const person_id = result.data.id;
-
-    const resultInsert = await UserModel.insert(person_id, email);
-
-    if (!resultInsert.success) {
-      createLogger.error({
-        model: "user/insert",
-        error: resultInsert.error,
-      });
-      res.status(500).json({ success: false, data: null, error: result.error });
-      return;
-    }
-
-    const data = {
-      id: resultInsert.data.id,
-      person_id: person_id,
-      login: email,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    };
-    createLogger.info({
-      controller: "user/upsert",
-      message: "OK",
-    });
-    if (result.success) {
-      res.status(200).json({
-        success: true,
-        data,
-        error: null,
-      });
-      return;
-    }
+  if(!personResult.data){
+    return res.status(500)
+    .json({ success: false, data: null, error: "No data" });
   }
+  
+  const {id: person_id} = personResult.data;
 
-  const result = await PersonModel.updateById(
-    resultGetByRut.data.id,
-    rut,
-    name,
-    paternalLastName,
-    maternalLastName,
-    address,
-    district,
-    email,
-    phone
-  );
+  const resultGetByLogin = await UserModel.getByLogin(email);
 
-  if (!result.success) {
-    createLogger.error({
-      model: "person/updateById",
-      error: result.error,
-    });
-    res.status(500).json({ success: false, result, error: result.error });
-    return;
-  }
-
-  const resultGetByLogin = await UserModel.getByLogin(
-    resultGetByRut.data.email
-  );
-  const person_id = resultGetByRut.data.id;
 
   if (!resultGetByLogin.success) {
     createLogger.error({
