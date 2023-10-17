@@ -1,16 +1,15 @@
-import nodemailer, {Transporter} from "nodemailer";
+import nodemailer, { Transporter } from "nodemailer";
+
 import config from "../utils/config";
 
-const send: any = async ( to: string, subject: string, text: string ) => {
+const send: any = async (to: string, subject: string, text: string) => {
   try {
-
     const { host, port, user, pass, from } = config;
-
 
     const transportConfig = {
       host,
-      port : parseInt(port),
-      auth : {user,pass}
+      port: parseInt(port),
+      auth: { user, pass },
     };
 
     const mensaje = {
@@ -29,4 +28,4 @@ const send: any = async ( to: string, subject: string, text: string ) => {
   }
 };
 
-export { send }
+export { send };

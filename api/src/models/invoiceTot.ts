@@ -14,9 +14,19 @@ const getByInvoiceId: any = async (id: string) => {
   }
 };
 
-const insert: any = async (invoicecab_id: string, subTotal: number, tax: string, total: number) => {
+const insert: any = async (
+  invoicecab_id: string,
+  subTotal: number,
+  tax: string,
+  total: number
+) => {
   try {
-    const result = await pool.query(_insert, [invoicecab_id, subTotal, tax, total]);
+    const result = await pool.query(_insert, [
+      invoicecab_id,
+      subTotal,
+      tax,
+      total,
+    ]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -36,7 +46,7 @@ const updateById: any = async (
       invoicecab_id,
       subTotal,
       tax,
-      total
+      total,
     ]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {

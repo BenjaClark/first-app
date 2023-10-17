@@ -1,8 +1,10 @@
+import axios from "axios";
+import bcrypt from "bcrypt";
+
 import * as UserModel from "../models/user";
 import * as PersonModel from "../models/person";
 import * as PersonService from "../services/person";
-import axios from "axios";
-import bcrypt from "bcrypt";
+
 import config from "../utils/config";
 import createLogger from "../utils/logger";
 
@@ -225,25 +227,24 @@ const upsert = async (req: any, res: any) => {
       .json({ success: false, data: null, error: personResult.error });
   }
 
-  if(!personResult.data){
-    return res.status(500)
-    .json({ success: false, data: null, error: "No data" });
+  if (!personResult.data) {
+    return res
+      .status(500)
+      .json({ success: false, data: null, error: "No data" });
   }
-  
-  const {id: person_id} = personResult.data;
+
+  const { id: person_id } = personResult.data;
 
   const resultGetByLogin = await UserModel.getByLogin(email);
-
-
   if (!resultGetByLogin.success) {
     createLogger.error({
       model: "user/getByLogin",
       error: resultGetByLogin.error,
     });
-    res
+
+    return res
       .status(500)
       .json({ success: false, data: null, error: resultGetByLogin.error });
-    return;
   }
 
   if (!resultGetByLogin.data) {
@@ -254,14 +255,15 @@ const upsert = async (req: any, res: any) => {
         model: "user/insert",
         error: resultInsert.error,
       });
-      res
+
+      return res
         .status(500)
         .json({ success: false, data: null, error: resultInsert.error });
-      return;
     }
+
     const data = {
       id: resultInsert.data.id,
-      person_id: person_id,
+      person_id,
       login: email,
       rut,
       name,
@@ -272,12 +274,13 @@ const upsert = async (req: any, res: any) => {
       email,
       phone,
     };
+
     createLogger.info({
       controller: "user/upsert",
       message: "OK",
     });
-    res.status(200).json({ success: true, data, error: null });
-    return;
+
+    return res.status(200).json({ success: true, data, error: null });
   }
 
   const resultUpdate = await UserModel.updateById(person_id, email);
@@ -286,14 +289,15 @@ const upsert = async (req: any, res: any) => {
       model: "user/updateById",
       error: resultUpdate.error,
     });
-    res
+
+    return res
       .status(500)
       .json({ success: false, data: null, error: resultUpdate.error });
-    return;
   }
+
   const data = {
     id: resultUpdate.data.id,
-    person_id: person_id,
+    person_id,
     login: email,
     rut,
     name,
@@ -304,12 +308,13 @@ const upsert = async (req: any, res: any) => {
     email,
     phone,
   };
+
   createLogger.info({
     controller: "user/upsert",
     message: "OK",
   });
-  res.status(200).json({ success: true, data, error: null });
-  return;
+
+  return res.status(200).json({ success: true, data, error: null });
 };
 
 const assignPassword = async (req: any, res: any) => {

@@ -1,5 +1,6 @@
-import createLogger from "../utils/logger";
 import * as ProductModel from "../models/product";
+
+import createLogger from "../utils/logger";
 
 const getByCode = async (req: any, res: any) => {
   const { code } = req.params;
@@ -19,14 +20,13 @@ const getByCode = async (req: any, res: any) => {
     return;
   }
 
-  const { id, name, price } =
-    result.data;
+  const { id, name, price } = result.data;
 
   const data = {
     id,
     code,
     name,
-    price
+    price,
   };
 
   createLogger.info({
@@ -56,14 +56,13 @@ const getById = async (req: any, res: any) => {
     return;
   }
 
-  const { code, name, price } =
-    result.data;
+  const { code, name, price } = result.data;
 
   const data = {
     id,
     code,
     name,
-    price
+    price,
   };
   createLogger.info({
     controller: "product/getById",
@@ -90,7 +89,7 @@ const getAll = async (req: any, res: any) => {
       id: product.id,
       code: product.code,
       name: product.name,
-      price: product.price
+      price: product.price,
     };
   });
   createLogger.info({
@@ -118,11 +117,7 @@ const upsert = async (req: any, res: any) => {
   }
 
   if (!resultGetByCode.data) {
-    const result = await ProductModel.insert(
-      code,
-      name,
-      price
-    );
+    const result = await ProductModel.insert(code, name, price);
 
     if (!result.success) {
       createLogger.error({
@@ -137,7 +132,7 @@ const upsert = async (req: any, res: any) => {
       id: result.data.id,
       code,
       name,
-      price
+      price,
     };
     createLogger.info({
       controller: "product/upsert",
@@ -167,7 +162,7 @@ const upsert = async (req: any, res: any) => {
     id: resultGetByCode.data.id,
     code,
     name,
-    price
+    price,
   };
   createLogger.info({
     controller: "product/upsert",
@@ -193,13 +188,11 @@ const deleteById = async (req: any, res: any) => {
     controller: "product/deteleById",
     message: "OK",
   });
-  res
-    .status(200)
-    .json({
-      success: true,
-      data: result.data + " registro(s) eliminado(s)",
-      error: null,
-    });
+  res.status(200).json({
+    success: true,
+    data: result.data + " registro(s) eliminado(s)",
+    error: null,
+  });
   return;
 };
 

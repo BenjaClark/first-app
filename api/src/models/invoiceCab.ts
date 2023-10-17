@@ -19,23 +19,19 @@ const getAll: any = async () => {
 const getById: any = async (id: string) => {
   try {
     const result = await pool.query(_getById, [id]);
-    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
+    return {
+      success: true,
+      data: result.rows.length > 0 ? result.rows[0] : null,
+      error: null,
+    };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
 };
 
-const insert: any = async (
-  number: number,
-  customer_id: string,
-  date: Date
-) => {
+const insert: any = async (number: number, customer_id: string, date: Date) => {
   try {
-    const result = await pool.query(_insert, [
-      number,
-      customer_id,
-      date
-    ]);
+    const result = await pool.query(_insert, [number, customer_id, date]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -46,7 +42,7 @@ const updateById: any = async (
   id: number,
   number: number,
   customer_id: string,
-  date: Date,
+  date: Date
 ) => {
   try {
     const result = await pool.query(_updateById, [

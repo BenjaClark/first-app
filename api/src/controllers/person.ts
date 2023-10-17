@@ -1,5 +1,6 @@
 import * as PersonModel from "../models/person";
 import * as PersonService from "../services/person";
+
 import createLogger from "../utils/logger";
 
 const getByRut = async (req: any, res: any) => {

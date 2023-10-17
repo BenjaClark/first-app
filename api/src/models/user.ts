@@ -94,7 +94,6 @@ const assignPassword: any = async (id: string, password: string) => {
   }
 };
 
-
 export {
   getByRut,
   insert,
@@ -104,6 +103,4 @@ export {
   updateById,
   getById,
   assignPassword,
-  
-  
 };

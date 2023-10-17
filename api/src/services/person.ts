@@ -1,56 +1,25 @@
 import * as PersonModel from "../models/person";
 
 const upsert = async (values: any) => {
-    const {
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    } = values;
-  
-    const resultGetByRut = await PersonModel.getByRut(rut);
-  
-    if (!resultGetByRut.success) {
+  const {
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone,
+  } = values;
 
-      return {success: false, data: null, error: resultGetByRut.error};
-    }
-  
-    if (!resultGetByRut.data) {
-      const result = await PersonModel.insert(
-        rut,
-        name,
-        paternalLastName,
-        maternalLastName,
-        address,
-        district,
-        email,
-        phone
-      );
-  
-      if (!result.success) {
-        return {success: false, data: null, error: result.error};
-      }
-  
-      const data = {
-        id: result.data.id,
-        rut,
-        name,
-        paternalLastName,
-        maternalLastName,
-        address,
-        district,
-        email,
-        phone,
-      };
-      return {success: true, data, error: null};
-    }
-  
-    const result = await PersonModel.updateById(
-      resultGetByRut.data.id,
+  const resultGetByRut = await PersonModel.getByRut(rut);
+
+  if (!resultGetByRut.success) {
+    return { success: false, data: null, error: resultGetByRut.error };
+  }
+
+  if (!resultGetByRut.data) {
+    const resultInsert = await PersonModel.insert(
       rut,
       name,
       paternalLastName,
@@ -60,24 +29,54 @@ const upsert = async (values: any) => {
       email,
       phone
     );
-  
-    if (!result.success) {
-        return {success: false, data: null, error: result.error};
+
+    if (!resultInsert.success) {
+      return { success: false, data: null, error: resultInsert.error };
     }
-  
+
     const data = {
-      id: resultGetByRut.data.id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
+      id: resultInsert.data.id,
+      rut: resultInsert.data.rut,
+      name: resultInsert.data.name,
+      paternalLastName: resultInsert.data.paternallastname,
+      maternalLastName: resultInsert.data.maternallastname,
+      address: resultInsert.data.address,
+      district: resultInsert.data.district,
+      email: resultInsert.data.email,
+      phone: resultInsert.data.phone,
     };
-  
-    return {success: false, data, error: null};
+    return { success: true, data, error: null };
+  }
+
+  const resultUpdate = await PersonModel.updateById(
+    resultGetByRut.data.id,
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone
+  );
+
+  if (!resultUpdate.success) {
+    return { success: false, data: null, error: resultUpdate.error };
+  }
+
+  const data = {
+    id: resultUpdate.data.id,
+    rut,
+    name,
+    paternalLastName,
+    maternalLastName,
+    address,
+    district,
+    email,
+    phone,
   };
 
-  export {upsert};
+  return { success: true, data, error: null };
+};
+
+export { upsert };

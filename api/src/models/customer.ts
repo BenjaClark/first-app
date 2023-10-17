@@ -1,6 +1,12 @@
 import pool from "../utils/database";
 
-import { _getAll, _getByRut, _deleteById, _insert, _updateById } from "../queries/customer";
+import {
+  _getAll,
+  _getByRut,
+  _deleteById,
+  _insert,
+  _updateById,
+} from "../queries/customer";
 
 const getAll: any = async () => {
   try {
@@ -24,7 +30,11 @@ const getByRut: any = async (rut: string) => {
   }
 };
 
-const insert: any = async (type: string, person_id: number, company_id: number) => {
+const insert: any = async (
+  type: string,
+  person_id: number,
+  company_id: number
+) => {
   try {
     const result = await pool.query(_insert, [type, person_id, company_id]);
     return { success: true, data: result.rows[0], error: null };
@@ -33,7 +43,11 @@ const insert: any = async (type: string, person_id: number, company_id: number) 
   }
 };
 
-const updateById: any = async (id: number, person_id: number, company_id: number) => {
+const updateById: any = async (
+  id: number,
+  person_id: number,
+  company_id: number
+) => {
   try {
     const result = await pool.query(_updateById, [id, person_id, company_id]);
     return { success: true, data: result.rows[0], error: null };
@@ -51,4 +65,4 @@ const deleteById: any = async (id: number) => {
   }
 };
 
-export { getAll, getByRut, deleteById, insert, updateById}
+export { getAll, getByRut, deleteById, insert, updateById };

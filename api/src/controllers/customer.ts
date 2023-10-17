@@ -1,6 +1,7 @@
 import * as CustomerModel from "../models/customer";
 import * as CompanyModel from "../models/company";
 import * as PersonModel from "../models/person";
+
 import createLogger from "../utils/logger";
 
 const getAll = async (req: any, res: any) => {
@@ -197,7 +198,7 @@ const upsert = async (req: any, res: any) => {
     }
   }
 
- else if (!resultGetByRut.data && type === "P") {
+  if (!resultGetByRut.data && type === "P") {
     const resultInsertPerson = await PersonModel.insert(
       rut,
       name,
@@ -269,7 +270,7 @@ const upsert = async (req: any, res: any) => {
     }
   }
 
-else if (resultGetByRut.data && type === "C") {
+  if (resultGetByRut.data && type === "C") {
     const result = await CompanyModel.updateById(
       resultGetByRut.data.id,
       rut,
@@ -383,7 +384,7 @@ else if (resultGetByRut.data && type === "C") {
     return;
   }
 
-  else if (resultGetByRut.data && type === "P") {
+  if (resultGetByRut.data && type === "P") {
     const result = await PersonModel.updateById(
       resultGetByRut.data.id,
       rut,

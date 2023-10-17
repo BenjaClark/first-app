@@ -11,7 +11,11 @@ import {
 const getByCode: any = async (code: string) => {
   try {
     const result = await pool.query(_getByCode, [code]);
-    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
+    return {
+      success: true,
+      data: result.rows.length > 0 ? result.rows[0] : null,
+      error: null,
+    };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -20,7 +24,11 @@ const getByCode: any = async (code: string) => {
 const getById: any = async (id: string) => {
   try {
     const result = await pool.query(_getById, [id]);
-    return { success: true, data: result.rows.length > 0 ? result.rows[0]:null, error: null };
+    return {
+      success: true,
+      data: result.rows.length > 0 ? result.rows[0] : null,
+      error: null,
+    };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -35,17 +43,9 @@ const getAll: any = async () => {
   }
 };
 
-const insert: any = async (
-  code: string,
-  name: string,
-  price: number
-) => {
+const insert: any = async (code: string, name: string, price: number) => {
   try {
-    const result = await pool.query(_insert, [
-      code,
-      name,
-      price
-    ]);
+    const result = await pool.query(_insert, [code, name, price]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -59,12 +59,7 @@ const updateById: any = async (
   price: number
 ) => {
   try {
-    const result = await pool.query(_updateById, [
-      id,
-      code,
-      name,
-      price,
-    ]);
+    const result = await pool.query(_updateById, [id, code, name, price]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -80,4 +75,4 @@ const deleteById: any = async (id: number) => {
   }
 };
 
-export { getByCode, getById, getAll, insert, updateById, deleteById};
+export { getByCode, getById, getAll, insert, updateById, deleteById };

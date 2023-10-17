@@ -14,9 +14,19 @@ const getByInvoiceId: any = async (id: string) => {
   }
 };
 
-const insert: any = async (invoicecab_id: string, quantity: number, product_id: string, price: number) => {
+const insert: any = async (
+  invoicecab_id: string,
+  quantity: number,
+  product_id: string,
+  price: number
+) => {
   try {
-    const result = await pool.query(_insert, [invoicecab_id, quantity, product_id, price]);
+    const result = await pool.query(_insert, [
+      invoicecab_id,
+      quantity,
+      product_id,
+      price,
+    ]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
@@ -36,7 +46,7 @@ const updateById: any = async (
       invoicecab_id,
       quantity,
       product_id,
-      price
+      price,
     ]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {

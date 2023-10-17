@@ -1,5 +1,6 @@
-import createLogger from "../utils/logger";
 import * as CompanyModel from "../models/company";
+
+import createLogger from "../utils/logger";
 
 const getByRut = async (req: any, res: any) => {
   const { rut } = req.params;
@@ -229,13 +230,11 @@ const deleteById = async (req: any, res: any) => {
     controller: "company/deteleById",
     message: "OK",
   });
-  res
-    .status(200)
-    .json({
-      success: true,
-      data: result.data + " registro(s) eliminado(s)",
-      error: null,
-    });
+  res.status(200).json({
+    success: true,
+    data: result.data + " registro(s) eliminado(s)",
+    error: null,
+  });
   return;
 };
 
