@@ -1,4 +1,5 @@
 import * as CompanyModel from "../models/company";
+import * as CompanyService from "../services/company";
 
 import createLogger from "../utils/logger";
 
@@ -118,100 +119,21 @@ const getAll = async (req: any, res: any) => {
 };
 
 const upsert = async (req: any, res: any) => {
-  const { rut, fantasyName, name, activity, address, district, email, phone } =
-    req.body;
+  const companyResult = await CompanyService.upsert(req.body);
 
-  const resultGetByRut = await CompanyModel.getByRut(rut);
-
-  if (!resultGetByRut.success) {
+  if (!companyResult.success) {
     createLogger.error({
-      model: "company/getByRut",
-      error: resultGetByRut.error,
-    });
-    res
-      .status(500)
-      .json({ success: false, data: null, error: resultGetByRut.error });
-    return;
-  }
-
-  if (!resultGetByRut.data) {
-    const result = await CompanyModel.insert(
-      rut,
-      fantasyName,
-      name,
-      activity,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!result.success) {
-      createLogger.error({
-        model: "company/insert",
-        error: result.error,
-      });
-      res.status(500).json({ success: false, data: null, error: result.error });
-      return;
-    }
-
-    const data = {
-      id: result.data.id,
-      rut,
-      fantasyName,
-      name,
-      activity,
-      address,
-      district,
-      email,
-      phone,
-    };
-    createLogger.info({
       controller: "company/upsert",
-      message: "OK",
+      error: companyResult.error,
     });
-    res.status(200).json({ success: true, data, error: null });
-    return;
+
+    return res
+      .status(500)
+      .json({ success: false, data: null, error: companyResult.error });
   }
-
-  const result = await CompanyModel.updateById(
-    resultGetByRut.data.id,
-    rut,
-    fantasyName,
-    name,
-    activity,
-    address,
-    district,
-    email,
-    phone
-  );
-
-  if (!result.success) {
-    createLogger.error({
-      model: "company/updateById",
-      error: result.error,
-    });
-    res.status(500).json({ success: false, result, error: result.error });
-    return;
-  }
-
-  const data = {
-    id: resultGetByRut.data.id,
-    rut,
-    fantasyName,
-    name,
-    activity,
-    address,
-    district,
-    email,
-    phone,
-  };
-  createLogger.info({
-    controller: "company/upsert",
-    message: "OK",
-  });
-  res.status(200).json({ success: true, data, error: null });
-  return;
+  return res
+    .status(200)
+    .json({ success: true, data: companyResult.data, error: null });
 };
 
 const deleteById = async (req: any, res: any) => {

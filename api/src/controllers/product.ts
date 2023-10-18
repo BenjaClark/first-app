@@ -1,4 +1,5 @@
 import * as ProductModel from "../models/product";
+import * as ProductService from "../services/product";
 
 import createLogger from "../utils/logger";
 
@@ -101,75 +102,21 @@ const getAll = async (req: any, res: any) => {
 };
 
 const upsert = async (req: any, res: any) => {
-  const { code, name, price } = req.body;
+  const productResult = await ProductService.upsert(req.body);
 
-  const resultGetByCode = await ProductModel.getByCode(code);
-
-  if (!resultGetByCode.success) {
+  if (!productResult.success) {
     createLogger.error({
-      model: "product/getByCode",
-      error: resultGetByCode.error,
-    });
-    res
-      .status(500)
-      .json({ success: false, data: null, error: resultGetByCode.error });
-    return;
-  }
-
-  if (!resultGetByCode.data) {
-    const result = await ProductModel.insert(code, name, price);
-
-    if (!result.success) {
-      createLogger.error({
-        model: "product/insert",
-        error: result.error,
-      });
-      res.status(500).json({ success: false, data: null, error: result.error });
-      return;
-    }
-
-    const data = {
-      id: result.data.id,
-      code,
-      name,
-      price,
-    };
-    createLogger.info({
       controller: "product/upsert",
-      message: "OK",
+      error: productResult.error,
     });
-    res.status(200).json({ success: true, data, error: null });
-    return;
+
+    return res
+      .status(500)
+      .json({ success: false, data: null, error: productResult.error });
   }
-
-  const result = await ProductModel.updateById(
-    resultGetByCode.data.id,
-    code,
-    name,
-    price
-  );
-
-  if (!result.success) {
-    createLogger.error({
-      model: "product/updateById",
-      error: result.error,
-    });
-    res.status(500).json({ success: false, result, error: result.error });
-    return;
-  }
-
-  const data = {
-    id: resultGetByCode.data.id,
-    code,
-    name,
-    price,
-  };
-  createLogger.info({
-    controller: "product/upsert",
-    message: "OK",
-  });
-  res.status(200).json({ success: true, data, error: null });
-  return;
+  return res
+    .status(200)
+    .json({ success: true, data: productResult.data, error: null });
 };
 
 const deleteById = async (req: any, res: any) => {

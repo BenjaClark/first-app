@@ -1,8 +1,9 @@
 import * as InvoiceCabModel from "../models/invoiceCab";
 import * as InvoiceDetModel from "../models/invoiceDet";
-import * as PersonModel from "../models/person";
-import * as CompanyModel from "../models/company";
+import * as InvoiceTotModel from "../models/invoiceTot";
 import * as CustomerModel from "../models/customer";
+import * as CustomerService from "../services/customer";
+import * as ProductService from "../services/product";
 
 import createLogger from "../utils/logger";
 
@@ -133,415 +134,112 @@ const getByCustomerRut = async (req: any, res: any) => {
 };
 
 const upsert = async (req: any, res: any) => {
-  const {
+  const { number, customer, date, detail, total } = req.body;
+  const customerResult = await CustomerService.upsert(req.body.customer);
+
+  if (!customerResult.success) {
+    createLogger.error({
+      controller: "customer/upsert",
+      error: customerResult.error,
+    });
+
+    return res
+      .status(500)
+      .json({ success: false, data: null, error: customerResult.error });
+  }
+
+  const customer_id = customerResult.data?.id;
+
+  const resultInsertInvoiceCab = await InvoiceCabModel.insert(
     number,
-    customer: {
-      type,
-      rut,
-      fantasyName,
-      name,
-      activity,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    },
+    customer_id,
+    date
+  );
+
+  if (!resultInsertInvoiceCab.success) {
+    createLogger.error({
+      controller: "invoice/insert",
+      error: resultInsertInvoiceCab.error,
+    });
+
+    return res.status(500).json({
+      success: false,
+      data: null,
+      error: resultInsertInvoiceCab.error,
+    });
+  }
+
+  let productDetailSummary = { rows: 0, productError: 0, invoiceDetError: 0 };
+
+  await Promise.all(
+    detail.map(async (item: any) => {
+      const { product, quantity } = item;
+      const invoicecab_id = resultInsertInvoiceCab.data.id;
+
+      const resultProduct = await ProductService.upsert(product);
+
+      if (!resultProduct.success) {
+        productDetailSummary = {
+          ...productDetailSummary,
+          productError: productDetailSummary.productError + 1,
+        };
+      }
+      
+      const resultInvoiceDet = await InvoiceDetModel.insert(
+        invoicecab_id,
+        quantity,
+        resultProduct.data?.id,
+        product.price
+      );
+      
+      if (!resultInvoiceDet.success) {
+        productDetailSummary = {
+          ...productDetailSummary,
+          productError: productDetailSummary.productError + 1,
+        };
+      }
+
+      productDetailSummary = {
+        ...productDetailSummary,
+        rows: productDetailSummary.rows + 1,
+      };
+    })
+  );
+
+  detail.map(async (item: any) => {
+    const { product, quantity } = item;
+
+    const subTot = product.price * quantity;
+    const total = subTot * 1.19;
+    const tax = total - subTot;
+
+  const resultInsertInvoiceTot = await InvoiceTotModel.insert(
+    resultInsertInvoiceCab.data.id,
+    subTot,
+    tax,
+    total
+    
+  );
+  
+  if (!resultInsertInvoiceTot.success) {
+    productDetailSummary = {
+      ...productDetailSummary,
+      productError: productDetailSummary.productError + 1,
+    };
+  }
+
+  const data = {
+    number,
+    customer,
     date,
     detail,
-    total,
-  } = req.body;
-
-  const resultGetByRut = await CustomerModel.getByRut(rut);
-
-  if (!resultGetByRut.success) {
-    createLogger.error({
-      model: "customer/getByRut",
-      error: resultGetByRut.error,
-    });
-    res
-      .status(500)
-      .json({ success: false, data: null, error: resultGetByRut.error });
-    return;
-  }
-
-  if (!resultGetByRut.data && type === "C") {
-    const resultInsertCompany = await CompanyModel.insert(
-      rut,
-      fantasyName,
-      name,
-      activity,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!resultInsertCompany.success) {
-      createLogger.error({
-        model: "company/insert",
-        error: resultInsertCompany.error,
-      });
-      res
-        .status(500)
-        .json({ success: false, data: null, error: resultInsertCompany.error });
-      return;
-    }
-
-    const company_id = resultInsertCompany.data.id;
-
-    const resultInsert = await CustomerModel.insert(
-      type,
-      null,
-      resultInsertCompany.data.id
-    );
-
-    if (!resultInsert.success) {
-      createLogger.error({
-        model: "customer/insert",
-        error: resultInsert.error,
-      });
-      res.status(500).json({
-        success: false,
-        data: null,
-        error: resultInsert.error,
-      });
-      return;
-    }
-
-    const data = {
-      id: resultInsert.data.id,
-      type,
-      company_id: company_id,
-      rut,
-      name,
-      fantasyName,
-      address,
-      district,
-      email,
-      phone,
-    };
-
-    if (resultInsert.success) {
-      createLogger.info({
-        controller: "customer/upsert",
-        message: "OK",
-      });
-
-      const customer_id = resultInsert.id;
-
-      const resultInsertInvoiceCab = await InvoiceCabModel.insert(
-        number,
-        customer_id,
-        "2023-10-16"
-      );
-
-      const resultInsertInvoiceDet = await InvoiceDetModel.insert;
-    }
-  }
-
-  if (!resultGetByRut.data && type === "P") {
-    const resultInsertPerson = await PersonModel.insert(
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!resultInsertPerson.success) {
-      createLogger.error({
-        model: "person/insert",
-        error: resultInsertPerson.error,
-      });
-      res
-        .status(500)
-        .json({ success: false, data: null, error: resultInsertPerson.error });
-      return;
-    }
-
-    const person_id = resultInsertPerson.data.id;
-
-    const resultInsert = await CustomerModel.insert(
-      type,
-      resultInsertPerson.data.id,
-      null
-    );
-
-    if (!resultInsert.success) {
-      createLogger.error({
-        model: "customer/insert",
-        error: resultInsert.error,
-      });
-      res.status(500).json({
-        success: false,
-        data: null,
-        error: resultInsert.error,
-      });
-      return;
-    }
-
-    const data = {
-      id: resultInsert.data.id,
-      type,
-      person_id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    };
-
-    if (resultInsert.success) {
-      createLogger.info({
-        controller: "customer/upsert",
-        message: "OK",
-      });
-      res.status(200).json({
-        success: true,
-        data,
-        error: null,
-      });
-      return;
-    }
-  }
-
-  if (resultGetByRut.data && type === "C") {
-    const result = await CompanyModel.updateById(
-      resultGetByRut.data.id,
-      rut,
-      fantasyName,
-      name,
-      activity,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!result.success) {
-      createLogger.error({
-        model: "company/updateById",
-        error: result.error,
-      });
-      res.status(500).json({ success: false, result, error: result.error });
-      return;
-    }
-
-    const company_id = result.data.id;
-
-    const resultGetByRut2 = await CustomerModel.getByRut(rut);
-
-    if (!resultGetByRut2.data) {
-      const resultInsert = await CustomerModel.insert(type, null, company_id);
-
-      if (!resultInsert.success) {
-        createLogger.error({
-          model: "customer/insert",
-          error: result.error,
-        });
-        res.status(500).json({
-          success: false,
-          data: null,
-          error: resultInsert.error,
-        });
-        return;
-      }
-
-      const data = {
-        id: resultInsert.data.id,
-        type,
-        company_id: company_id,
-        rut,
-        name,
-        fantasyName,
-        activity,
-        address,
-        district,
-        email,
-        phone,
-      };
-
-      if (resultInsert.success) {
-        createLogger.info({
-          controller: "customer/upsert",
-          message: "OK",
-        });
-        res.status(200).json({
-          success: true,
-          data,
-          error: null,
-        });
-        return;
-      }
-    }
-
-    const resultUpdate = await CustomerModel.updateById(
-      resultGetByRut2.data.id,
-      null,
-      company_id
-    );
-    if (!resultUpdate.success) {
-      createLogger.error({
-        model: "customer/updateById",
-        error: resultUpdate.error,
-      });
-      res.status(500).json({
-        success: false,
-        data: null,
-        error: resultUpdate.error,
-      });
-      return;
-    }
-
-    const data = {
-      id: resultGetByRut2.data.id,
-      type,
-      company_id,
-      rut,
-      name,
-      fantasyName,
-      activity,
-      address,
-      district,
-      email,
-      phone,
-    };
-
-    createLogger.info({
-      controller: "customer/upsert",
-      message: "OK",
-    });
-    res.status(200).json({
-      success: true,
-      data: data,
-      error: null,
-    });
-    return;
-  }
-
-  if (resultGetByRut.data && type === "P") {
-    const result = await PersonModel.updateById(
-      resultGetByRut.data.id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone
-    );
-
-    if (!result.success) {
-      createLogger.error({
-        model: "person/updateById",
-        error: result.error,
-      });
-      res.status(500).json({ success: false, result, error: result.error });
-      return;
-    }
-
-    const person_id = resultGetByRut.data.id;
-
-    const resultGetByRut2 = await PersonModel.getByRut(rut);
-
-    if (!resultGetByRut2.data) {
-      const resultInsert = await CustomerModel.insert(type, person_id, null);
-
-      if (!resultInsert.success) {
-        createLogger.error({
-          model: "customer/insert",
-          error: resultInsert.error,
-        });
-        res.status(500).json({
-          success: false,
-          data: null,
-          error: resultInsert.error,
-        });
-        return;
-      }
-
-      const data = {
-        id: resultInsert.data.id,
-        type,
-        person_id,
-        rut,
-        name,
-        address,
-        district,
-        email,
-        phone,
-      };
-      createLogger.info({
-        controller: "customer/upsert",
-        message: "OK",
-      });
-      if (resultInsert.success) {
-        res.status(200).json({
-          success: true,
-          data,
-          error: null,
-        });
-        return;
-      }
-    }
-
-    const resultUpdate = await CustomerModel.updateById(
-      resultGetByRut2.data.id,
-      person_id,
-      null
-    );
-    if (!resultUpdate.success) {
-      createLogger.error({
-        model: "customer/updateById",
-        error: resultUpdate.error,
-      });
-      res.status(500).json({
-        success: false,
-        data: null,
-        error: resultUpdate.error,
-      });
-      return;
-    }
-
-    const data = {
-      id: resultGetByRut2.data.id,
-      type,
-      person_id,
-      rut,
-      name,
-      paternalLastName,
-      maternalLastName,
-      address,
-      district,
-      email,
-      phone,
-    };
-    createLogger.info({
-      controller: "customer/upsert",
-      message: "OK",
-    });
-    res.status(200).json({
-      success: true,
-      data: data,
-      error: null,
-    });
-    return;
-  }
-  res.status(500).json({
-    success: true,
-    data: null,
-    error: null,
-  });
-  return;
+    subTot,
+    tax,
+    total
+  };
+  return res.status(200).json(data);
+})
+  
 };
 
 const deleteById = async (req: any, res: any) => {

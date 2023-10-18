@@ -23,7 +23,7 @@ export const _getAll = `
             phone 
     FROM    app.company 
     WHERE   isActive = true 
-    ORDER BYname, fantasyname`;
+    ORDER BY name, fantasyname`;
 
 export const _getByRut = `
     SELECT  id,
@@ -39,7 +39,7 @@ export const _getByRut = `
     WHERE   rut = $1`;
 
 export const _insert = `
-    INSERT Iapp.company (
+    INSERT INTO app.company (
             rut, 
             fantasyname, 
             name, 

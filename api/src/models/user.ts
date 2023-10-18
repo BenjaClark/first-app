@@ -72,9 +72,9 @@ const deleteById: any = async (id: number) => {
   }
 };
 
-const updateById: any = async (id: number, person_id: string) => {
+const updateById: any = async (person_id: number, login: string) => {
   try {
-    const result = await pool.query(_updateById, [id, person_id]);
+    const result = await pool.query(_updateById, [person_id, login]);
     return { success: true, data: result.rows[0], error: null };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };

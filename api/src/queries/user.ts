@@ -62,6 +62,3 @@ export const _updateById = `
     UPDATE  app.user 
     SET     login = $2 
     WHERE   person_id = $1 RETURNING *`;
-
-
-
