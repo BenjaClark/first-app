@@ -134,7 +134,7 @@ const getByCustomerRut = async (req: any, res: any) => {
 };
 
 const upsert = async (req: any, res: any) => {
-  const { number, customer, date, detail, total } = req.body;
+  const { number, customer, date, detail } = req.body;
   const customerResult = await CustomerService.upsert(req.body.customer);
 
   if (!customerResult.success) {
@@ -169,58 +169,86 @@ const upsert = async (req: any, res: any) => {
     });
   }
 
+  const invoiceCab_id = resultInsertInvoiceCab.data.id;
+
   let productDetailSummary = { rows: 0, productError: 0, invoiceDetError: 0 };
 
-  await Promise.all(
+  const resultPromise = await Promise.all(
     detail.map(async (item: any) => {
       const { product, quantity } = item;
-      const invoicecab_id = resultInsertInvoiceCab.data.id;
 
       const resultProduct = await ProductService.upsert(product);
 
       if (!resultProduct.success) {
-        productDetailSummary = {
-          ...productDetailSummary,
-          productError: productDetailSummary.productError + 1,
-        };
-      }
-      
-      const resultInvoiceDet = await InvoiceDetModel.insert(
-        invoicecab_id,
-        quantity,
-        resultProduct.data?.id,
-        product.price
-      );
-      
-      if (!resultInvoiceDet.success) {
+        createLogger.error({
+          service: "product/upsert",
+          error: resultProduct.error,
+        });
+
         productDetailSummary = {
           ...productDetailSummary,
           productError: productDetailSummary.productError + 1,
         };
       }
 
-      productDetailSummary = {
-        ...productDetailSummary,
-        rows: productDetailSummary.rows + 1,
+      const { id: product_id, price } = resultProduct.data || {
+        id: "",
+        product_id: "",
+        price: 0,
+      };
+
+      const resultInvoiceDet = await InvoiceDetModel.insert(
+        invoiceCab_id,
+        quantity,
+        product_id,
+        price
+      );
+
+      console.log(invoiceCab_id,
+        quantity,
+        product_id,
+        price)
+
+      if (!resultInvoiceDet.success) {
+        createLogger.error({
+          model: "invoiceDet/insert",
+          error: resultProduct.error,
+        });
+
+        productDetailSummary = {
+          ...productDetailSummary,
+          productError: productDetailSummary.productError + 1,
+        };
+      }
+
+      const itemSubtotal = quantity * price;
+      return {
+        subtotal: itemSubtotal,
+        tax: itemSubtotal * (19 / 100),
+        total: itemSubtotal * 1.19,
       };
     })
   );
 
-  detail.map(async (item: any) => {
-    const { product, quantity } = item;
-
-    const subTot = product.price * quantity;
-    const total = subTot * 1.19;
-    const tax = total - subTot;
+  const { subtotal, tax, total } = resultPromise.reduce(
+    (accumulator, item) => {
+      if (item) {
+        accumulator.subtotal += item.subtotal;
+        accumulator.tax += item.tax;
+        accumulator.total += item.total;
+      }
+      return accumulator;
+    },
+    { subtotal: 0, tax: 0, total: 0 }
+  );
 
   const resultInsertInvoiceTot = await InvoiceTotModel.insert(
     resultInsertInvoiceCab.data.id,
-    subTot,
+    subtotal,
     tax,
     total
-    
   );
-  
+
   if (!resultInsertInvoiceTot.success) {
     productDetailSummary = {
       ...productDetailSummary,
@@ -233,13 +261,11 @@ const upsert = async (req: any, res: any) => {
     customer,
     date,
     detail,
-    subTot,
+    subtotal,
     tax,
-    total
+    total,
   };
   return res.status(200).json(data);
-})
-  
 };
 
 const deleteById = async (req: any, res: any) => {

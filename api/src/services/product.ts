@@ -1,6 +1,17 @@
 import * as ProductModel from "../models/product";
 
-const upsert = async (product: any) => {
+const upsert = async (
+  product: any
+): Promise<{
+  success: boolean;
+  data: {
+    id: string;
+    code: number;
+    name: string;
+    price: number;
+  } | null;
+  error: any;
+}> => {
   const { code, name, price } = product;
 
   const resultGetByCode = await ProductModel.getByCode(code);
