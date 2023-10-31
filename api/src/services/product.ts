@@ -10,7 +10,7 @@ const upsert = async (
     name: string;
     price: number;
   } | null;
-  error: any;
+  error: string | null;
 }> => {
   const { code, name, price } = product;
 
