@@ -1,3 +1,3 @@
 import { ContentCell, ContentRow } from "./Content";
 
-export {ContentCell, ContentRow};
+export { ContentCell, ContentRow };

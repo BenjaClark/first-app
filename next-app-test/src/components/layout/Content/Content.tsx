@@ -2,18 +2,20 @@ import React from "react";
 
 import styles from "./Content.module.scss";
 
-const ContentCell = ({ children, gap, align }: any) => {
+const ContentCell = ({ children, gap, align, marginTop }: any) => {
   return (
-  <div style={{ gap, justifyContent: align }} className={styles.ContentCell}>
-    {children}
+    <div style={{ gap, justifyContent: align }} className={styles.contentCell}>
+      {children}
     </div>
   );
-  
 };
 
-const ContentRow = ({ children, gap, align }: any) => {
+const ContentRow = ({ children, gap, align, marginTop }: any) => {
   return (
-    <div style={{ gap, alignItems: align }} className={styles.ContentRow}>
+    <div
+      style={{ gap, alignItems: align, marginTop }}
+      className={styles.contentRow}
+    >
       {children}
     </div>
   );

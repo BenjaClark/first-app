@@ -1,10 +1,5 @@
-.InputText {
+.InputSelect {
   position: relative;
-
-  ::placeholder {
-    color: #959595;
-    font-size: 16px;
-  }
 
   label {
     position: absolute;
@@ -14,7 +9,7 @@
     top: 3px;
   }
 
-  input {
+  select {
     font-size: 16px;
     color: #959595;
     height: 50px;
