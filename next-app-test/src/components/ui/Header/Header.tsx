@@ -7,9 +7,7 @@ const Header = ({ label }: any) => {
   return (
     <div className={styles.Header}>
       <ul className={styles.left}>
-        <li>
-          <label>{label}</label>
-        </li>
+        <label>{label}</label>
       </ul>
       <ul className={styles.right}>
         <InputText label="Etiqueta" placeholder="Texto" width="350px" />
