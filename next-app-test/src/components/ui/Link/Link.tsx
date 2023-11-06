@@ -1,10 +1,10 @@
 import React from "react";
 import styles from "./Link.module.scss";
 
-const Link = () => {
+const Link = ({ label }: any) => {
   return (
     <div className={styles.Link}>
-      <a href="/welcome">Ir a otra página</a>
+      <a href="/welcome">{label}</a>
     </div>
   );
 };
