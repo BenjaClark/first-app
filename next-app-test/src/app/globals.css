@@ -20,4 +20,5 @@
 .material-symbols-outlined:hover {
   color: black;
   background-color: #fae890;
+  transition: 1s;
 }
