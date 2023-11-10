@@ -24,5 +24,9 @@
     padding-left: 15px;
     padding-top: 20px;
     font-size: 18px;
+    &:focus {
+      background-color: rgb(255, 244, 226);
+      transition: all 0.3s;
+    }
   }
 }

@@ -1,37 +1,38 @@
 import React, { useState, useContext } from "react";
 import styles from "./NavBar.module.scss";
-import MenuContext from "../Menu/MenuContext";
+import MenuContext from "../../../context/MenuContext";
+import ButtonIcon from "../ButtonIcon";
 
 const NavBar = () => {
-  const handleToggle = useContext(MenuContext);
+  const { showMenu, setShowMenu } = useContext(MenuContext);
+
+  const handleToggle = () => {
+    setShowMenu(!showMenu);
+  };
 
   return (
     <div className={styles.navBar}>
       <nav>
         <ul className={styles.left}>
           <li className={styles.button}>
-            <button id="menu-button" onClick={handleToggle}>
-              <span className="material-symbols-outlined">
-                <span className="material-symbols-outlined">menu</span>
-              </span>
-            </button>
+            <ButtonIcon onClick={handleToggle} icon="menu" />
           </li>
         </ul>
 
         <ul className={styles.right}>
-          <span className="material-symbols-outlined"> monitoring</span>
+          <ButtonIcon icon="monitoring" />
         </ul>
 
         <ul className={styles.right}>
-          <span className="material-symbols-outlined"> qr_code_2 </span>
+          <ButtonIcon icon="qr_code_2" />
         </ul>
 
         <ul className={styles.right}>
-          <span className="material-symbols-outlined"> inbox </span>
+          <ButtonIcon icon="inbox" />
         </ul>
 
         <ul className={styles.right}>
-          <span className="material-symbols-outlined"> person </span>
+          <ButtonIcon icon="person" />
         </ul>
       </nav>
     </div>

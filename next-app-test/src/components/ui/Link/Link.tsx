@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./Link.module.scss";
 
-const Link = ({ label }: any) => {
+interface ILink {
+  label: string;
+}
+
+const Link = ({ label }: ILink) => {
   return (
     <div className={styles.Link}>
       <a href="/welcome">{label}</a>

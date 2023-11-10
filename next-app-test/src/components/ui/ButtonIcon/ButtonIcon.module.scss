@@ -1,0 +1,23 @@
+.buttonIcon {
+  border: none;
+  list-style: none;
+  background: none;
+  border: none;
+  span {
+    padding: 5px;
+    border-radius: 5px;
+    color: #959595;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 24px;
+    transition: all 0.3s;
+    &:hover {
+      color: white;
+      background-color: black;
+      transition: 1s;
+    }
+    &:active {
+      transform: scale(0.7);
+    }
+  }
+}

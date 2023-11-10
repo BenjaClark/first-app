@@ -1,9 +1,9 @@
-.InputSelect {
+.inputDate {
   position: relative;
 
   &:after {
     position: absolute;
-    content: url(../../../assets/Vector.svg);
+    content: url(../../../assets/Calendar.svg);
     background-color: none;
     border-bottom: 3px solid #959595;
     width: 30px;
@@ -24,11 +24,12 @@
     top: 3px;
   }
 
-  select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
 
+  input {
     font-size: 16px;
     color: #959595;
     height: 50px;

@@ -9,16 +9,22 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Oswald", sans-serif;
+  border: none;
+  outline: none;
 }
 
-.material-symbols-outlined {
-  color: #959595;
-  cursor: pointer;
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+::-webkit-scrollbar {
+  width: 7px;
 }
 
-.material-symbols-outlined:hover {
-  color: black;
-  background-color: #fae890;
-  transition: 1s;
+::-webkit-scrollbar-track {
+  background: #cccccc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

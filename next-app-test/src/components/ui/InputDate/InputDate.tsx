@@ -1,8 +1,8 @@
 import React from "react";
 
-import styles from "./InputText.module.scss";
+import styles from "./InputDate.module.scss";
 
-interface IText {
+interface IDate {
   label: string;
   type: string;
   placeholder: string;
@@ -12,7 +12,7 @@ interface IText {
   name?: string;
 }
 
-const inputText = ({
+const inputDate = ({
   label,
   type,
   placeholder,
@@ -20,9 +20,9 @@ const inputText = ({
   onChange,
   value,
   name,
-}: IText) => {
+}: IDate) => {
   return (
-    <div className={styles.InputText} style={{ width }}>
+    <div className={styles.inputDate} style={{ width }}>
       <label>{label}</label>
       <input
         type={type}
@@ -35,4 +35,4 @@ const inputText = ({
   );
 };
 
-export default inputText;
+export default inputDate;

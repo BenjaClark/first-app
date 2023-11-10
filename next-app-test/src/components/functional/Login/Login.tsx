@@ -7,8 +7,23 @@ import Image from "@/components/ui/Image";
 import InputText from "@/components/ui/InputText";
 import Button from "@/components/ui/Button";
 import Link from "@/components/ui/Link/Link";
+import { useState } from "react";
+
+const initData = {
+  email: { value: "", isValid: true },
+  password: { value: "", isValid: true },
+};
 
 const Login = () => {
+  const [form, setForm] = useState(initData);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: { value: e.target.value, isValid: true },
+    });
+  };
+
   const router = useRouter();
 
   const handleClick = () => {
@@ -25,12 +40,18 @@ const Login = () => {
           type="text"
           placeholder="claudio@matus.cl"
           width="300px"
+          onChange={handleOnChange}
+          value={form.email.value}
+          name="email"
         />
         <InputText
           label="Contraseña"
           type="password"
           placeholder="**********"
           width="300px"
+          onChange={handleOnChange}
+          value={form.password.value}
+          name="password"
         />
         <Button label="Ingresar" onClick={handleClick} />
 
