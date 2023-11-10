@@ -1,6 +1,10 @@
+"use client";
+
 import React, { ReactNode } from "react";
 
 import styles from "./Screen.module.scss";
+import { StoreProvider } from "@/context/StoreContext";
+import { ShapeProvider } from "@/context/ShapeContext";
 
 interface IScreen {
   children: ReactNode;
@@ -11,12 +15,20 @@ interface IScreen {
 
 const Screen = ({ children, valign, halign, height }: IScreen) => {
   return (
-    <div
-      className={styles.screen}
-      style={{ justifyContent: halign, alignContent: valign, height: height }}
-    >
-      {children}
-    </div>
+    <ShapeProvider>
+      <StoreProvider>
+        <div
+          className={styles.screen}
+          style={{
+            justifyContent: halign,
+            alignContent: valign,
+            height: height,
+          }}
+        >
+          {children}
+        </div>
+      </StoreProvider>
+    </ShapeProvider>
   );
 };
 

@@ -1,7 +1,6 @@
 import React from "react";
+import Reception from "@/components/functional/Reception";
 
-const Reception = () => {
-  return <div>Recepción</div>;
-};
-
-export default Reception;
+export default function ReceptionPage() {
+  return <Reception />;
+}

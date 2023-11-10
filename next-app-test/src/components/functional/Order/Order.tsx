@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { ContentCell, ContentRow } from "@/components/layout/Content";
 import InputText from "@/components/ui/InputText";
@@ -7,6 +7,7 @@ import InputSelect from "@/components/ui/InputSelect";
 import Option from "@/components/layout/Option";
 import OptionHeader from "@/components/layout/OptionHeader";
 import InputDate from "@/components/ui/InputDate";
+import { StoreContext } from "@/context/StoreContext";
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -39,22 +40,23 @@ const initData = {
   date: { value: "", isValid: true },
 };
 
-const dataSelect = [
-  { name: "opcion1", text: "Opción 1", color: "red" },
-  { name: "opcion2", text: "Opción 2", color: "green" },
-  { name: "opcion3", text: "Opción 3", color: "blue" },
-  { name: "opcion4", text: "Opción 4", color: "yellow" },
-];
-
 const Order = () => {
   const [form, setForm] = useState(initData);
+  const { store, setColor, setStore, dataSelect } = useContext(StoreContext);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: { value: e.target.value, isValid: true },
     });
+    setStore(e.target.value);
+    const color = dataSelect.filter(
+      (item: any) => item.value === e.target.value
+    );
+    console.log(color[0]);
+    setColor(color[0].color);
   };
+
   return (
     <Option>
       <OptionHeader>
@@ -206,9 +208,9 @@ const Order = () => {
               <InputSelect
                 label="Sucursal"
                 width="266px"
-                value={form.extra.value}
+                value={store}
                 onChange={handleOnChange}
-                name="extra"
+                name="sucursal"
                 data={dataSelect}
               />
             </ContentRow>

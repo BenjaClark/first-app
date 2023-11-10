@@ -1,42 +1,29 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useState } from "react";
 
-const StoreContext = createContext<any>({});
+export const StoreContext = createContext<any>({});
 
 interface IStoreProvider {
   children: ReactNode;
 }
 
-const colors = {
-  blue: "blue",
-  red: "red",
-  white: "white",
-  green: "green",
-};
+const dataSelect = [
+  { value: "opcion1", text: "Sucursal 1", color: "red" },
+  { value: "opcion2", text: "Sucursal 2", color: "green" },
+  { value: "opcion3", text: "Sucursal 3", color: "blue" },
+  { value: "opcion4", text: "Sucursal 4", color: "orange" },
+];
 
-const stores = {
-  Antofagasta: "Antofagasta",
-  Valparaíso: "Valparaíso",
-  Santiago: "Santiago",
-  Arica: "green",
-};
-
-export const StoreProvider = ({ children }: IStoreProvider) => {
-  const [label, setLabel] = useState("Sucursal");
-  const [bgColor, setBgColor] = useState("white");
+const StoreProvider = ({ children }: IStoreProvider) => {
+  const [store, setStore] = useState("Sucursal");
+  const [color, setColor] = useState("yellow");
 
   return (
-    <StoreContext.Provider value={{ label, setLabel, bgColor, setBgColor }}>
+    <StoreContext.Provider
+      value={{ store, setStore, color, setColor, dataSelect }}
+    >
       {children}
     </StoreContext.Provider>
   );
 };
-
-export const useStore = () => {
-  const context = useContext(StoreContext);
-
-  if (!context) {
-    throw new Error("useStore debe ser usado dentro de un StoreProvider");
-  }
-
-  return context;
-};
+export { StoreProvider };
+export default StoreContext;

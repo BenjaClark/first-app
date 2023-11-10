@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styles from "./Header.module.scss";
 import InputText from "../InputText";
 import InputSelect from "../InputSelect";
 import InputDate from "../InputDate";
 import Store from "../Store";
-import { useStore } from "@/context/StoreContext";
+import { StoreContext } from "@/context/StoreContext";
 
 const initData = {
   etiqueta: { value: "", isValid: true },
@@ -25,7 +25,7 @@ interface IHeader {
 
 const Header = ({ text }: IHeader) => {
   const [form, setForm] = useState(initData);
-  const { bgColor, label } = useStore();
+  const { color, store } = useContext(StoreContext);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -37,7 +37,6 @@ const Header = ({ text }: IHeader) => {
     });
   };
 
-  console.log(form);
   return (
     <div className={styles.header}>
       <ul className={styles.left}>
@@ -76,7 +75,7 @@ const Header = ({ text }: IHeader) => {
         />
       </ul>
       <ul>
-        <Store label={label} bgColor={bgColor} />
+        <Store label={store} bgColor={color} />
       </ul>
     </div>
   );

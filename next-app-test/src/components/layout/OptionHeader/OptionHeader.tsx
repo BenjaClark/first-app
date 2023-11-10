@@ -1,9 +1,8 @@
-import React, { Fragment, ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 import Header from "@/components/ui/Header";
 
 import styles from "./OptionHeader.module.scss";
-import { StoreProvider } from "@/context/StoreContext";
 
 interface IOptionHeader {
   children: ReactNode;
@@ -12,9 +11,7 @@ interface IOptionHeader {
 const OptionHeader = ({ children }: IOptionHeader) => {
   return (
     <div className={styles.container}>
-      <StoreProvider>
-        <Header text="Pedido" />
-      </StoreProvider>
+      <Header text="Pedido" />
       <div className={styles.body}>{children}</div>
     </div>
   );
