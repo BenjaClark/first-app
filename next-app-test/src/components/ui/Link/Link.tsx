@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Link.module.scss";
 
 interface ILink {
-  label: string;
+  label?: string;
 }
 
 const Link = ({ label }: ILink) => {

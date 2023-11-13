@@ -59,7 +59,7 @@ const Order = () => {
 
   return (
     <Option>
-      <OptionHeader>
+      <OptionHeader label="Pedido">
         <ContentRow gap="20px">
           <ContentCell gap="20px">
             <ContentCell gap="5px">

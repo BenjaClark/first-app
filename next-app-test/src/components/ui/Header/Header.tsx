@@ -20,10 +20,10 @@ const dataSelect = [
 ];
 
 interface IHeader {
-  text: string;
+  label: string;
 }
 
-const Header = ({ text }: IHeader) => {
+const Header = ({ label }: IHeader) => {
   const [form, setForm] = useState(initData);
   const { color, store } = useContext(StoreContext);
 
@@ -40,7 +40,7 @@ const Header = ({ text }: IHeader) => {
   return (
     <div className={styles.header}>
       <ul className={styles.left}>
-        <label>{text}</label>
+        <label>{label}</label>
       </ul>
       <ul className={styles.right}>
         <InputText

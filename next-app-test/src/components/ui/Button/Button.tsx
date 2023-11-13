@@ -5,8 +5,8 @@ import React from "react";
 import styles from "./Button.module.scss";
 
 interface IButton {
-  label: string;
-  onClick: () => void;
+  label?: string;
+  onClick?: () => void;
   value?: string;
 }
 

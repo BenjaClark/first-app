@@ -8,7 +8,8 @@ interface IText {
   placeholder: string;
   width: string;
   onChange?: any;
-  value?: string;
+  onBlur?: any;
+  value: string;
   name?: string;
 }
 
@@ -18,6 +19,7 @@ const inputText = ({
   placeholder,
   width,
   onChange,
+  onBlur,
   value,
   name,
 }: IText) => {
@@ -28,6 +30,7 @@ const inputText = ({
         type={type}
         placeholder={placeholder}
         onChange={onChange}
+        onBlur={onBlur}
         value={value}
         name={name}
       />

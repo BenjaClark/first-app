@@ -1,4 +1,6 @@
 import express from "express";
+import cors from "cors";
+
 import { reqLogger } from "./middlewares/logger";
 
 import * as routes from "./routes";
@@ -13,6 +15,7 @@ class App {
   }
 
   middlewares() {
+    this.server.use(cors());
     this.server.use(express.json());
     this.server.use(express.urlencoded({ extended: false }));
   }

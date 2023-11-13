@@ -38,6 +38,8 @@ const Menu = () => {
         { title: "Pedidos especiales", path: "/order" },
         { title: "Registro de sobrantes", path: "/order" },
         { title: "Revisión de Stock", path: "/order" },
+        { title: "Registro de Persona", path: "/registerPerson" },
+        { title: "Registro de Usuario", path: "/registerUser" },
       ],
     },
   ];
