@@ -30,7 +30,7 @@ const User = () => {
     });
   };
 
-  const onClick = () => {
+  const createUserOnClick = () => {
     if (form.password.value === form.repeatPassword.value) {
       axios
         .post("http://localhost:3001/api/user/upsert", {
@@ -42,6 +42,24 @@ const User = () => {
           phone: form.phone.value,
           address: form.address.value,
           district: form.district.value,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      alert("Las contraseñas no coinciden");
+    }
+  };
+
+  const assignOnClick = () => {
+    if (form.password.value === form.repeatPassword.value) {
+      axios
+        .post("http://localhost:3001/api/user/assignPassword/", {
+          login: form.email.value,
+          password: form.password.value,
         })
         .then(function (response) {
           console.log(response);
@@ -141,7 +159,7 @@ const User = () => {
         />
       </ContentCell>
 
-      <Button label="Crear" onClick={onClick} />
+      <Button label="Crear" onClick={createUserOnClick} />
 
       <ContentCell gap="7px">
         <InputText
@@ -165,7 +183,7 @@ const User = () => {
         />
       </ContentCell>
 
-      <Button label="Crear" onClick={onClick} />
+      <Button label="Crear" onClick={assignOnClick} />
     </Option>
   );
 };

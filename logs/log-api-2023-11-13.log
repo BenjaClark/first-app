@@ -123,3 +123,8 @@
 {"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/"},"timestamp":"2023-11-13 16:02:45"}
 {"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-13 16:03:16"}
 {"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-13 16:03:17"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-13 16:10:19"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-13 16:10:20"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-13 16:10:23"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-13 16:10:23"}
+{"level":"info","message":{"body":{"address":"","district":"","email":"","maternalLastName":"","name":"","paternalLastName":"","phone":"","rut":""},"method":"POST","params":"","query":"","url":"/api/user/upsert"},"timestamp":"2023-11-13 16:38:30"}
