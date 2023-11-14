@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
-import axios from "axios";
-import { ContentCell, ContentRow } from "@/components/layout/Content";
-import InputText from "@/components/ui/InputText";
+import React, { useState, useEffect } from "react";
 
+import { ContentCell } from "@/components/layout/Content";
+
+import InputText from "@/components/ui/InputText";
 import Option from "@/components/layout/Option";
-import OptionHeader from "@/components/layout/OptionHeader";
-import { StoreContext } from "@/context/StoreContext";
 import Button from "@/components/ui/Button";
+
+import { usePerson } from "@/store/hooks";
+
 import styles from "./Person.module.scss";
 
 const initData = {
@@ -21,6 +22,8 @@ const initData = {
 };
 
 const Person = () => {
+  const { person, isLoading, isError, error, upsert, getByRut } = usePerson();
+
   const [form, setForm] = useState(initData);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,56 +35,35 @@ const Person = () => {
 
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const rut = e.target.value;
-
-    axios
-      .get(`http://localhost:3001/api/person/getByRut/${rut}`)
-      .then(function (response) {
-        const {
-          rut,
-          name,
-          paternalLastName,
-          maternalLastName,
-          email,
-          phone,
-          address,
-          district,
-        } = response.data;
-        setForm({
-          ...form,
-          rut: { value: rut, isValid: true },
-          name: { value: name, isValid: true },
-          paternalLastName: { value: paternalLastName, isValid: true },
-          maternalLastName: { value: maternalLastName, isValid: true },
-          email: { value: email, isValid: true },
-          phone: { value: phone, isValid: true },
-          address: { value: address, isValid: true },
-          district: { value: district, isValid: true },
-        });
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    getByRut(rut);
   };
 
+  useEffect(() => {
+    setForm({
+      ...form,
+      rut: { value: person.rut, isValid: true },
+      name: { value: person.name, isValid: true },
+      paternalLastName: { value: person.paternalLastName, isValid: true },
+      maternalLastName: { value: person.maternalLastName, isValid: true },
+      email: { value: person.email, isValid: true },
+      phone: { value: person.phone, isValid: true },
+      address: { value: person.address, isValid: true },
+      district: { value: person.district, isValid: true },
+    });
+  }, [person]);
+
   const onClick = () => {
-    axios
-      .post("http://localhost:3001/api/person/upsert", {
-        rut: form.rut.value,
-        name: form.name.value,
-        paternalLastName: form.paternalLastName.value,
-        maternalLastName: form.maternalLastName.value,
-        email: form.email.value,
-        phone: form.phone.value,
-        address: form.address.value,
-        district: form.district.value,
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    console.log(form);
+    upsert({
+      rut: form.rut.value,
+      name: form.name.value,
+      paternalLastName: form.paternalLastName.value,
+      maternalLastName: form.maternalLastName.value,
+      email: form.email.value,
+      district: form.district.value,
+      phone: form.phone.value,
+      address: form.address.value,
+    });
   };
   return (
     <Option>

@@ -420,6 +420,7 @@ const validate = async (req: any, res: any) => {
   res.status(200).json({
     success: true,
     data: "Validado correctamente",
+    isValid,
     error: null,
   });
   return;

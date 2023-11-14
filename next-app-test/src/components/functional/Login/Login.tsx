@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-
+import axios from "axios";
 import { ContentCell, ContentRow } from "@/components/layout/Content";
 import Image from "@/components/ui/Image";
 import InputText from "@/components/ui/InputText";
@@ -27,7 +27,24 @@ const Login = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/welcome");
+    axios
+      .post("http://localhost:3001/api/user/validate/", {
+        login: form.email.value,
+        password: form.password.value,
+      })
+      .then(function (response) {
+        console.log(response);
+        if (response.data.isValid) {
+          alert("Inicio de sesión exitoso");
+          router.push("/welcome");
+        } else {
+          console.log("Credenciales inválidas");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        alert("Credenciales inválidas");
+      });
   };
 
   return (

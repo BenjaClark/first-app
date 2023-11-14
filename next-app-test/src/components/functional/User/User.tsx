@@ -54,6 +54,40 @@ const User = () => {
     }
   };
 
+  const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    const rut = e.target.value;
+
+    axios
+      .get(`http://localhost:3001/api/person/getByRut/${rut}`)
+      .then(function (response) {
+        const {
+          rut,
+          name,
+          paternalLastName,
+          maternalLastName,
+          email,
+          phone,
+          address,
+          district,
+        } = response.data.data;
+        setForm({
+          ...form,
+          rut: { value: rut, isValid: true },
+          name: { value: name, isValid: true },
+          paternalLastName: { value: paternalLastName, isValid: true },
+          maternalLastName: { value: maternalLastName, isValid: true },
+          email: { value: email, isValid: true },
+          phone: { value: phone, isValid: true },
+          address: { value: address, isValid: true },
+          district: { value: district, isValid: true },
+        });
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const assignOnClick = () => {
     if (form.password.value === form.repeatPassword.value) {
       axios
@@ -84,6 +118,7 @@ const User = () => {
           placeholder="11.111.111-1"
           width="300px"
           onChange={handleOnChange}
+          onBlur={handleOnBlur}
           value={form.rut.value}
           name="rut"
         />
