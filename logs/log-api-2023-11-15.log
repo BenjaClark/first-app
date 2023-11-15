@@ -248,3 +248,24 @@
 {"level":"info","message":{"body":{"login":"benja123@gmail.com","password":""},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-15 13:56:56"}
 {"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-15 13:57:01"}
 {"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-15 13:57:02"}
+{"level":"info","message":{"body":{"login":"benja226@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:34:06"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-15 17:34:06"}
+{"level":"info","message":{"body":{"login":"benja226@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:42:22"}
+{"level":"info","message":{"body":{"login":"benja226@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:42:26"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:43:07"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:43:10"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:43:52"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-15 17:43:53"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:46:43"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:47:55"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:47:57"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:47:58"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:49:32"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:56:14"}
+{"level":"error","message":{"error":"column reference \"id\" is ambiguous","model":"user/getByLogin"},"timestamp":"2023-11-15 17:56:15"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:56:21"}
+{"level":"error","message":{"error":"column reference \"id\" is ambiguous","model":"user/getByLogin"},"timestamp":"2023-11-15 17:56:21"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:57:32"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:57:34"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:57:35"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 17:57:38"}

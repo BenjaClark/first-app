@@ -47,8 +47,21 @@ export const _getAll = `
     WHERE   usr.isactive = true`;
 
 export const _getByLogin = `
-    SELECT  id, person_id, login, hash 
-    FROM    app.user WHERE login = $1`;
+    SELECT  usr.id, 
+            usr.person_id, 
+            usr.login, 
+            usr.hash,
+            per.rut, 
+            per.name, 
+            per.paternallastname, 
+            per.maternallastname, 
+            per.address, 
+            per.district, 
+            per.email, 
+            per.phone 
+    FROM    app.user usr
+    INNER JOIN app.person per ON usr.login = per.email
+    WHERE   usr.login = $1`;
 
 export const _insert = `
     INSERT INTO app.user (person_id, login) 

@@ -1,0 +1,29 @@
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:02:39"}
+{"level":"error","message":{"error":"bind message supplies 1 parameters, but prepared statement \"\" requires 0","model":"user/getByLogin"},"timestamp":"2023-11-15 18:02:39"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:02:45"}
+{"level":"error","message":{"error":"bind message supplies 1 parameters, but prepared statement \"\" requires 0","model":"user/getByLogin"},"timestamp":"2023-11-15 18:02:47"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:03:04"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:03:40"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:06:36"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:06:38"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:09:27"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:09:31"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:14:41"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:15:22"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:15:25"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:15:26"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"1233"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:15:31"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:15:36"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:16:18"}
+{"level":"error","message":{"error":"syntax error at or near \".\"","model":"user/getByLogin"},"timestamp":"2023-11-15 18:16:18"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:16:21"}
+{"level":"error","message":{"error":"syntax error at or near \".\"","model":"user/getByLogin"},"timestamp":"2023-11-15 18:16:21"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:17:10"}
+{"level":"error","message":{"error":"syntax error at or near \".\"","model":"user/getByLogin"},"timestamp":"2023-11-15 18:17:11"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:17:43"}
+{"level":"error","message":{"error":"syntax error at or near \".\"","model":"user/getByLogin"},"timestamp":"2023-11-15 18:17:43"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:18:58"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-15 18:18:59"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-15 18:22:26"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-15 18:22:26"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"hhjjjj"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-15 18:23:26"}

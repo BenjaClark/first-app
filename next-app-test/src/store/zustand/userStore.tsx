@@ -1,12 +1,11 @@
 import { create } from "zustand";
 
 import { apiInstance } from "@/utils/api";
-
-import { IUser } from "@/interfaces/user";
 import { IPerson } from "@/interfaces/person";
+import { IUser } from "@/interfaces/user";
 
 interface userState {
-  person: IPerson;
+  user: IUser;
   isLoading: boolean;
   isError: boolean;
   error: string;
@@ -15,7 +14,7 @@ interface userState {
   getByLogin: (login: string) => void;
   getAll: () => void;
   deleteById: (id: string) => void;
-  upsert: (person: IPerson) => void;
+  upsert: (person: IUser) => void;
   assignPassword: (login: string, password: string) => void;
   validate: (login: string, password: string) => void;
   updatePassword: (
@@ -26,8 +25,10 @@ interface userState {
 }
 
 export const userStore = create<userState>((set) => ({
-  person: {
+  user: {
     id: "",
+    person_id: "",
+    login: "",
     rut: "",
     name: "",
     paternalLastName: "",
@@ -40,6 +41,7 @@ export const userStore = create<userState>((set) => ({
   isLoading: false,
   isError: false,
   error: "",
+  data: "",
 
   getById: async (id: string) => {
     try {
@@ -52,7 +54,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data,
+        user: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -74,11 +76,11 @@ export const userStore = create<userState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/person/getByRut/${rut}`);
+      const { data } = await apiInstance.get(`/user/getByRut/${rut}`);
 
       set((state) => ({
         ...state,
-        person: data.data,
+        user: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -93,14 +95,14 @@ export const userStore = create<userState>((set) => ({
     }
   },
 
-  getByLogin: async (rut: string) => {
+  getByLogin: async (login: string) => {
     try {
       set((state) => ({
         ...state,
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/user/getByRut/${rut}`);
+      const { data } = await apiInstance.get(`/user/getByLogin/${login}`);
 
       set((state) => ({
         ...state,
@@ -130,7 +132,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data,
+        user: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -224,7 +226,7 @@ export const userStore = create<userState>((set) => ({
     }
   },
 
-  validate: async (login: string, password: string): Promise<boolean> => {
+  validate: async (login: string, password: string) => {
     try {
       set((state) => ({
         ...state,
@@ -236,17 +238,13 @@ export const userStore = create<userState>((set) => ({
         password,
       });
 
-      const isValid = data.data;
-
       set((state) => ({
         ...state,
         user: data.data,
         isLoading: false,
-        isError: true,
-        error: !isValid ? "Credenciales inválidas" : "",
+        isError: false,
+        error: "",
       }));
-
-      return isValid;
     } catch (e) {
       set((state) => ({
         ...state,
@@ -254,8 +252,6 @@ export const userStore = create<userState>((set) => ({
         isError: true,
         error: (e as Error).message,
       }));
-
-      return false;
     }
   },
 

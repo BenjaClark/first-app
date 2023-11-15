@@ -16,7 +16,6 @@ const initData = {
 
 const Login = () => {
   const { validate } = useUser();
-
   const [form, setForm] = useState(initData);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +32,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    // router.push("/welcome");
+    router.push("/welcome");
   }, [validate]);
 
   const router = useRouter();

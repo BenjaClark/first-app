@@ -23,7 +23,7 @@ const initData = {
 
 const User = () => {
   const {
-    person,
+    user,
     isLoading,
     isError,
     error,
@@ -71,20 +71,20 @@ const User = () => {
   };
 
   useEffect(() => {
-    if (person) {
+    if (user) {
       setForm({
         ...form,
-        rut: { value: person.rut, isValid: true },
-        name: { value: person.name, isValid: true },
-        paternalLastName: { value: person.paternalLastName, isValid: true },
-        maternalLastName: { value: person.maternalLastName, isValid: true },
-        email: { value: person.email, isValid: true },
-        phone: { value: person.phone, isValid: true },
-        address: { value: person.address, isValid: true },
-        district: { value: person.district, isValid: true },
+        rut: { value: user.rut, isValid: true },
+        name: { value: user.name, isValid: true },
+        paternalLastName: { value: user.paternalLastName, isValid: true },
+        maternalLastName: { value: user.maternalLastName, isValid: true },
+        email: { value: user.email, isValid: true },
+        phone: { value: user.phone, isValid: true },
+        address: { value: user.address, isValid: true },
+        district: { value: user.district, isValid: true },
       });
     }
-  }, [person]);
+  }, [user]);
 
   return (
     <Option>

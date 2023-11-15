@@ -131,8 +131,15 @@ const getByLogin = async (req: any, res: any) => {
   const data = {
     id: result.data.id,
     person_id: result.data.person_id,
+    login: result.data.login,
+    rut: result.data.rut,
+    name: result.data.name,
+    paternallastname: result.data.paternalLastName,
+    maternallastname: result.data.maternalLastName,
+    address: result.data.address,
+    district: result.data.district,
     email: result.data.email,
-    hash: result.data.hash,
+    phone: result.data.phone,
   };
   createLogger.info({
     controller: "user/getByLogin",
@@ -409,17 +416,44 @@ const validate = async (req: any, res: any) => {
   if (!isValid) {
     res
       .status(403)
-      .json({ success: false, data: null, error: "Usuario no valido" });
+      .json({ success: true, data: null, error: "Usuario no valido" });
     return;
   }
   createLogger.info({
     controller: "user/validate",
     message: "OK",
   });
+
+  const {
+    id,
+    person_id,
+    rut,
+    name,
+    paternallastname,
+    maternallastname,
+    address,
+    district,
+    email,
+    phone,
+  } = resultGetByLogin.data;
+
+  const data = {
+    id,
+    person_id,
+    login,
+    rut,
+    name,
+    paternalLastName: paternallastname,
+    maternalLastName: maternallastname,
+    address,
+    district,
+    email,
+    phone,
+  };
+
   res.status(200).json({
     success: true,
-    data: "Validado correctamente",
-    isValid,
+    data,
     error: null,
   });
   return;
