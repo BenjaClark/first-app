@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { ContentCell, ContentRow } from "@/components/layout/Content";
 import Image from "@/components/ui/Image";
 import InputText from "@/components/ui/InputText";
 import Button from "@/components/ui/Button";
 import Link from "@/components/ui/Link/Link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useUser } from "@/store/hooks";
 
 const initData = {
   email: { value: "", isValid: true },
@@ -15,6 +15,8 @@ const initData = {
 };
 
 const Login = () => {
+  const { validate } = useUser();
+
   const [form, setForm] = useState(initData);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,28 +26,17 @@ const Login = () => {
     });
   };
 
-  const router = useRouter();
-
   const handleClick = () => {
-    axios
-      .post("http://localhost:3001/api/user/validate/", {
-        login: form.email.value,
-        password: form.password.value,
-      })
-      .then(function (response) {
-        console.log(response);
-        if (response.data.isValid) {
-          alert("Inicio de sesión exitoso");
-          router.push("/welcome");
-        } else {
-          console.log("Credenciales inválidas");
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-        alert("Credenciales inválidas");
-      });
+    const email = form.email.value;
+    const password = form.password.value;
+    validate(email, password);
   };
+
+  useEffect(() => {
+    // router.push("/welcome");
+  }, [validate]);
+
+  const router = useRouter();
 
   return (
     <ContentCell gap="65px">

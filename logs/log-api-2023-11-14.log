@@ -88,3 +88,111 @@
 {"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"sdqwdqwd"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-13 18:54:59"}
 {"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-13 18:55:08"}
 {"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-13 18:55:08"}
+{"level":"info","message":{"body":{"login":"","password":""},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-14 13:00:02"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-14 13:00:08"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-14 13:00:10"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:02:06"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:02:06"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:08:16"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:08:16"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:08:23"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:08:23"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:08:38"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:08:39"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:08:41"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:08:42"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:09:10"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:09:11"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:09:21"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:09:22"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 13:09:57"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 13:09:58"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/"},"timestamp":"2023-11-14 13:12:04"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/"},"timestamp":"2023-11-14 13:12:08"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:12:29"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:12:30"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:13:34"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:13:35"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:15:02"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:15:03"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:15:05"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:15:05"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:15:09"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:15:09"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:19:25"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:19:25"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:19:28"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:19:28"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:19:44"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:19:45"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 13:19:54"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 13:19:54"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:20:56"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:20:57"}
+{"level":"info","message":{"body":{},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 13:28:33"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 13:28:34"}
+{"level":"info","message":{"body":{},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 13:29:26"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 13:29:27"}
+{"level":"info","message":{"body":{},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 13:31:49"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 13:31:50"}
+{"level":"info","message":{"body":{},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 13:31:58"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 13:31:59"}
+{"level":"info","message":{"body":{},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 13:33:01"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 13:33:02"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:35:20"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:35:20"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:35:20"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:35:21"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:36:22"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:36:22"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:36:22"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:36:22"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:36:51"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:36:52"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 13:37:22"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 13:37:23"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:14:45"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:14:46"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:16:51"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:16:52"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:16:59"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:16:59"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:22:20"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:22:21"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:22:24"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:22:24"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:22:35"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:22:36"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:22:45"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:22:46"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:22:51"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:22:51"}
+{"level":"info","message":{"body":{"login":"","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-14 16:29:07"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:29:28"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:29:29"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 16:29:37"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-14 16:29:38"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/"},"timestamp":"2023-11-14 16:29:44"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:29:47"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:29:48"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/assignPassword/"},"timestamp":"2023-11-14 16:29:53"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/user/upsert"},"timestamp":"2023-11-14 16:30:24"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-11-14 16:30:26"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/assignPassword/"},"timestamp":"2023-11-14 16:30:27"}
+{"controller":"user/assignPassword","level":"info","message":"OK","timestamp":"2023-11-14 16:30:28"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate/"},"timestamp":"2023-11-14 16:30:38"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-14 16:30:39"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:49:32"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:49:33"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 16:50:11"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 16:50:12"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin11111","paternalLastName":"Vasquez","phone":"12345678","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 16:50:18"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 17:04:16"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 17:04:17"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678","rut":"20395011k"},"method":"POST","params":"","query":"","url":"/api/person/upsert"},"timestamp":"2023-11-14 17:04:22"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 17:06:26"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 17:06:27"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 18:01:13"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 18:01:14"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011k"},"timestamp":"2023-11-14 18:01:35"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-14 18:01:36"}

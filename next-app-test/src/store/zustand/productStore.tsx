@@ -2,48 +2,42 @@ import { create } from "zustand";
 
 import { apiInstance } from "@/utils/api";
 
-import { IPerson } from "@/interfaces/person";
+import { IProduct } from "@/interfaces/product";
 
-interface personState {
-  person: IPerson;
+interface productState {
+  product: IProduct;
   isLoading: boolean;
   isError: boolean;
   error: string;
-  upsert: (person: IPerson) => void;
-  getByRut: (rut: string) => void;
+  upsert: (product: IProduct) => void;
+  getByCode: (code: number) => void;
   getById: (id: string) => void;
   getAll: () => void;
   deleteById: (id: string) => void;
 }
 
-export const personStore = create<personState>((set) => ({
-  person: {
+export const productStore = create<productState>((set) => ({
+  product: {
     id: "",
-    rut: "",
+    code: 0,
     name: "",
-    paternalLastName: "",
-    maternalLastName: "",
-    address: "",
-    district: "",
-    phone: "",
-    email: "",
+    price: 0,
   },
   isLoading: false,
   isError: false,
   error: "",
-
-  upsert: async (person: IPerson) => {
+  upsert: async (product: IProduct) => {
     try {
       set((state) => ({
         ...state,
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.post("/person/upsert", person);
+      const { data } = await apiInstance.post("/product/upsert", product);
 
       set((state) => ({
         ...state,
-        person: data.data,
+        product: data.data,
         isLoading: false,
         isError: true,
         error: "",
@@ -57,18 +51,18 @@ export const personStore = create<personState>((set) => ({
       }));
     }
   },
-  getByRut: async (rut: string) => {
+  getByCode: async (code: number) => {
     try {
       set((state) => ({
         ...state,
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/person/getByRut/${rut}`);
+      const { data } = await apiInstance.get(`/product/getByCode/${code}`);
 
       set((state) => ({
         ...state,
-        person: data.data,
+        product: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -89,11 +83,11 @@ export const personStore = create<personState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/person/getById/${id}`);
+      const { data } = await apiInstance.get(`/product/getById/${id}`);
 
       set((state) => ({
         ...state,
-        person: data,
+        product: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -114,11 +108,11 @@ export const personStore = create<personState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/person/getAll/`);
+      const { data } = await apiInstance.get(`/product/getAll/`);
 
       set((state) => ({
         ...state,
-        person: data,
+        product: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -139,7 +133,7 @@ export const personStore = create<personState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/person/deleteById/${id}`);
+      const { data } = await apiInstance.get(`/product/deleteById/${id}`);
 
       set((state) => ({
         ...state,

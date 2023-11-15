@@ -2,7 +2,6 @@ import axios from "axios";
 import bcrypt from "bcrypt";
 
 import * as UserModel from "../models/user";
-import * as PersonModel from "../models/person";
 import * as PersonService from "../services/person";
 
 import config from "../utils/config";

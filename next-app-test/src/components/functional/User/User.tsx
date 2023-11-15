@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ContentCell, ContentRow } from "@/components/layout/Content";
 import InputText from "@/components/ui/InputText";
@@ -6,6 +6,7 @@ import InputText from "@/components/ui/InputText";
 import Option from "@/components/layout/Option";
 import Button from "@/components/ui/Button";
 import styles from "./User.module.scss";
+import { usePerson, useUser } from "@/store/hooks";
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -21,6 +22,22 @@ const initData = {
 };
 
 const User = () => {
+  const {
+    person,
+    isLoading,
+    isError,
+    error,
+    getById,
+    getByRut,
+    getByLogin,
+    getAll,
+    deleteById,
+    upsert,
+    assignPassword,
+    validate,
+    updatePassword,
+  } = useUser();
+
   const [form, setForm] = useState(initData);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,81 +47,45 @@ const User = () => {
     });
   };
 
-  const createUserOnClick = () => {
-    if (form.password.value === form.repeatPassword.value) {
-      axios
-        .post("http://localhost:3001/api/user/upsert", {
-          rut: form.rut.value,
-          name: form.name.value,
-          paternalLastName: form.paternalLastName.value,
-          maternalLastName: form.maternalLastName.value,
-          email: form.email.value,
-          phone: form.phone.value,
-          address: form.address.value,
-          district: form.district.value,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else {
-      alert("Las contraseñas no coinciden");
-    }
-  };
-
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const rut = e.target.value;
+    getByRut(rut);
+    console.log(getByRut("20395011k"));
+  };
 
-    axios
-      .get(`http://localhost:3001/api/person/getByRut/${rut}`)
-      .then(function (response) {
-        const {
-          rut,
-          name,
-          paternalLastName,
-          maternalLastName,
-          email,
-          phone,
-          address,
-          district,
-        } = response.data.data;
-        setForm({
-          ...form,
-          rut: { value: rut, isValid: true },
-          name: { value: name, isValid: true },
-          paternalLastName: { value: paternalLastName, isValid: true },
-          maternalLastName: { value: maternalLastName, isValid: true },
-          email: { value: email, isValid: true },
-          phone: { value: phone, isValid: true },
-          address: { value: address, isValid: true },
-          district: { value: district, isValid: true },
-        });
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  const onClick = () => {
+    upsert({
+      rut: form.rut.value,
+      name: form.name.value,
+      paternalLastName: form.paternalLastName.value,
+      maternalLastName: form.maternalLastName.value,
+      email: form.email.value,
+      district: form.district.value,
+      phone: form.phone.value,
+      address: form.address.value,
+    });
   };
 
   const assignOnClick = () => {
-    if (form.password.value === form.repeatPassword.value) {
-      axios
-        .post("http://localhost:3001/api/user/assignPassword/", {
-          login: form.email.value,
-          password: form.password.value,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else {
-      alert("Las contraseñas no coinciden");
-    }
+    assignPassword(form.email.value, form.password.value);
   };
+
+  useEffect(() => {
+    if (person) {
+      setForm({
+        ...form,
+        rut: { value: person.rut, isValid: true },
+        name: { value: person.name, isValid: true },
+        paternalLastName: { value: person.paternalLastName, isValid: true },
+        maternalLastName: { value: person.maternalLastName, isValid: true },
+        email: { value: person.email, isValid: true },
+        phone: { value: person.phone, isValid: true },
+        address: { value: person.address, isValid: true },
+        district: { value: person.district, isValid: true },
+      });
+    }
+  }, [person]);
+
   return (
     <Option>
       <div className={styles.header}>
@@ -194,7 +175,7 @@ const User = () => {
         />
       </ContentCell>
 
-      <Button label="Crear" onClick={createUserOnClick} />
+      <Button label="Crear" onClick={onClick} />
 
       <ContentCell gap="7px">
         <InputText

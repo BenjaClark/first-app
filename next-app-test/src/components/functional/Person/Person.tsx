@@ -36,24 +36,10 @@ const Person = () => {
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const rut = e.target.value;
     getByRut(rut);
+    console.log(getByRut(rut));
   };
 
-  useEffect(() => {
-    setForm({
-      ...form,
-      rut: { value: person.rut, isValid: true },
-      name: { value: person.name, isValid: true },
-      paternalLastName: { value: person.paternalLastName, isValid: true },
-      maternalLastName: { value: person.maternalLastName, isValid: true },
-      email: { value: person.email, isValid: true },
-      phone: { value: person.phone, isValid: true },
-      address: { value: person.address, isValid: true },
-      district: { value: person.district, isValid: true },
-    });
-  }, [person]);
-
   const onClick = () => {
-    console.log(form);
     upsert({
       rut: form.rut.value,
       name: form.name.value,
@@ -65,6 +51,23 @@ const Person = () => {
       address: form.address.value,
     });
   };
+
+  useEffect(() => {
+    if (person) {
+      setForm({
+        ...form,
+        rut: { value: person.rut, isValid: true },
+        name: { value: person.name, isValid: true },
+        paternalLastName: { value: person.paternalLastName, isValid: true },
+        maternalLastName: { value: person.maternalLastName, isValid: true },
+        email: { value: person.email, isValid: true },
+        phone: { value: person.phone, isValid: true },
+        address: { value: person.address, isValid: true },
+        district: { value: person.district, isValid: true },
+      });
+    }
+  }, [person]);
+
   return (
     <Option>
       <div className={styles.header}>
