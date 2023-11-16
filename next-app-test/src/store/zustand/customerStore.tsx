@@ -2,26 +2,31 @@ import { create } from "zustand";
 
 import { apiInstance } from "@/utils/api";
 
-import { ICompany } from "@/interfaces/company";
+import { ICustomer } from "@/interfaces/customer";
 
-interface companyState {
-  company: ICompany;
+interface customerState {
+  customer: ICustomer;
   isLoading: boolean;
   isError: boolean;
   error: string;
-  upsert: (person: ICompany) => void;
+  upsert: (customer: ICustomer) => void;
   getByRut: (rut: string) => void;
   getById: (id: string) => void;
   getAll: () => void;
   deleteById: (id: string) => void;
 }
 
-export const companyStore = create<companyState>((set) => ({
-  company: {
+export const customerStore = create<customerState>((set) => ({
+  customer: {
     id: "",
+    type: "",
+    person_id: "",
+    company_id: "",
     rut: "",
     fantasyName: "",
     name: "",
+    paternalLastName: "",
+    maternalLastName: "",
     activity: "",
     address: "",
     district: "",
@@ -31,18 +36,18 @@ export const companyStore = create<companyState>((set) => ({
   isLoading: false,
   isError: false,
   error: "",
-  upsert: async (company: ICompany) => {
+  upsert: async (customer: ICustomer) => {
     try {
       set((state) => ({
         ...state,
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.post("/company/upsert", company);
+      const { data } = await apiInstance.post("/customer/upsert", customer);
 
       set((state) => ({
         ...state,
-        company: data.data,
+        customer: data.data,
         isLoading: false,
         isError: true,
         error: "",
@@ -63,11 +68,11 @@ export const companyStore = create<companyState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/company/getByRut/${rut}`);
+      const { data } = await apiInstance.get(`/customer/getByRut/${rut}`);
 
       set((state) => ({
         ...state,
-        company: data.data,
+        customer: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -88,11 +93,11 @@ export const companyStore = create<companyState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/company/getById/${id}`);
+      const { data } = await apiInstance.get(`/customer/getById/${id}`);
 
       set((state) => ({
         ...state,
-        company: data.data,
+        customer: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -113,11 +118,11 @@ export const companyStore = create<companyState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/company/getAll/`);
+      const { data } = await apiInstance.get(`/customer/getAll/`);
 
       set((state) => ({
         ...state,
-        company: data.data,
+        customer: data.data,
         isLoading: false,
         isError: false,
         error: "",
@@ -138,7 +143,7 @@ export const companyStore = create<companyState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/company/deleteById/${id}`);
+      const { data } = await apiInstance.get(`/customer/deleteById/${id}`);
 
       set((state) => ({
         ...state,

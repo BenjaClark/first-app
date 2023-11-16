@@ -6,8 +6,9 @@ import Image from "@/components/ui/Image";
 import InputText from "@/components/ui/InputText";
 import Button from "@/components/ui/Button";
 import Link from "@/components/ui/Link/Link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useUser } from "@/store/hooks";
+import FloatingBarContext from "@/context/FloatingBarContext";
 
 const initData = {
   email: { value: "", isValid: true },
@@ -15,8 +16,9 @@ const initData = {
 };
 
 const Login = () => {
-  const { validate } = useUser();
+  const { validate, user } = useUser();
   const [form, setForm] = useState(initData);
+  const { name, setName } = useContext(FloatingBarContext);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -32,8 +34,8 @@ const Login = () => {
   };
 
   useEffect(() => {
-    router.push("/welcome");
-  }, [validate]);
+    if (user.rut !== "") router.push("/welcome");
+  }, [user]);
 
   const router = useRouter();
 

@@ -19,9 +19,9 @@ interface productState {
 export const productStore = create<productState>((set) => ({
   product: {
     id: "",
-    code: 0,
+    code: "",
     name: "",
-    price: 0,
+    price: "",
   },
   isLoading: false,
   isError: false,

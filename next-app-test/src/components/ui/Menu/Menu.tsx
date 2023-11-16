@@ -32,14 +32,15 @@ const Menu = () => {
     },
 
     {
-      title: "Procesos",
-      path: "/process",
+      title: "Registro",
+      path: "/register",
       subTitle: [
-        { title: "Pedidos especiales", path: "/order" },
-        { title: "Registro de sobrantes", path: "/order" },
-        { title: "Revisión de Stock", path: "/order" },
         { title: "Registro de Persona", path: "/registerPerson" },
+        { title: "Registro de Empresa", path: "/registerCompany" },
         { title: "Registro de Usuario", path: "/registerUser" },
+        { title: "Registro de Customer", path: "/registerCustomer" },
+        { title: "Registro de Producto", path: "/registerProduct" },
+        { title: "Registro de Invoice", path: "/registerInvoice" },
       ],
     },
   ];

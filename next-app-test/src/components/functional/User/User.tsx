@@ -50,7 +50,6 @@ const User = () => {
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const rut = e.target.value;
     getByRut(rut);
-    console.log(getByRut("20395011k"));
   };
 
   const onClick = () => {
@@ -82,6 +81,19 @@ const User = () => {
         phone: { value: user.phone, isValid: true },
         address: { value: user.address, isValid: true },
         district: { value: user.district, isValid: true },
+      });
+    } else if (!user) {
+      setForm({
+        ...form,
+        name: { value: "", isValid: true },
+        paternalLastName: { value: "", isValid: true },
+        maternalLastName: { value: "", isValid: true },
+        email: { value: "", isValid: true },
+        phone: { value: "", isValid: true },
+        address: { value: "", isValid: true },
+        district: { value: "", isValid: true },
+        password: { value: "", isValid: true },
+        repeatPassword: { value: "", isValid: true },
       });
     }
   }, [user]);

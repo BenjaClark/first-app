@@ -8,6 +8,8 @@ import Option from "@/components/layout/Option";
 import OptionHeader from "@/components/layout/OptionHeader";
 import InputDate from "@/components/ui/InputDate";
 import { StoreContext } from "@/context/StoreContext";
+import FloatingBar from "@/components/ui/FloatingBar";
+import FloatingBarContext from "@/context/FloatingBarContext";
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -43,6 +45,7 @@ const initData = {
 const Order = () => {
   const [form, setForm] = useState(initData);
   const { store, setColor, setStore, dataSelect } = useContext(StoreContext);
+  const { name } = useContext(FloatingBarContext);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -331,6 +334,7 @@ const Order = () => {
           </ContentCell>
         </ContentRow>
       </OptionHeader>
+      <FloatingBar name={name} />
     </Option>
   );
 };

@@ -6,23 +6,23 @@ import InputText from "@/components/ui/InputText";
 import Option from "@/components/layout/Option";
 import Button from "@/components/ui/Button";
 
-import { usePerson } from "@/store/hooks";
+import { useCompany } from "@/store/hooks";
 
-import styles from "./Person.module.scss";
+import styles from "./Company.module.scss";
 
 const initData = {
   rut: { value: "", isValid: true },
+  fantasyName: { value: "", isValid: true },
   name: { value: "", isValid: true },
-  paternalLastName: { value: "", isValid: true },
-  maternalLastName: { value: "", isValid: true },
+  activity: { value: "", isValid: true },
   email: { value: "", isValid: true },
   phone: { value: "", isValid: true },
   address: { value: "", isValid: true },
   district: { value: "", isValid: true },
 };
 
-const Person = () => {
-  const { person, isLoading, isError, error, upsert, getByRut } = usePerson();
+const Company = () => {
+  const { company, isLoading, isError, error, upsert, getByRut } = useCompany();
 
   const [form, setForm] = useState(initData);
 
@@ -41,9 +41,9 @@ const Person = () => {
   const onClick = () => {
     upsert({
       rut: form.rut.value,
+      fantasyName: form.fantasyName.value,
       name: form.name.value,
-      paternalLastName: form.paternalLastName.value,
-      maternalLastName: form.maternalLastName.value,
+      activity: form.activity.value,
       email: form.email.value,
       district: form.district.value,
       phone: form.phone.value,
@@ -52,42 +52,42 @@ const Person = () => {
   };
 
   useEffect(() => {
-    if (person) {
+    if (company) {
       setForm({
         ...form,
-        rut: { value: person.rut, isValid: true },
-        name: { value: person.name, isValid: true },
-        paternalLastName: { value: person.paternalLastName, isValid: true },
-        maternalLastName: { value: person.maternalLastName, isValid: true },
-        email: { value: person.email, isValid: true },
-        phone: { value: person.phone, isValid: true },
-        address: { value: person.address, isValid: true },
-        district: { value: person.district, isValid: true },
+        rut: { value: company.rut, isValid: true },
+        name: { value: company.name, isValid: true },
+        fantasyName: { value: company.fantasyName, isValid: true },
+        activity: { value: company.activity, isValid: true },
+        email: { value: company.email, isValid: true },
+        phone: { value: company.phone, isValid: true },
+        address: { value: company.address, isValid: true },
+        district: { value: company.district, isValid: true },
       });
-    } else if (!person) {
+    } else if (!company) {
       setForm({
         ...form,
+        fantasyName: { value: "", isValid: true },
         name: { value: "", isValid: true },
-        paternalLastName: { value: "", isValid: true },
-        maternalLastName: { value: "", isValid: true },
+        activity: { value: "", isValid: true },
         email: { value: "", isValid: true },
         phone: { value: "", isValid: true },
         address: { value: "", isValid: true },
         district: { value: "", isValid: true },
       });
     }
-  }, [person]);
+  }, [company]);
 
   return (
     <Option>
       <div className={styles.header}>
-        <ul className={styles.left}>Persona</ul>
+        <ul className={styles.left}>Empresa</ul>
       </div>
       <ContentCell gap="7px">
         <InputText
           label="Rut"
           type="text"
-          placeholder="11.111.111-1"
+          placeholder="77.777.777-7"
           width="300px"
           onChange={handleOnChange}
           onBlur={handleOnBlur}
@@ -96,9 +96,19 @@ const Person = () => {
         />
 
         <InputText
+          label="Nombre de fantasía"
+          type="text"
+          placeholder="El Parrón - Norte 2"
+          width="300px"
+          onChange={handleOnChange}
+          value={form.fantasyName.value}
+          name="fantasyName"
+        />
+
+        <InputText
           label="Nombre"
           type="text"
-          placeholder="Julio"
+          placeholder="El Parrón"
           width="300px"
           onChange={handleOnChange}
           value={form.name.value}
@@ -106,23 +116,13 @@ const Person = () => {
         />
 
         <InputText
-          label="Apellido Paterno"
+          label="Actividad"
           type="text"
-          placeholder="Rodriguez"
+          placeholder="Venta de..."
           width="300px"
           onChange={handleOnChange}
-          value={form.paternalLastName.value}
-          name="paternalLastName"
-        />
-
-        <InputText
-          label="Apellido Materno"
-          type="text"
-          placeholder="Acevedo"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.maternalLastName.value}
-          name="maternalLastName"
+          value={form.activity.value}
+          name="activity"
         />
 
         <InputText
@@ -148,7 +148,7 @@ const Person = () => {
         <InputText
           label="Correo electrónico"
           type="text"
-          placeholder="julio@gmail.com"
+          placeholder="elparron@gmail.com"
           width="300px"
           onChange={handleOnChange}
           value={form.email.value}
@@ -171,4 +171,4 @@ const Person = () => {
   );
 };
 
-export default Person;
+export default Company;

@@ -1,6 +1,14 @@
 export interface ICustomer {
   id?: string;
   type: string;
-  person_id: string;
-  company_id: string;
+  rut: string;
+  fantasyName: string;
+  name: string;
+  paternalLastName: string;
+  maternalLastName: string;
+  activity: string;
+  address: string;
+  district: string;
+  email: string;
+  phone: string;
 }

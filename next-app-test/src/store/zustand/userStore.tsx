@@ -172,14 +172,14 @@ export const userStore = create<userState>((set) => ({
     }
   },
 
-  upsert: async (person: IPerson) => {
+  upsert: async (user: IUser) => {
     try {
       set((state) => ({
         ...state,
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.post("/user/upsert", person);
+      const { data } = await apiInstance.post("/user/upsert", user);
 
       set((state) => ({
         ...state,
@@ -266,7 +266,11 @@ export const userStore = create<userState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.post("/user/upsert", login);
+      const { data } = await apiInstance.post("/user/upsert", {
+        login,
+        password,
+        newPassword,
+      });
 
       set((state) => ({
         ...state,

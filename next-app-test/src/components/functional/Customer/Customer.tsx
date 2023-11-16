@@ -6,23 +6,28 @@ import InputText from "@/components/ui/InputText";
 import Option from "@/components/layout/Option";
 import Button from "@/components/ui/Button";
 
-import { usePerson } from "@/store/hooks";
+import { useCustomer } from "@/store/hooks";
 
-import styles from "./Person.module.scss";
+import styles from "./Customer.module.scss";
+import InputSelect from "@/components/ui/InputSelect";
 
 const initData = {
+  type: { value: "", isValid: true },
   rut: { value: "", isValid: true },
   name: { value: "", isValid: true },
+  fantasyName: { value: "", isValid: true },
   paternalLastName: { value: "", isValid: true },
   maternalLastName: { value: "", isValid: true },
-  email: { value: "", isValid: true },
-  phone: { value: "", isValid: true },
+  activity: { value: "", isValid: true },
   address: { value: "", isValid: true },
   district: { value: "", isValid: true },
+  email: { value: "", isValid: true },
+  phone: { value: "", isValid: true },
 };
 
-const Person = () => {
-  const { person, isLoading, isError, error, upsert, getByRut } = usePerson();
+const Customer = () => {
+  const { customer, isLoading, isError, error, upsert, getByRut } =
+    useCustomer();
 
   const [form, setForm] = useState(initData);
 
@@ -40,10 +45,13 @@ const Person = () => {
 
   const onClick = () => {
     upsert({
+      type: form.type.value,
       rut: form.rut.value,
+      fantasyName: form.fantasyName.value,
       name: form.name.value,
       paternalLastName: form.paternalLastName.value,
       maternalLastName: form.maternalLastName.value,
+      activity: form.activity.value,
       email: form.email.value,
       district: form.district.value,
       phone: form.phone.value,
@@ -52,38 +60,51 @@ const Person = () => {
   };
 
   useEffect(() => {
-    if (person) {
+    if (customer) {
       setForm({
         ...form,
-        rut: { value: person.rut, isValid: true },
-        name: { value: person.name, isValid: true },
-        paternalLastName: { value: person.paternalLastName, isValid: true },
-        maternalLastName: { value: person.maternalLastName, isValid: true },
-        email: { value: person.email, isValid: true },
-        phone: { value: person.phone, isValid: true },
-        address: { value: person.address, isValid: true },
-        district: { value: person.district, isValid: true },
+        type: { value: customer.type, isValid: true },
+        rut: { value: customer.rut, isValid: true },
+        fantasyName: { value: customer.fantasyName, isValid: true },
+        name: { value: customer.name, isValid: true },
+        paternalLastName: { value: customer.paternalLastName, isValid: true },
+        maternalLastName: { value: customer.maternalLastName, isValid: true },
+        activity: { value: customer.activity, isValid: true },
+        email: { value: customer.email, isValid: true },
+        phone: { value: customer.phone, isValid: true },
+        address: { value: customer.address, isValid: true },
+        district: { value: customer.district, isValid: true },
       });
-    } else if (!person) {
+    } else if (!customer) {
       setForm({
         ...form,
+        fantasyName: { value: "", isValid: true },
         name: { value: "", isValid: true },
         paternalLastName: { value: "", isValid: true },
         maternalLastName: { value: "", isValid: true },
+        activity: { value: "", isValid: true },
         email: { value: "", isValid: true },
         phone: { value: "", isValid: true },
         address: { value: "", isValid: true },
         district: { value: "", isValid: true },
       });
     }
-  }, [person]);
+  }, [customer]);
 
   return (
     <Option>
       <div className={styles.header}>
-        <ul className={styles.left}>Persona</ul>
+        <ul className={styles.left}>Customer</ul>
       </div>
       <ContentCell gap="7px">
+        <InputSelect
+          label="Tipo"
+          width="300px"
+          onChange={handleOnChange}
+          value={form.type.value}
+          name="type"
+        />
+
         <InputText
           label="Rut"
           type="text"
@@ -93,6 +114,16 @@ const Person = () => {
           onBlur={handleOnBlur}
           value={form.rut.value}
           name="rut"
+        />
+
+        <InputText
+          label="Nombre de fantasía"
+          type="text"
+          placeholder="El Parrón - Norte 2"
+          width="300px"
+          onChange={handleOnChange}
+          value={form.fantasyName.value}
+          name="fantasyName"
         />
 
         <InputText
@@ -123,6 +154,16 @@ const Person = () => {
           onChange={handleOnChange}
           value={form.maternalLastName.value}
           name="maternalLastName"
+        />
+
+        <InputText
+          label="Actividad"
+          type="text"
+          placeholder="Venta de..."
+          width="300px"
+          onChange={handleOnChange}
+          value={form.activity.value}
+          name="activity"
         />
 
         <InputText
@@ -171,4 +212,4 @@ const Person = () => {
   );
 };
 
-export default Person;
+export default Customer;
