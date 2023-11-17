@@ -25,17 +25,34 @@ const initData = {
   phone: { value: "", isValid: true },
 };
 
+const dataSelect = [
+  { value: "", text: "Seleccionar" },
+  { value: "P", text: "Persona" },
+  { value: "C", text: "Compañía" },
+];
+
 const Customer = () => {
   const { customer, isLoading, isError, error, upsert, getByRut } =
     useCustomer();
 
   const [form, setForm] = useState(initData);
+  const [selectedType, setSelectedType] = useState<string>("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: { value: e.target.value, isValid: true },
-    });
+    const { name, value } = e.target;
+
+    if (name === "rut") {
+      const rutValue = value.toUpperCase();
+      setForm({
+        ...form,
+        rut: { value: rutValue, isValid: true },
+      });
+    } else {
+      setForm({
+        ...form,
+        [e.target.name]: { value: e.target.value, isValid: true },
+      });
+    }
   };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -43,9 +60,14 @@ const Customer = () => {
     getByRut(rut);
   };
 
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = e.target.value;
+    setSelectedType(selectedValue);
+  };
+
   const onClick = () => {
     upsert({
-      type: form.type.value,
+      type: selectedType,
       rut: form.rut.value,
       fantasyName: form.fantasyName.value,
       name: form.name.value,
@@ -75,7 +97,7 @@ const Customer = () => {
         address: { value: customer.address, isValid: true },
         district: { value: customer.district, isValid: true },
       });
-    } else if (!customer) {
+    } else {
       setForm({
         ...form,
         fantasyName: { value: "", isValid: true },
@@ -100,9 +122,10 @@ const Customer = () => {
         <InputSelect
           label="Tipo"
           width="300px"
-          onChange={handleOnChange}
-          value={form.type.value}
+          onChange={handleTypeChange}
+          value={selectedType || ""}
           name="type"
+          data={dataSelect}
         />
 
         <InputText
@@ -117,55 +140,61 @@ const Customer = () => {
         />
 
         <InputText
-          label="Nombre de fantasía"
-          type="text"
-          placeholder="El Parrón - Norte 2"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.fantasyName.value}
-          name="fantasyName"
-        />
-
-        <InputText
           label="Nombre"
           type="text"
-          placeholder="Julio"
+          placeholder="Nombre"
           width="300px"
           onChange={handleOnChange}
           value={form.name.value}
           name="name"
         />
 
-        <InputText
-          label="Apellido Paterno"
-          type="text"
-          placeholder="Rodriguez"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.paternalLastName.value}
-          name="paternalLastName"
-        />
+        {selectedType === "C" && (
+          <>
+            <InputText
+              label="Nombre de fantasía"
+              type="text"
+              placeholder="El Parrón - Norte 2"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.fantasyName.value}
+              name="fantasyName"
+            />
 
-        <InputText
-          label="Apellido Materno"
-          type="text"
-          placeholder="Acevedo"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.maternalLastName.value}
-          name="maternalLastName"
-        />
+            <InputText
+              label="Actividad"
+              type="text"
+              placeholder="Venta de..."
+              width="300px"
+              onChange={handleOnChange}
+              value={form.activity.value}
+              name="activity"
+            />
+          </>
+        )}
+        {selectedType === "P" && (
+          <>
+            <InputText
+              label="Apellido Paterno"
+              type="text"
+              placeholder="Rodriguez"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.paternalLastName.value}
+              name="paternalLastName"
+            />
 
-        <InputText
-          label="Actividad"
-          type="text"
-          placeholder="Venta de..."
-          width="300px"
-          onChange={handleOnChange}
-          value={form.activity.value}
-          name="activity"
-        />
-
+            <InputText
+              label="Apellido Materno"
+              type="text"
+              placeholder="Acevedo"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.maternalLastName.value}
+              name="maternalLastName"
+            />
+          </>
+        )}
         <InputText
           label="Dirección"
           type="text"

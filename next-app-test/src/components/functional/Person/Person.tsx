@@ -27,10 +27,20 @@ const Person = () => {
   const [form, setForm] = useState(initData);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: { value: e.target.value, isValid: true },
-    });
+    const { name, value } = e.target;
+
+    if (name === "rut") {
+      const rutValue = value.toUpperCase();
+      setForm({
+        ...form,
+        rut: { value: rutValue, isValid: true },
+      });
+    } else {
+      setForm({
+        ...form,
+        [e.target.name]: { value: e.target.value, isValid: true },
+      });
+    }
   };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -98,7 +108,7 @@ const Person = () => {
         <InputText
           label="Nombre"
           type="text"
-          placeholder="Julio"
+          placeholder="Nombre de la persona"
           width="300px"
           onChange={handleOnChange}
           value={form.name.value}

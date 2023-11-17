@@ -41,10 +41,20 @@ const User = () => {
   const [form, setForm] = useState(initData);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: { value: e.target.value, isValid: true },
-    });
+    const { name, value } = e.target;
+
+    if (name === "rut") {
+      const rutValue = value.toUpperCase();
+      setForm({
+        ...form,
+        rut: { value: rutValue, isValid: true },
+      });
+    } else {
+      setForm({
+        ...form,
+        [e.target.name]: { value: e.target.value, isValid: true },
+      });
+    }
   };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
@@ -67,6 +77,10 @@ const User = () => {
 
   const assignOnClick = () => {
     assignPassword(form.email.value, form.password.value);
+  };
+
+  const changePasswordOnClick = () => {
+    updatePassword(form.email.value, form.password.value);
   };
 
   useEffect(() => {
@@ -100,118 +114,147 @@ const User = () => {
 
   return (
     <Option>
-      <div className={styles.header}>
-        <ul className={styles.left}>Usuario</ul>
-      </div>
+      <ContentRow>
+        <ContentRow gap="20px">
+          <ContentCell gap="7px">
+            <ul className={styles.ul}>Agregar Usuario</ul>
+            <InputText
+              label="Rut"
+              type="text"
+              placeholder="11.111.111-1"
+              width="300px"
+              onChange={handleOnChange}
+              onBlur={handleOnBlur}
+              value={form.rut.value}
+              name="rut"
+            />
 
-      <ContentCell gap="7px">
-        <InputText
-          label="Rut"
-          type="text"
-          placeholder="11.111.111-1"
-          width="300px"
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          value={form.rut.value}
-          name="rut"
-        />
+            <InputText
+              label="Nombre"
+              type="text"
+              placeholder="Nombre de la persona"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.name.value}
+              name="name"
+            />
 
-        <InputText
-          label="Nombre"
-          type="text"
-          placeholder="Julio"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.name.value}
-          name="name"
-        />
+            <InputText
+              label="Apellido Paterno"
+              type="text"
+              placeholder="Rodriguez"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.paternalLastName.value}
+              name="paternalLastName"
+            />
 
-        <InputText
-          label="Apellido Paterno"
-          type="text"
-          placeholder="Rodriguez"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.paternalLastName.value}
-          name="paternalLastName"
-        />
+            <InputText
+              label="Apellido Materno"
+              type="text"
+              placeholder="Acevedo"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.maternalLastName.value}
+              name="maternalLastName"
+            />
 
-        <InputText
-          label="Apellido Materno"
-          type="text"
-          placeholder="Acevedo"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.maternalLastName.value}
-          name="maternalLastName"
-        />
+            <InputText
+              label="Dirección"
+              type="text"
+              placeholder="Av. Providencia 221..."
+              width="300px"
+              onChange={handleOnChange}
+              value={form.address.value}
+              name="address"
+            />
 
-        <InputText
-          label="Dirección"
-          type="text"
-          placeholder="Av. Providencia 221..."
-          width="300px"
-          onChange={handleOnChange}
-          value={form.address.value}
-          name="address"
-        />
+            <InputText
+              label="Comuna"
+              type="text"
+              placeholder="Providencia"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.district.value}
+              name="district"
+            />
 
-        <InputText
-          label="Comuna"
-          type="text"
-          placeholder="Providencia"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.district.value}
-          name="district"
-        />
+            <InputText
+              label="Correo electrónico"
+              type="text"
+              placeholder="julio@gmail.com"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.email.value}
+              name="email"
+            />
 
-        <InputText
-          label="Correo electrónico"
-          type="text"
-          placeholder="julio@gmail.com"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.email.value}
-          name="email"
-        />
+            <InputText
+              label="Teléfono"
+              type="phone"
+              placeholder="+569 9934 1234"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.phone.value}
+              name="phone"
+            />
 
-        <InputText
-          label="Teléfono"
-          type="phone"
-          placeholder="+569 9934 1234"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.phone.value}
-          name="phone"
-        />
-      </ContentCell>
+            <Button label="Crear" onClick={onClick} />
+          </ContentCell>
 
-      <Button label="Crear" onClick={onClick} />
+          <ContentCell gap="7px">
+            <ul className={styles.ul}>Crear Contraseña</ul>
+            <InputText
+              label="Contraseña"
+              type="password"
+              placeholder="********"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.password.value}
+              name="password"
+            />
 
-      <ContentCell gap="7px">
-        <InputText
-          label="Contraseña"
-          type="password"
-          placeholder="********"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.password.value}
-          name="password"
-        />
+            <InputText
+              label="Repetir contraseña"
+              type="password"
+              placeholder="********"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.repeatPassword.value}
+              name="repeatPassword"
+            />
 
-        <InputText
-          label="Repetir contraseña"
-          type="password"
-          placeholder="********"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.repeatPassword.value}
-          name="repeatPassword"
-        />
-      </ContentCell>
+            <Button label="Crear Contraseña" onClick={assignOnClick} />
+          </ContentCell>
 
-      <Button label="Crear" onClick={assignOnClick} />
+          <ContentCell gap="7px">
+            <ul className={styles.ul}>Cambiar Contraseña</ul>
+            <InputText
+              label="Contraseña anterior"
+              type="password"
+              placeholder="********"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.password.value}
+              name="password"
+            />
+
+            <InputText
+              label="Nueva contraseña"
+              type="password"
+              placeholder="********"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.repeatPassword.value}
+              name="repeatPassword"
+            />
+            <Button
+              label="Cambiar Contraseña"
+              onClick={changePasswordOnClick}
+            />
+          </ContentCell>
+        </ContentRow>
+      </ContentRow>
     </Option>
   );
 };

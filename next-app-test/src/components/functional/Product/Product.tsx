@@ -23,10 +23,20 @@ const Product = () => {
   const [form, setForm] = useState(initData);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({
-      ...form,
-      [e.target.name]: { value: e.target.value, isValid: true },
-    });
+    const { name, value } = e.target;
+
+    if (name === "code") {
+      const codeValue = value.toUpperCase();
+      setForm({
+        ...form,
+        code: { value: codeValue, isValid: true },
+      });
+    } else {
+      setForm({
+        ...form,
+        [e.target.name]: { value: e.target.value, isValid: true },
+      });
+    }
   };
 
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
