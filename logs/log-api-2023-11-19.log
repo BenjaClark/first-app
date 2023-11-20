@@ -1,0 +1,17 @@
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-19 14:11:36"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-19 14:11:40"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"1234"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-19 14:11:51"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-19 14:11:52"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/"},"timestamp":"2023-11-19 14:12:14"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/"},"timestamp":"2023-11-19 14:12:20"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011K"},"timestamp":"2023-11-19 14:12:54"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-19 14:12:55"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011K1"},"timestamp":"2023-11-19 14:13:07"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-19 14:13:07"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011K1488"},"timestamp":"2023-11-19 14:13:10"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011K"},"timestamp":"2023-11-19 14:13:16"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-19 14:13:16"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/person/getByRut/20395011K"},"timestamp":"2023-11-19 14:13:30"}
+{"controller":"person/getByRut","level":"info","message":"OK","timestamp":"2023-11-19 14:13:31"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"1234"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-19 14:14:13"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-19 14:14:14"}

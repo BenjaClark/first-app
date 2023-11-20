@@ -363,3 +363,23 @@
 {"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/product/getByCode/122"},"timestamp":"2023-11-17 12:31:53"}
 {"controller":"product/getByCode","level":"info","message":"OK","timestamp":"2023-11-17 12:31:53"}
 {"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/user/getByRut/"},"timestamp":"2023-11-17 12:42:10"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/user/getByRut/"},"timestamp":"2023-11-17 16:30:17"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/user/getByRut/20395011K"},"timestamp":"2023-11-17 16:30:26"}
+{"level":"info","message":{"body":"","method":"GET","params":{},"query":{},"url":"/api/user/getByRut/20395011K1"},"timestamp":"2023-11-17 16:30:39"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678","rut":"20395011K1"},"method":"POST","params":"","query":"","url":"/api/user/upsert"},"timestamp":"2023-11-17 16:31:52"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678","rut":"20395011K1"},"method":"POST","params":"","query":"","url":"/api/user/upsert"},"timestamp":"2023-11-17 16:34:33"}
+{"level":"info","message":{"body":{"address":"Av. providencia","district":"Providencia","email":"benja123@gmail.com","maternalLastName":"Zuloaga","name":"Benjamin","paternalLastName":"Vasquez","phone":"12345678","rut":"20395011K1"},"method":"POST","params":"","query":"","url":"/api/user/upsert"},"timestamp":"2023-11-17 16:35:57"}
+{"controller":"user/upsert","level":"info","message":"OK","timestamp":"2023-11-17 16:35:58"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/assignPassword"},"timestamp":"2023-11-17 16:36:32"}
+{"controller":"user/assignPassword","level":"info","message":"OK","timestamp":"2023-11-17 16:36:34"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","newPassword":"111","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/upsert"},"timestamp":"2023-11-17 16:36:55"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-17 16:36:56"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","newPassword":"111","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/updatePassword/"},"timestamp":"2023-11-17 16:38:43"}
+{"controller":"user/updatePassword","level":"info","message":"OK","timestamp":"2023-11-17 16:38:44"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","newPassword":"111","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/updatePassword/"},"timestamp":"2023-11-17 16:38:54"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","newPassword":"111","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/upsert"},"timestamp":"2023-11-17 16:40:24"}
+{"level":"error","message":{"controller":"person/upsert","error":"null value in column \"rut\" of relation \"person\" violates not-null constraint"},"timestamp":"2023-11-17 16:40:25"}
+{"level":"info","message":{"body":{"login":"","newPassword":"111","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/updatePassword"},"timestamp":"2023-11-17 16:42:36"}
+{"level":"info","message":{"body":{"login":"","newPassword":"1234","password":"111"},"method":"POST","params":"","query":"","url":"/api/user/updatePassword"},"timestamp":"2023-11-17 16:45:25"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","newPassword":"1234","password":"111"},"method":"POST","params":"","query":"","url":"/api/user/updatePassword"},"timestamp":"2023-11-17 16:45:52"}
+{"controller":"user/updatePassword","level":"info","message":"OK","timestamp":"2023-11-17 16:45:53"}

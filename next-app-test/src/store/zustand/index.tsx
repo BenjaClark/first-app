@@ -12,3 +12,6 @@ export { userStore };
 
 import { customerStore } from "./customerStore";
 export { customerStore };
+
+import { storeStore } from "./storeStore";
+export { storeStore };

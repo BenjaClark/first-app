@@ -19,6 +19,7 @@ const initData = {
   district: { value: "", isValid: true },
   password: { value: "", isValid: true },
   repeatPassword: { value: "", isValid: true },
+  newPassword: { value: "", isValid: true },
 };
 
 const User = () => {
@@ -80,7 +81,11 @@ const User = () => {
   };
 
   const changePasswordOnClick = () => {
-    updatePassword(form.email.value, form.password.value);
+    updatePassword(
+      form.email.value,
+      form.password.value,
+      form.newPassword.value
+    );
   };
 
   useEffect(() => {
@@ -108,6 +113,7 @@ const User = () => {
         district: { value: "", isValid: true },
         password: { value: "", isValid: true },
         repeatPassword: { value: "", isValid: true },
+        newPassword: { value: "", isValid: true },
       });
     }
   }, [user]);
@@ -116,7 +122,7 @@ const User = () => {
     <Option>
       <ContentRow>
         <ContentRow gap="20px">
-          <ContentCell gap="7px">
+          <ContentCell gap="12px">
             <ul className={styles.ul}>Agregar Usuario</ul>
             <InputText
               label="Rut"
@@ -202,8 +208,19 @@ const User = () => {
             <Button label="Crear" onClick={onClick} />
           </ContentCell>
 
-          <ContentCell gap="7px">
+          <ContentCell gap="7.5px">
             <ul className={styles.ul}>Crear Contraseña</ul>
+
+            <InputText
+              label="Correo electrónico"
+              type="text"
+              placeholder="julio@gmail.com"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.email.value}
+              name="email"
+            />
+
             <InputText
               label="Contraseña"
               type="password"
@@ -225,10 +242,17 @@ const User = () => {
             />
 
             <Button label="Crear Contraseña" onClick={assignOnClick} />
-          </ContentCell>
-
-          <ContentCell gap="7px">
             <ul className={styles.ul}>Cambiar Contraseña</ul>
+            <InputText
+              label="Correo electrónico"
+              type="text"
+              placeholder="julio@gmail.com"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.email.value}
+              name="email"
+            />
+
             <InputText
               label="Contraseña anterior"
               type="password"
@@ -245,8 +269,8 @@ const User = () => {
               placeholder="********"
               width="300px"
               onChange={handleOnChange}
-              value={form.repeatPassword.value}
-              name="repeatPassword"
+              value={form.newPassword.value}
+              name="newPassword"
             />
             <Button
               label="Cambiar Contraseña"

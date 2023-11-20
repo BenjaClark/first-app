@@ -1,7 +1,6 @@
 import { create } from "zustand";
 
 import { apiInstance } from "@/utils/api";
-import { IPerson } from "@/interfaces/person";
 import { IUser } from "@/interfaces/user";
 
 interface userState {
@@ -266,7 +265,7 @@ export const userStore = create<userState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.post("/user/upsert", {
+      const { data } = await apiInstance.post("/user/updatePassword", {
         login,
         password,
         newPassword,

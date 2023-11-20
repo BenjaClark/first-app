@@ -1,0 +1,3 @@
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"123"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-20 01:49:01"}
+{"level":"info","message":{"body":{"login":"benja123@gmail.com","password":"1234"},"method":"POST","params":"","query":"","url":"/api/user/validate"},"timestamp":"2023-11-20 01:49:06"}
+{"controller":"user/validate","level":"info","message":"OK","timestamp":"2023-11-20 01:49:06"}
