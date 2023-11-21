@@ -4,7 +4,7 @@ import InputText from "../InputText";
 import InputSelect from "../InputSelect";
 import InputDate from "../InputDate";
 import Store from "../Store";
-import { StoreContext } from "@/context/StoreContext";
+import { useStore } from "@/store/hooks";
 
 const initData = {
   etiqueta: { value: "", isValid: true },
@@ -25,7 +25,7 @@ interface IHeader {
 
 const Header = ({ label }: IHeader) => {
   const [form, setForm] = useState(initData);
-  const { color, store } = useContext(StoreContext);
+  const { color, store } = useStore();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({

@@ -9,3 +9,7 @@ export interface IPerson {
   email: string;
   phone: string;
 }
+
+export interface IListPerson {
+  listPerson: IPerson[];
+}

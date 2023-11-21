@@ -15,3 +15,12 @@ export { customerStore };
 
 import { storeStore } from "./storeStore";
 export { storeStore };
+
+import { shapeStore } from "./shapeStore";
+export { shapeStore };
+
+import { menuStore } from "./menuStore";
+export { menuStore };
+
+import { floatingBarStore } from "./floatingBarStore";
+export { floatingBarStore };

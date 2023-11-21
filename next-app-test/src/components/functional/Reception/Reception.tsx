@@ -1,17 +1,15 @@
 "use client";
-
 import React, { useContext, useState } from "react";
 
 import { ContentCell, ContentRow } from "@/components/layout/Content";
-
-import InputSelect from "@/components/ui/InputSelect";
-
 import Option from "@/components/layout/Option";
 
-import { ShapeContext } from "@/context/ShapeContext";
+import InputSelect from "@/components/ui/InputSelect";
 import Store from "@/components/ui/Store";
 import Shape from "@/components/ui/Shape";
+
 import { useStore } from "@/store/hooks/useStore";
+import { useShape } from "@/store/hooks/useShape";
 
 const initData = {
   shape: { value: "", isValid: true },
@@ -25,22 +23,31 @@ const dataSelect = [
   { value: "opcion4", text: "Sucursal 4", color: "orange" },
 ];
 
+const dataSelectShape = [
+  { value: "opcion1", text: "Cuadrada", color: "purple" },
+  { value: "opcion2", text: "Redonda", color: "white" },
+  { value: "opcion3", text: "Rectangular", color: "cyan" },
+  { value: "opcion4", text: "Triangular", color: "gray" },
+];
+
 const Reception = () => {
   const [form, setForm] = useState(initData);
+
   const { color, setColor, store, setStore } = useStore();
 
-  const { colorShape, setColorShape, shape, setShape, dataSelectShape } =
-    useContext(ShapeContext);
+  const { shape, setShape, colorShape, setColorShape } = useShape();
 
   const handleOnChangeShape = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: { value: e.target.value, isValid: true },
     });
+
     setShape(e.target.value);
     const colorShape = dataSelectShape.filter(
       (item: any) => item.value === e.target.value
     );
+
     console.log(colorShape[0]);
     setColorShape(colorShape[0].color);
   };
@@ -50,10 +57,12 @@ const Reception = () => {
       ...form,
       [e.target.name]: { value: e.target.value, isValid: true },
     });
+
     setStore(e.target.value);
     const color = dataSelect.filter(
       (item: any) => item.value === e.target.value
     );
+
     console.log(color[0]);
     setColor(color[0].color);
   };

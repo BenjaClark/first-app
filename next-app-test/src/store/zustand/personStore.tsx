@@ -3,9 +3,11 @@ import { create } from "zustand";
 import { apiInstance } from "@/utils/api";
 
 import { IPerson } from "@/interfaces/person";
+import { IListPerson } from "@/interfaces/listPerson";
 
 interface personState {
-  person: IPerson;
+  listPerson?: IListPerson[];
+  person?: IPerson;
   isLoading: boolean;
   isError: boolean;
   error: string;
@@ -17,6 +19,7 @@ interface personState {
 }
 
 export const personStore = create<personState>((set) => ({
+  listPerson: [],
   person: {
     id: "",
     rut: "",
@@ -118,7 +121,7 @@ export const personStore = create<personState>((set) => ({
 
       set((state) => ({
         ...state,
-        person: data,
+        listPerson: data.data[0],
         isLoading: false,
         isError: false,
         error: "",

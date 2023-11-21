@@ -3,8 +3,9 @@ import { shallow } from "zustand/shallow";
 import { personStore } from "@/store/zustand/personStore";
 
 export const usePerson = () => {
-  const { person, isLoading, isError, error } = personStore(
+  const { listPerson, person, isLoading, isError, error } = personStore(
     (state) => ({
+      listPerson: state.listPerson,
       person: state.person,
       isLoading: state.isLoading,
       isError: state.isError,
@@ -16,6 +17,7 @@ export const usePerson = () => {
   const { upsert, getByRut, getById, getAll } = personStore();
 
   return {
+    listPerson,
     person,
     isLoading,
     isError,

@@ -2,11 +2,11 @@
 
 import React, { useState, useContext } from "react";
 import styles from "./Menu.module.scss";
-import MenuContext from "../../../context/MenuContext";
 import Link from "next/link";
+import { useMenu } from "@/store/hooks";
 
 const Menu = () => {
-  const { showMenu } = useContext(MenuContext);
+  const { showMenu } = useMenu();
   const data = [
     {
       title: "Programacion",
@@ -35,12 +35,13 @@ const Menu = () => {
       title: "Registro",
       path: "/register",
       subTitle: [
-        { title: "Registro de Persona", path: "/registerPerson" },
-        { title: "Registro de Empresa", path: "/registerCompany" },
-        { title: "Registro de Usuario", path: "/registerUser" },
-        { title: "Registro de Customer", path: "/registerCustomer" },
-        { title: "Registro de Producto", path: "/registerProduct" },
-        { title: "Registro de Invoice", path: "/registerInvoice" },
+        { title: "Registro de Persona", path: "/Person" },
+        { title: "Obtener Persona", path: "/getPerson" },
+        { title: "Registro de Empresa", path: "/Company" },
+        { title: "Registro de Usuario", path: "/User" },
+        { title: "Registro de Customer", path: "/Customer" },
+        { title: "Registro de Producto", path: "/Product" },
+        { title: "Registro de Invoice", path: "/Invoice" },
       ],
     },
   ];

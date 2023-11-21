@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import styles from "./NavBar.module.scss";
-import MenuContext from "../../../context/MenuContext";
 import ButtonIcon from "../ButtonIcon";
+import { useMenu } from "@/store/hooks";
 
 const NavBar = () => {
-  const { showMenu, setShowMenu } = useContext(MenuContext);
+  const { showMenu, setShowMenu } = useMenu();
 
   const handleToggle = () => {
     setShowMenu(!showMenu);

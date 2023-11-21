@@ -7,9 +7,16 @@ import InputSelect from "@/components/ui/InputSelect";
 import Option from "@/components/layout/Option";
 import OptionHeader from "@/components/layout/OptionHeader";
 import InputDate from "@/components/ui/InputDate";
-import { StoreContext } from "@/context/StoreContext";
 import FloatingBar from "@/components/ui/FloatingBar";
-import FloatingBarContext from "@/context/FloatingBarContext";
+import { useStore } from "@/store/hooks/useStore";
+import { useFloatingBar } from "@/store/hooks";
+
+const dataSelect = [
+  { value: "opcion1", text: "Sucursal 1", color: "red" },
+  { value: "opcion2", text: "Sucursal 2", color: "green" },
+  { value: "opcion3", text: "Sucursal 3", color: "blue" },
+  { value: "opcion4", text: "Sucursal 4", color: "orange" },
+];
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -44,8 +51,8 @@ const initData = {
 
 const Order = () => {
   const [form, setForm] = useState(initData);
-  const { store, setColor, setStore, dataSelect } = useContext(StoreContext);
-  const { name } = useContext(FloatingBarContext);
+  const { store, setColor, setStore } = useStore();
+  const { name } = useFloatingBar();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -61,7 +68,7 @@ const Order = () => {
   };
 
   return (
-    <Option>
+    <Option userName={name}>
       <OptionHeader label="Pedido">
         <ContentRow gap="20px">
           <ContentCell gap="20px">
@@ -334,7 +341,6 @@ const Order = () => {
           </ContentCell>
         </ContentRow>
       </OptionHeader>
-      <FloatingBar name={name} />
     </Option>
   );
 };

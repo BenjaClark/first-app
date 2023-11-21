@@ -3,7 +3,6 @@
 import React, { useContext } from "react";
 
 import styles from "./Shape.module.scss";
-import ShapeContext from "@/context/ShapeContext";
 
 interface IButton {
   label?: string;
@@ -11,11 +10,9 @@ interface IButton {
 }
 
 const Shape = ({ label, bgColor }: IButton) => {
-  const { shape, colorShape } = useContext(ShapeContext);
-
   return (
     <div className={styles.button}>
-      <button style={{ backgroundColor: colorShape }}>{shape}</button>
+      <button style={{ backgroundColor: bgColor }}>{label}</button>
     </div>
   );
 };
