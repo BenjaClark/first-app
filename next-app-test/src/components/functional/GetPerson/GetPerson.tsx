@@ -6,32 +6,50 @@ import { usePerson } from "@/store/hooks";
 import styles from "./GetPerson.module.scss";
 
 const GetPerson = () => {
-  const { listPerson } = usePerson();
+  const { listPerson, getAll } = usePerson();
+
+  console.log(listPerson);
+
+  useEffect(() => {
+    getAll();
+  }, []);
 
   return (
     <Option>
-      {listPerson?.map((person: any) => (
-        <li className={styles.li} key={person.id}>
-          <ul>ID:{person.id}</ul>
-          <br />
-          <ul>RUT:{person.rut}</ul>
-          <br />
-          <ul>Nombre:{person.name}</ul>
-          <br />
-          <ul>
-            Apellidos:{person.paternalLastName} {person.maternalLastName}
-          </ul>
-          <br />
-          <ul>Dirección:{person.address}</ul>
-          <br />
-          <ul>Comuna:{person.district}</ul>
-          <br />
-          <ul>Email:{person.email}</ul>
-          <br />
-          <ul>Teléfono:{person.phone}</ul>
-          <br />
-        </li>
-      ))}
+      <div className={styles.personListContainer}>
+        <h2>Listado de Personas</h2>
+        <ul className={styles.personList}>
+          {listPerson?.map((person: any, index: number) => (
+            <li className={styles.li} key={person.id}>
+              <div className={styles.field}>
+                <span>ID:</span> {person.id}
+              </div>
+              <div className={styles.field}>
+                <span>RUT:</span> {person.rut}
+              </div>
+              <div className={styles.field}>
+                <span>Nombre:</span> {person.name}
+              </div>
+              <div className={styles.field}>
+                <span>Apellidos:</span> {person.paternalLastName}{" "}
+                {person.maternalLastName}
+              </div>
+              <div className={styles.field}>
+                <span>Dirección:</span> {person.address}
+              </div>
+              <div className={styles.field}>
+                <span>Comuna:</span> {person.district}
+              </div>
+              <div className={styles.field}>
+                <span>Email:</span> {person.email}
+              </div>
+              <div className={styles.field}>
+                <span>Teléfono:</span> {person.phone}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Option>
   );
 };

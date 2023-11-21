@@ -3,8 +3,10 @@ import { create } from "zustand";
 import { apiInstance } from "@/utils/api";
 
 import { ICompany } from "@/interfaces/company";
+import { IListCompany } from "@/interfaces/listCompany";
 
 interface companyState {
+  listCompany?: IListCompany[];
   company: ICompany;
   isLoading: boolean;
   isError: boolean;
@@ -17,6 +19,7 @@ interface companyState {
 }
 
 export const companyStore = create<companyState>((set) => ({
+  listCompany: [],
   company: {
     id: "",
     rut: "",
@@ -117,7 +120,7 @@ export const companyStore = create<companyState>((set) => ({
 
       set((state) => ({
         ...state,
-        company: data.data,
+        listCompany: data.data,
         isLoading: false,
         isError: false,
         error: "",

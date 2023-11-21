@@ -3,8 +3,10 @@ import { create } from "zustand";
 import { apiInstance } from "@/utils/api";
 
 import { IProduct } from "@/interfaces/product";
+import { IListProduct } from "@/interfaces/listProduct";
 
 interface productState {
+  listProduct: IListProduct[];
   product: IProduct;
   isLoading: boolean;
   isError: boolean;
@@ -17,6 +19,7 @@ interface productState {
 }
 
 export const productStore = create<productState>((set) => ({
+  listProduct: [],
   product: {
     id: "",
     code: "",
@@ -112,7 +115,7 @@ export const productStore = create<productState>((set) => ({
 
       set((state) => ({
         ...state,
-        product: data.data,
+        listProduct: data.data,
         isLoading: false,
         isError: false,
         error: "",

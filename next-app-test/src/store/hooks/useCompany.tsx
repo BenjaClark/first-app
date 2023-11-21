@@ -3,8 +3,9 @@ import { shallow } from "zustand/shallow";
 import { companyStore } from "@/store/zustand/companyStore";
 
 export const useCompany = () => {
-  const { company, isLoading, isError, error } = companyStore(
+  const { listCompany, company, isLoading, isError, error } = companyStore(
     (state) => ({
+      listCompany: state.listCompany,
       company: state.company,
       isLoading: state.isLoading,
       isError: state.isError,
@@ -16,6 +17,7 @@ export const useCompany = () => {
   const { upsert, getByRut, getById, getAll } = companyStore();
 
   return {
+    listCompany,
     company,
     isLoading,
     isError,

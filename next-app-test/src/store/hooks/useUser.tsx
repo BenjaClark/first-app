@@ -3,8 +3,9 @@ import { shallow } from "zustand/shallow";
 import { userStore } from "@/store/zustand/userStore";
 
 export const useUser = () => {
-  const { user, isLoading, isError, error } = userStore(
+  const { listUser, user, isLoading, isError, error } = userStore(
     (state) => ({
+      listUser: state.listUser,
       user: state.user,
       isLoading: state.isLoading,
       isError: state.isError,
@@ -26,6 +27,7 @@ export const useUser = () => {
   } = userStore();
 
   return {
+    listUser,
     user,
     isLoading,
     isError,

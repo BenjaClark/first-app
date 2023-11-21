@@ -2,8 +2,10 @@ import { create } from "zustand";
 
 import { apiInstance } from "@/utils/api";
 import { IUser } from "@/interfaces/user";
+import { IListUser } from "@/interfaces/listUser";
 
 interface userState {
+  listUser: IListUser[];
   user: IUser;
   isLoading: boolean;
   isError: boolean;
@@ -24,6 +26,7 @@ interface userState {
 }
 
 export const userStore = create<userState>((set) => ({
+  listUser: [],
   user: {
     id: "",
     person_id: "",
@@ -131,7 +134,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data.data,
+        listUser: data.data,
         isLoading: false,
         isError: false,
         error: "",

@@ -3,8 +3,10 @@ import { create } from "zustand";
 import { apiInstance } from "@/utils/api";
 
 import { ICustomer } from "@/interfaces/customer";
+import { IListCustomer } from "@/interfaces/listCustomer";
 
 interface customerState {
+  listCustomer: IListCustomer[];
   customer: ICustomer;
   isLoading: boolean;
   isError: boolean;
@@ -17,6 +19,7 @@ interface customerState {
 }
 
 export const customerStore = create<customerState>((set) => ({
+  listCustomer: [],
   customer: {
     id: "",
     type: "",
@@ -122,7 +125,7 @@ export const customerStore = create<customerState>((set) => ({
 
       set((state) => ({
         ...state,
-        customer: data.data,
+        listCustomer: data.data,
         isLoading: false,
         isError: false,
         error: "",
