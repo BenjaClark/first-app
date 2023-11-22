@@ -96,7 +96,7 @@ export const personStore = create<personState>((set) => ({
 
       set((state) => ({
         ...state,
-        person: data,
+        person: data.data,
         isLoading: false,
         isError: false,
         error: "",

@@ -1,19 +1,18 @@
-.personListContainer {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  width: 600px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  overflow-y: auto;
-}
+.table {
+  tr {
+    background-color: white;
+    cursor: pointer;
 
-.field {
-  display: flex;
-  align-items: center;
-  margin: 5px 0;
-}
+    &:hover {
+      background-color: black;
 
-.field > span {
-  font-weight: bold;
-  margin-right: 5px;
+      td {
+        color: white;
+      }
+    }
+
+    td {
+      padding: 3px;
+    }
+  }
 }

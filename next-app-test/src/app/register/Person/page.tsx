@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import Person from "@/components/functional/Person";
+import GetPerson from "@/components/functional/GetPerson";
 
-export default function RegisterPersonPage() {
-  return <Person />;
+export default function GetPersonPage() {
+  return <GetPerson />;
 }

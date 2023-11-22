@@ -4,9 +4,16 @@ import Option from "@/components/layout/Option";
 import { useProduct } from "@/store/hooks";
 
 import styles from "./GetProduct.module.scss";
+import { useRouter } from "next/navigation";
 
 const GetProduct = () => {
   const { listProduct, getAll } = useProduct();
+
+  const router = useRouter();
+
+  const handleClick = (id: string) => {
+    router.push(`/register/person/${id}`);
+  };
 
   useEffect(() => {
     getAll();
@@ -16,24 +23,17 @@ const GetProduct = () => {
     <Option>
       <div className={styles.productListContainer}>
         <h2>Listado de Productos</h2>
-        <ul className={styles.productList}>
+
+        <table className={styles.table}>
           {listProduct?.map((product: any, index: number) => (
-            <li className={styles.li} key={product.id}>
-              <div className={styles.field}>
-                <span>ID:</span> {product.id}
-              </div>
-              <div className={styles.field}>
-                <span>Codigo:</span> {product.code}
-              </div>
-              <div className={styles.field}>
-                <span>Nombre:</span> {product.name}
-              </div>
-              <div className={styles.field}>
-                <span>Precio:</span> {product.price}
-              </div>
-            </li>
+            <tr key={index} onClick={() => handleClick(product.id)}>
+              <td>{product.id}</td>
+              <td>{product.code}</td>
+              <td>{product.name}</td>
+              <td>{product.price}</td>
+            </tr>
           ))}
-        </ul>
+        </table>
       </div>
     </Option>
   );

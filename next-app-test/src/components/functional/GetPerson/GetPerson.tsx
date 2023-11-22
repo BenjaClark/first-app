@@ -4,11 +4,17 @@ import Option from "@/components/layout/Option";
 import { usePerson } from "@/store/hooks";
 
 import styles from "./GetPerson.module.scss";
+import { useRouter } from "next/navigation";
+import Header from "@/components/ui/Header";
 
 const GetPerson = () => {
   const { listPerson, getAll } = usePerson();
 
-  console.log(listPerson);
+  const router = useRouter();
+
+  const handleClick = (id: string) => {
+    router.push(`/register/person/${id}`);
+  };
 
   useEffect(() => {
     getAll();
@@ -18,37 +24,23 @@ const GetPerson = () => {
     <Option>
       <div className={styles.personListContainer}>
         <h2>Listado de Personas</h2>
-        <ul className={styles.personList}>
+
+        <table className={styles.table}>
           {listPerson?.map((person: any, index: number) => (
-            <li className={styles.li} key={person.id}>
-              <div className={styles.field}>
-                <span>ID:</span> {person.id}
-              </div>
-              <div className={styles.field}>
-                <span>RUT:</span> {person.rut}
-              </div>
-              <div className={styles.field}>
-                <span>Nombre:</span> {person.name}
-              </div>
-              <div className={styles.field}>
-                <span>Apellidos:</span> {person.paternalLastName}{" "}
-                {person.maternalLastName}
-              </div>
-              <div className={styles.field}>
-                <span>Dirección:</span> {person.address}
-              </div>
-              <div className={styles.field}>
-                <span>Comuna:</span> {person.district}
-              </div>
-              <div className={styles.field}>
-                <span>Email:</span> {person.email}
-              </div>
-              <div className={styles.field}>
-                <span>Teléfono:</span> {person.phone}
-              </div>
-            </li>
+            <tr key={index} onClick={() => handleClick(person.id)}>
+              <td>{person.id}</td>
+              <td>{person.rut}</td>
+              <td>{person.name}</td>
+              <td>
+                {person.paternalLastName} {person.maternalLastName}
+              </td>
+              <td>{person.address}</td>
+              <td>{person.district}</td>
+              <td>{person.email}</td>
+              <td>{person.phone}</td>
+            </tr>
           ))}
-        </ul>
+        </table>
       </div>
     </Option>
   );

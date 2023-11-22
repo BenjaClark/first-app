@@ -6,7 +6,12 @@ import Link from "next/link";
 import { useMenu } from "@/store/hooks";
 
 const Menu = () => {
-  const { showMenu } = useMenu();
+  const { showMenu, setShowMenu } = useMenu();
+
+  const handleItemClick = () => {
+    setShowMenu(false);
+  };
+
   const data = [
     {
       title: "Programacion",
@@ -35,14 +40,13 @@ const Menu = () => {
       title: "Registro",
       path: "/register",
       subTitle: [
-        { title: "Registro de Persona", path: "/Person" },
-        { title: "Obtener Persona", path: "/getPerson" },
+        { title: "Persona", path: "/person" },
         { title: "Registro de Empresa", path: "/Company" },
         { title: "Obtener Empresa", path: "/getCompany" },
         { title: "Registro de Usuario", path: "/User" },
         { title: "Obtener Usuario", path: "/getUser" },
-        { title: "Registro de Customer", path: "/Customer" },
-        { title: "Obtener Customer", path: "/getCustomer" },
+        { title: "Registro de Cliente", path: "/Customer" },
+        { title: "Obtener Cliente", path: "/getCustomer" },
         { title: "Registro de Producto", path: "/Product" },
         { title: "Obtener Producto", path: "/getProduct" },
         { title: "Registro de Invoice", path: "/Invoice" },
@@ -62,7 +66,11 @@ const Menu = () => {
           {item.subTitle.map((subItem, key) => (
             <>
               <Link className={styles.linkMenu} href={item.path + subItem.path}>
-                <div key={key} className={styles.subItem}>
+                <div
+                  key={key}
+                  className={styles.subItem}
+                  onClick={handleItemClick}
+                >
                   {subItem.title}
                 </div>
               </Link>

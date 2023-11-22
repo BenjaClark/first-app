@@ -21,8 +21,9 @@ const initData = {
   district: { value: "", isValid: true },
 };
 
-const Person = () => {
-  const { person, isLoading, isError, error, upsert, getByRut } = usePerson();
+const Person = ({ id }: any) => {
+  const { person, isLoading, isError, error, upsert, getByRut, getById } =
+    usePerson();
 
   const [form, setForm] = useState(initData);
 
@@ -60,6 +61,23 @@ const Person = () => {
       address: form.address.value,
     });
   };
+
+  useEffect(() => {
+    getById(id);
+    if (person?.id) {
+      setForm({
+        ...form,
+        rut: { value: person.rut, isValid: true },
+        name: { value: person.name, isValid: true },
+        paternalLastName: { value: person.paternalLastName, isValid: true },
+        maternalLastName: { value: person.maternalLastName, isValid: true },
+        email: { value: person.email, isValid: true },
+        phone: { value: person.phone, isValid: true },
+        address: { value: person.address, isValid: true },
+        district: { value: person.district, isValid: true },
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (person) {
