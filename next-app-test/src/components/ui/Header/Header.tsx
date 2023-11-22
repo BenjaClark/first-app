@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  Children,
+  ReactNode,
+} from "react";
 import styles from "./Header.module.scss";
 import InputText from "../InputText";
 import InputSelect from "../InputSelect";
@@ -20,10 +26,11 @@ const dataSelect = [
 ];
 
 interface IHeader {
+  children: ReactNode;
   label: string;
 }
 
-const Header = ({ label }: IHeader) => {
+const OrderHeader = ({ label, children }: IHeader) => {
   const [form, setForm] = useState(initData);
   const { color, store } = useStore();
 
@@ -43,7 +50,7 @@ const Header = ({ label }: IHeader) => {
         <label>{label}</label>
       </ul>
       <ul className={styles.right}>
-        <InputText
+        {/* <InputText
           type="text"
           label="Etiqueta"
           placeholder="Texto"
@@ -51,20 +58,21 @@ const Header = ({ label }: IHeader) => {
           value={form.etiqueta.value}
           onChange={handleOnChange}
           name="etiqueta"
-        />
+        /> */}
+        {children}
       </ul>
       <ul className={styles.right}>
-        <InputSelect
+        {/* <InputSelect
           label="Sucursal"
           width="184px"
           value={form.sucursal.value}
           onChange={handleOnChange}
           name="sucursal"
           data={dataSelect}
-        />
+        /> */}
       </ul>
       <ul className={styles.right}>
-        <InputDate
+        {/* <InputDate
           type="date"
           label="Fecha"
           placeholder="01-02-2023"
@@ -72,13 +80,11 @@ const Header = ({ label }: IHeader) => {
           value={form.fecha.value}
           onChange={handleOnChange}
           name="fecha"
-        />
+        /> */}
       </ul>
-      <ul>
-        <Store label={store} bgColor={color} />
-      </ul>
+      <ul>{/* <Store label={store} bgColor={color} /> */}</ul>
     </div>
   );
 };
 
-export default Header;
+export default OrderHeader;

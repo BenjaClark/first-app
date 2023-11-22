@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import Company from "@/components/functional/Company";
+import GetCompany from "@/components/functional/GetCompany";
 
-export default function RegisterCompanyPage() {
-  return <Company />;
+export default function GetCompanyPage() {
+  return <GetCompany />;
 }

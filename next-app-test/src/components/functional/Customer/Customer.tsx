@@ -11,6 +11,12 @@ import { useCustomer } from "@/store/hooks";
 import styles from "./Customer.module.scss";
 import InputSelect from "@/components/ui/InputSelect";
 
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
+
 const initData = {
   type: { value: "", isValid: true },
   rut: { value: "", isValid: true },
@@ -31,8 +37,8 @@ const dataSelect = [
   { value: "C", text: "Compañía" },
 ];
 
-const Customer = () => {
-  const { customer, isLoading, isError, error, upsert, getByRut } =
+const Customer = ({ id }: any) => {
+  const { customer, isLoading, isError, error, upsert, getByRut, getById } =
     useCustomer();
 
   const [form, setForm] = useState(initData);
@@ -82,6 +88,23 @@ const Customer = () => {
   };
 
   useEffect(() => {
+    getById(id);
+    if (customer) {
+      setForm({
+        ...form,
+        rut: { value: customer.rut, isValid: true },
+        name: { value: customer.name, isValid: true },
+        fantasyName: { value: customer.fantasyName, isValid: true },
+        activity: { value: customer.activity, isValid: true },
+        email: { value: customer.email, isValid: true },
+        phone: { value: customer.phone, isValid: true },
+        address: { value: customer.address, isValid: true },
+        district: { value: customer.district, isValid: true },
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (customer) {
       setForm({
         ...form,
@@ -115,128 +138,129 @@ const Customer = () => {
 
   return (
     <Option>
-      <div className={styles.header}>
-        <ul className={styles.left}>Customer</ul>
-      </div>
-      <ContentCell gap="7px">
-        <InputSelect
-          label="Tipo"
-          width="300px"
-          onChange={handleTypeChange}
-          value={selectedType || ""}
-          name="type"
-          data={dataSelect}
-        />
-
-        <InputText
-          label="Rut"
-          type="text"
-          placeholder="11.111.111-1"
-          width="300px"
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          value={form.rut.value}
-          name="rut"
-        />
-
-        <InputText
-          label="Nombre"
-          type="text"
-          placeholder="Nombre"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.name.value}
-          name="name"
-        />
-
-        {selectedType === "C" && (
-          <>
-            <InputText
-              label="Nombre de fantasía"
-              type="text"
-              placeholder="El Parrón - Norte 2"
+      <OptionOverlay>
+        <OptionHeader tittle="Cliente">{}</OptionHeader>
+        <OptionBody>
+          <ContentCell gap="7px">
+            <InputSelect
+              label="Tipo"
               width="300px"
-              onChange={handleOnChange}
-              value={form.fantasyName.value}
-              name="fantasyName"
+              onChange={handleTypeChange}
+              value={selectedType || ""}
+              name="type"
+              data={dataSelect}
             />
 
             <InputText
-              label="Actividad"
+              label="Rut"
               type="text"
-              placeholder="Venta de..."
+              placeholder="11.111.111-1"
               width="300px"
               onChange={handleOnChange}
-              value={form.activity.value}
-              name="activity"
-            />
-          </>
-        )}
-        {selectedType === "P" && (
-          <>
-            <InputText
-              label="Apellido Paterno"
-              type="text"
-              placeholder="Rodriguez"
-              width="300px"
-              onChange={handleOnChange}
-              value={form.paternalLastName.value}
-              name="paternalLastName"
+              onBlur={handleOnBlur}
+              value={form.rut.value}
+              name="rut"
             />
 
             <InputText
-              label="Apellido Materno"
+              label="Nombre"
               type="text"
-              placeholder="Acevedo"
+              placeholder="Nombre"
               width="300px"
               onChange={handleOnChange}
-              value={form.maternalLastName.value}
-              name="maternalLastName"
+              value={form.name.value}
+              name="name"
             />
-          </>
-        )}
-        <InputText
-          label="Dirección"
-          type="text"
-          placeholder="Av. Providencia 221..."
-          width="300px"
-          onChange={handleOnChange}
-          value={form.address.value}
-          name="address"
-        />
 
-        <InputText
-          label="Comuna"
-          type="text"
-          placeholder="Providencia"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.district.value}
-          name="district"
-        />
+            {selectedType === "C" && (
+              <>
+                <InputText
+                  label="Nombre de fantasía"
+                  type="text"
+                  placeholder="El Parrón - Norte 2"
+                  width="300px"
+                  onChange={handleOnChange}
+                  value={form.fantasyName.value}
+                  name="fantasyName"
+                />
 
-        <InputText
-          label="Correo electrónico"
-          type="text"
-          placeholder="julio@gmail.com"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.email.value}
-          name="email"
-        />
+                <InputText
+                  label="Actividad"
+                  type="text"
+                  placeholder="Venta de..."
+                  width="300px"
+                  onChange={handleOnChange}
+                  value={form.activity.value}
+                  name="activity"
+                />
+              </>
+            )}
+            {selectedType === "P" && (
+              <>
+                <InputText
+                  label="Apellido Paterno"
+                  type="text"
+                  placeholder="Rodriguez"
+                  width="300px"
+                  onChange={handleOnChange}
+                  value={form.paternalLastName.value}
+                  name="paternalLastName"
+                />
 
-        <InputText
-          label="Teléfono"
-          type="phone"
-          placeholder="+569 9934 1234"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.phone.value}
-          name="phone"
-        />
-      </ContentCell>
+                <InputText
+                  label="Apellido Materno"
+                  type="text"
+                  placeholder="Acevedo"
+                  width="300px"
+                  onChange={handleOnChange}
+                  value={form.maternalLastName.value}
+                  name="maternalLastName"
+                />
+              </>
+            )}
+            <InputText
+              label="Dirección"
+              type="text"
+              placeholder="Av. Providencia 221..."
+              width="300px"
+              onChange={handleOnChange}
+              value={form.address.value}
+              name="address"
+            />
 
-      <Button label="Crear" onClick={onClick} />
+            <InputText
+              label="Comuna"
+              type="text"
+              placeholder="Providencia"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.district.value}
+              name="district"
+            />
+
+            <InputText
+              label="Correo electrónico"
+              type="text"
+              placeholder="julio@gmail.com"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.email.value}
+              name="email"
+            />
+
+            <InputText
+              label="Teléfono"
+              type="phone"
+              placeholder="+569 9934 1234"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.phone.value}
+              name="phone"
+            />
+            <Button label="Crear" onClick={onClick} />
+          </ContentCell>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

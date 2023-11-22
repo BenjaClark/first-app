@@ -30,7 +30,7 @@ const dataSelectShape = [
   { value: "opcion4", text: "Triangular", color: "gray" },
 ];
 
-const Reception = () => {
+const Reception = ({ id }: any) => {
   const [form, setForm] = useState(initData);
 
   const { color, setColor, store, setStore } = useStore();

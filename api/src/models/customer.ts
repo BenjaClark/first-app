@@ -6,12 +6,26 @@ import {
   _deleteById,
   _insert,
   _updateById,
+  _getById,
 } from "../queries/customer";
 
 const getAll: any = async () => {
   try {
     const result = await pool.query(_getAll);
     return { success: true, data: result.rows, error: null };
+  } catch (e) {
+    return { success: false, data: null, error: (e as Error).message };
+  }
+};
+
+const getById: any = async (id: string) => {
+  try {
+    const result = await pool.query(_getById, [id]);
+    return {
+      success: true,
+      data: result.rows.length > 0 ? result.rows[0] : null,
+      error: null,
+    };
   } catch (e) {
     return { success: false, data: null, error: (e as Error).message };
   }
@@ -65,4 +79,4 @@ const deleteById: any = async (id: number) => {
   }
 };
 
-export { getAll, getByRut, deleteById, insert, updateById };
+export { getAll, getByRut, deleteById, insert, updateById, getById };

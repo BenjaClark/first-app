@@ -5,11 +5,15 @@ import InputText from "@/components/ui/InputText";
 import InputSelect from "@/components/ui/InputSelect";
 
 import Option from "@/components/layout/Option";
-import OptionHeader from "@/components/layout/OptionHeader";
 import InputDate from "@/components/ui/InputDate";
-import FloatingBar from "@/components/ui/FloatingBar";
 import { useStore } from "@/store/hooks/useStore";
 import { useFloatingBar } from "@/store/hooks";
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
+import Store from "@/components/ui/Store";
 
 const dataSelect = [
   { value: "opcion1", text: "Sucursal 1", color: "red" },
@@ -69,278 +73,309 @@ const Order = () => {
 
   return (
     <Option userName={name}>
-      <OptionHeader label="Pedido">
-        <ContentRow gap="20px">
-          <ContentCell gap="20px">
-            <ContentCell gap="5px">
-              <ContentRow gap="5px">
-                <InputText
-                  label="Rut"
-                  type="text"
-                  placeholder="11.111.111-1"
-                  width="140px"
-                  onChange={handleOnChange}
-                  value={form.rut.value}
-                  name="rut"
-                />
-                <InputText
-                  label="Nombre"
-                  type="text"
-                  placeholder="Julio Rodriguez Acevedo"
-                  width="300px"
-                  onChange={handleOnChange}
-                  value={form.name.value}
-                  name="name"
-                />
-              </ContentRow>
-
-              <ContentRow gap="5px">
-                <InputText
-                  label="Correo electrónico"
-                  type="text"
-                  placeholder="julio@gmail.com"
-                  width="300px"
-                  onChange={handleOnChange}
-                  value={form.email.value}
-                  name="email"
-                />
-                <InputText
-                  label="Telefono"
-                  type="phone"
-                  placeholder="+569 9934 1234"
-                  width="140px"
-                  onChange={handleOnChange}
-                  value={form.phone.value}
-                  name="phone"
-                />
-              </ContentRow>
-
+      <OptionOverlay>
+        <OptionHeader tittle="Orden">
+          <InputText
+            type="text"
+            label="Etiqueta"
+            placeholder="Texto"
+            width="350px"
+            value={"form.etiqueta.value"}
+            onChange={handleOnChange}
+            name="etiqueta"
+          />
+          <InputSelect
+            label="Sucursal"
+            width="184px"
+            value={form.sucursal.value}
+            onChange={handleOnChange}
+            name="sucursal"
+            data={dataSelect}
+          />
+          <InputDate
+            type="date"
+            label="Fecha"
+            placeholder="01-02-2023"
+            width="138px"
+            value={form.fecha.value}
+            onChange={handleOnChange}
+            name="fecha"
+          />
+          <Store label={store} bgColor={"color"} />
+        </OptionHeader>
+        <OptionBody>
+          <ContentRow gap="20px">
+            <ContentCell gap="20px">
               <ContentCell gap="5px">
-                <ContentRow gap="5px" marginTop="15px">
-                  <InputSelect
-                    label="Forma"
-                    width="220px"
-                    value={form.shape.value}
-                    onChange={handleOnChange}
-                    name="shape"
-                    data={dataSelect}
-                  />
-                  <InputSelect
-                    label="Tamaño"
-                    width="220px"
-                    value={form.size.value}
-                    onChange={handleOnChange}
-                    name="size"
-                    data={dataSelect}
-                  />
-                </ContentRow>
-
                 <ContentRow gap="5px">
-                  <InputSelect
-                    label="Masa"
-                    width="220px"
-                    value={form.dough.value}
-                    onChange={handleOnChange}
-                    name="dough"
-                    data={dataSelect}
-                  />
-                  <InputSelect
-                    label="Sabor"
-                    width="220px"
-                    value={form.flavor.value}
-                    onChange={handleOnChange}
-                    name="flavor"
-                    data={dataSelect}
-                  />
-                </ContentRow>
-
-                <ContentRow gap="5px">
-                  <InputSelect
-                    label="Crema"
-                    width="220px"
-                    value={form.cream.value}
-                    onChange={handleOnChange}
-                    name="cream"
-                    data={dataSelect}
-                  />
-                  <InputSelect
-                    label="Relleno"
-                    width="220px"
-                    value={form.fill.value}
-                    onChange={handleOnChange}
-                    name="fill"
-                    data={dataSelect}
-                  />
-                </ContentRow>
-
-                <ContentRow gap="5px">
-                  <InputSelect
-                    label="Extra"
-                    width="220px"
-                    value={form.extra.value}
-                    onChange={handleOnChange}
-                    name="extra"
-                    data={dataSelect}
-                  />
-                </ContentRow>
-              </ContentCell>
-
-              <ContentCell gap="5px">
-                <ContentRow gap="5px" marginTop="15px">
                   <InputText
-                    label="Mensaje"
+                    label="Rut"
                     type="text"
-                    placeholder="Feliz Cumpleaños"
-                    width="445px"
+                    placeholder="11.111.111-1"
+                    width="140px"
                     onChange={handleOnChange}
-                    value={form.message.value}
-                    name="message"
+                    value={form.rut.value}
+                    name="rut"
+                  />
+                  <InputText
+                    label="Nombre"
+                    type="text"
+                    placeholder="Julio Rodriguez Acevedo"
+                    width="300px"
+                    onChange={handleOnChange}
+                    value={form.name.value}
+                    name="name"
                   />
                 </ContentRow>
 
                 <ContentRow gap="5px">
                   <InputText
-                    label="Adicional"
+                    label="Correo electrónico"
                     type="text"
-                    placeholder="Poco Manjar"
-                    width="445px"
+                    placeholder="julio@gmail.com"
+                    width="300px"
                     onChange={handleOnChange}
-                    value={form.aditional.value}
-                    name="aditional"
+                    value={form.email.value}
+                    name="email"
+                  />
+                  <InputText
+                    label="Telefono"
+                    type="phone"
+                    placeholder="+569 9934 1234"
+                    width="140px"
+                    onChange={handleOnChange}
+                    value={form.phone.value}
+                    name="phone"
                   />
                 </ContentRow>
+
+                <ContentCell gap="5px">
+                  <ContentRow gap="5px" marginTop="15px">
+                    <InputSelect
+                      label="Forma"
+                      width="220px"
+                      value={form.shape.value}
+                      onChange={handleOnChange}
+                      name="shape"
+                      data={dataSelect}
+                    />
+                    <InputSelect
+                      label="Tamaño"
+                      width="220px"
+                      value={form.size.value}
+                      onChange={handleOnChange}
+                      name="size"
+                      data={dataSelect}
+                    />
+                  </ContentRow>
+
+                  <ContentRow gap="5px">
+                    <InputSelect
+                      label="Masa"
+                      width="220px"
+                      value={form.dough.value}
+                      onChange={handleOnChange}
+                      name="dough"
+                      data={dataSelect}
+                    />
+                    <InputSelect
+                      label="Sabor"
+                      width="220px"
+                      value={form.flavor.value}
+                      onChange={handleOnChange}
+                      name="flavor"
+                      data={dataSelect}
+                    />
+                  </ContentRow>
+
+                  <ContentRow gap="5px">
+                    <InputSelect
+                      label="Crema"
+                      width="220px"
+                      value={form.cream.value}
+                      onChange={handleOnChange}
+                      name="cream"
+                      data={dataSelect}
+                    />
+                    <InputSelect
+                      label="Relleno"
+                      width="220px"
+                      value={form.fill.value}
+                      onChange={handleOnChange}
+                      name="fill"
+                      data={dataSelect}
+                    />
+                  </ContentRow>
+
+                  <ContentRow gap="5px">
+                    <InputSelect
+                      label="Extra"
+                      width="220px"
+                      value={form.extra.value}
+                      onChange={handleOnChange}
+                      name="extra"
+                      data={dataSelect}
+                    />
+                  </ContentRow>
+                </ContentCell>
+
+                <ContentCell gap="5px">
+                  <ContentRow gap="5px" marginTop="15px">
+                    <InputText
+                      label="Mensaje"
+                      type="text"
+                      placeholder="Feliz Cumpleaños"
+                      width="445px"
+                      onChange={handleOnChange}
+                      value={form.message.value}
+                      name="message"
+                    />
+                  </ContentRow>
+
+                  <ContentRow gap="5px">
+                    <InputText
+                      label="Adicional"
+                      type="text"
+                      placeholder="Poco Manjar"
+                      width="445px"
+                      onChange={handleOnChange}
+                      value={form.aditional.value}
+                      name="aditional"
+                    />
+                  </ContentRow>
+                </ContentCell>
               </ContentCell>
             </ContentCell>
-          </ContentCell>
-
-          <ContentCell gap="5px">
-            <ContentRow gap="5px">
-              <InputSelect
-                label="Sucursal"
-                width="266px"
-                value={store}
-                onChange={handleOnChange}
-                name="sucursal"
-                data={dataSelect}
-              />
-            </ContentRow>
-
-            <ContentRow gap="6px">
-              <InputDate
-                type="date"
-                label="Fecha"
-                placeholder="01-02-2023"
-                width="160px"
-                value={form.date.value}
-                onChange={handleOnChange}
-                name="date"
-              />
-              <InputText
-                label="Hora"
-                type="time"
-                placeholder="Poco Manjar"
-                width="100px"
-                onChange={handleOnChange}
-                value={form.hour.value}
-                name="hour"
-              />
-            </ContentRow>
 
             <ContentCell gap="5px">
-              <ContentRow gap="5px" marginTop="15px">
-                <InputText
-                  label="Precio"
-                  type="text"
-                  placeholder="$12.500"
-                  width="130px"
-                  onChange={handleOnChange}
-                  value={form.price.value}
-                  name="price"
-                />
-                <InputText
-                  label="Abono"
-                  type="text"
-                  placeholder="$10.000"
-                  width="131px"
-                  onChange={handleOnChange}
-                  value={form.deposit.value}
-                  name="deposit"
-                />
-              </ContentRow>
-
               <ContentRow gap="5px">
                 <InputSelect
-                  label="Tipo de pago"
+                  label="Sucursal"
                   width="266px"
-                  value={form.payment.value}
+                  value={store}
                   onChange={handleOnChange}
-                  name="payment"
+                  name="sucursal"
                   data={dataSelect}
                 />
               </ContentRow>
 
-              <ContentRow gap="5px">
-                <InputText
-                  label="Estado del pago"
-                  type="text"
-                  placeholder="Pendiente"
-                  width="266px"
-                  onChange={handleOnChange}
-                  value={form.payState.value}
-                  name="payState"
-                />
-              </ContentRow>
-
-              <ContentRow gap="5px">
-                <InputText
-                  label="Estado del pedido"
-                  type="text"
-                  placeholder="En cámara"
-                  width="266px"
-                  onChange={handleOnChange}
-                  value={form.orderState.value}
-                  name="orderState"
-                />
-              </ContentRow>
-            </ContentCell>
-
-            <ContentCell gap="5px">
-              <ContentRow gap="5px" marginTop="15px">
-                <InputText
-                  label="Usuario"
-                  type="text"
-                  placeholder="Juan Pérez"
-                  width="266px"
-                  onChange={handleOnChange}
-                  value={form.user.value}
-                  name="user"
-                />
-              </ContentRow>
-
               <ContentRow gap="6px">
-                <InputText
+                <InputDate
+                  type="date"
                   label="Fecha"
-                  type="text"
-                  placeholder="12/02/2022"
+                  placeholder="01-02-2023"
                   width="160px"
-                  onChange={handleOnChange}
                   value={form.date.value}
+                  onChange={handleOnChange}
                   name="date"
                 />
                 <InputText
                   label="Hora"
-                  type="text"
-                  placeholder="15:34"
+                  type="time"
+                  placeholder="Poco Manjar"
                   width="100px"
                   onChange={handleOnChange}
                   value={form.hour.value}
                   name="hour"
                 />
               </ContentRow>
+
+              <ContentCell gap="5px">
+                <ContentRow gap="5px" marginTop="15px">
+                  <InputText
+                    label="Precio"
+                    type="text"
+                    placeholder="$12.500"
+                    width="130px"
+                    onChange={handleOnChange}
+                    value={form.price.value}
+                    name="price"
+                  />
+                  <InputText
+                    label="Abono"
+                    type="text"
+                    placeholder="$10.000"
+                    width="131px"
+                    onChange={handleOnChange}
+                    value={form.deposit.value}
+                    name="deposit"
+                  />
+                </ContentRow>
+
+                <ContentRow gap="5px">
+                  <InputSelect
+                    label="Tipo de pago"
+                    width="266px"
+                    value={form.payment.value}
+                    onChange={handleOnChange}
+                    name="payment"
+                    data={dataSelect}
+                  />
+                </ContentRow>
+
+                <ContentRow gap="5px">
+                  <InputText
+                    label="Estado del pago"
+                    type="text"
+                    placeholder="Pendiente"
+                    width="266px"
+                    onChange={handleOnChange}
+                    value={form.payState.value}
+                    name="payState"
+                  />
+                </ContentRow>
+
+                <ContentRow gap="5px">
+                  <InputText
+                    label="Estado del pedido"
+                    type="text"
+                    placeholder="En cámara"
+                    width="266px"
+                    onChange={handleOnChange}
+                    value={form.orderState.value}
+                    name="orderState"
+                  />
+                </ContentRow>
+              </ContentCell>
+
+              <ContentCell gap="5px">
+                <ContentRow gap="5px" marginTop="15px">
+                  <InputText
+                    label="Usuario"
+                    type="text"
+                    placeholder="Juan Pérez"
+                    width="266px"
+                    onChange={handleOnChange}
+                    value={form.user.value}
+                    name="user"
+                  />
+                </ContentRow>
+
+                <ContentRow gap="6px">
+                  <InputText
+                    label="Fecha"
+                    type="text"
+                    placeholder="12/02/2022"
+                    width="160px"
+                    onChange={handleOnChange}
+                    value={form.date.value}
+                    name="date"
+                  />
+                  <InputText
+                    label="Hora"
+                    type="text"
+                    placeholder="15:34"
+                    width="100px"
+                    onChange={handleOnChange}
+                    value={form.hour.value}
+                    name="hour"
+                  />
+                </ContentRow>
+              </ContentCell>
             </ContentCell>
-          </ContentCell>
-        </ContentRow>
-      </OptionHeader>
+          </ContentRow>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

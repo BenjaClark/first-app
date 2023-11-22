@@ -74,6 +74,47 @@ const getByRut = async (req: any, res: any) => {
   return;
 };
 
+const getById = async (req: any, res: any) => {
+  const { id } = req.params;
+  const result = await CustomerModel.getById(id);
+
+  if (!result.success) {
+    createLogger.error({
+      model: "customer/getById",
+      error: result.error,
+    });
+    res.status(500).json({ success: false, data: null, error: result.error });
+    return;
+  }
+  if (!result.data) {
+    res
+      .status(200)
+      .json({ success: true, data: result.data, error: result.error });
+    return;
+  }
+
+  const { type, rut, fantasyname, name, address, district, email, phone } =
+    result.data;
+
+  const data = {
+    id,
+    type,
+    rut,
+    fantasyname,
+    name,
+    address,
+    district,
+    email,
+    phone,
+  };
+  createLogger.info({
+    controller: "customer/getById",
+    message: "OK",
+  });
+  res.status(200).json({ success: true, data, error: null });
+  return;
+};
+
 const deleteById = async (req: any, res: any) => {
   const { id } = req.params;
   const result = await CustomerModel.deleteById(id);
@@ -116,4 +157,4 @@ const upsert = async (req: any, res: any) => {
     .json({ success: true, data: customerResult.data, error: null });
 };
 
-export { getAll, getByRut, deleteById, upsert };
+export { getAll, getByRut, deleteById, upsert, getById };

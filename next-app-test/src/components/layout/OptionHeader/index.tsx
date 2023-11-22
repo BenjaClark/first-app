@@ -1,3 +1,3 @@
-import OptionHeader from "./OptionHeader";
+import { OptionHeader, OptionBody, OptionOverlay } from "./OptionHeader";
 
-export default OptionHeader;
+export { OptionHeader, OptionBody, OptionOverlay };

@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import Customer from "@/components/functional/Customer";
+import GetCustomer from "@/components/functional/GetCustomer";
 
-export default function RegisterCustomerPage() {
-  return <Customer />;
+export default function GetCustomerPage() {
+  return <GetCustomer />;
 }

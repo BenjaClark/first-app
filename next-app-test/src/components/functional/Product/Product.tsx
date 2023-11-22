@@ -8,7 +8,11 @@ import Button from "@/components/ui/Button";
 
 import { useProduct } from "@/store/hooks";
 
-import styles from "./Product.module.scss";
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
 
 const initData = {
   code: { value: "", isValid: true },
@@ -16,8 +20,8 @@ const initData = {
   price: { value: "", isValid: true },
 };
 
-const Product = () => {
-  const { product, isLoading, isError, error, upsert, getByCode } =
+const Product = ({ id }: any) => {
+  const { product, isLoading, isError, error, upsert, getByCode, getById } =
     useProduct();
 
   const [form, setForm] = useState(initData);
@@ -53,6 +57,18 @@ const Product = () => {
   };
 
   useEffect(() => {
+    getById(id);
+    if (product?.id) {
+      setForm({
+        ...form,
+        code: { value: product.code, isValid: true },
+        name: { value: product.name, isValid: true },
+        price: { value: product.price, isValid: true },
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (product) {
       setForm({
         ...form,
@@ -71,43 +87,44 @@ const Product = () => {
 
   return (
     <Option>
-      <div className={styles.header}>
-        <ul className={styles.left}>Producto</ul>
-      </div>
-      <ContentCell gap="7px">
-        <InputText
-          label="Codigo"
-          type="text"
-          placeholder="111"
-          width="300px"
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          value={form.code.value.toString()}
-          name="code"
-        />
+      <OptionOverlay>
+        <OptionHeader tittle="Producto">{}</OptionHeader>
+        <OptionBody>
+          <ContentCell gap="7px">
+            <InputText
+              label="Codigo"
+              type="text"
+              placeholder="111"
+              width="300px"
+              onChange={handleOnChange}
+              onBlur={handleOnBlur}
+              value={form.code.value.toString()}
+              name="code"
+            />
 
-        <InputText
-          label="Nombre"
-          type="text"
-          placeholder="Pastel de Limón"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.name.value}
-          name="name"
-        />
+            <InputText
+              label="Nombre"
+              type="text"
+              placeholder="Pastel de Limón"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.name.value}
+              name="name"
+            />
 
-        <InputText
-          label="Precio"
-          type="number"
-          placeholder="$10.000"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.price.value.toString()}
-          name="price"
-        />
-      </ContentCell>
-
-      <Button label="Crear" onClick={onClick} />
+            <InputText
+              label="Precio"
+              type="number"
+              placeholder="$10.000"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.price.value.toString()}
+              name="price"
+            />
+            <Button label="Crear" onClick={onClick} />
+          </ContentCell>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

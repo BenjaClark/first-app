@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import Product from "@/components/functional/Product";
+import GetProduct from "@/components/functional/GetProduct";
 
-export default function RegisterProductPage() {
-  return <Product />;
+export default function GetProductPage() {
+  return <GetProduct />;
 }

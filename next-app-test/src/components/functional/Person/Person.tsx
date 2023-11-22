@@ -8,7 +8,16 @@ import Button from "@/components/ui/Button";
 
 import { usePerson } from "@/store/hooks";
 
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
+
 import styles from "./Person.module.scss";
+import Store from "@/components/ui/Store";
+import InputDate from "@/components/ui/InputDate";
+import InputSelect from "@/components/ui/InputSelect";
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -108,93 +117,94 @@ const Person = ({ id }: any) => {
 
   return (
     <Option>
-      <div className={styles.header}>
-        <ul className={styles.left}>Persona</ul>
-      </div>
-      <ContentCell gap="7px">
-        <InputText
-          label="Rut"
-          type="text"
-          placeholder="11.111.111-1"
-          width="300px"
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          value={form.rut.value}
-          name="rut"
-        />
+      <OptionOverlay>
+        <OptionHeader tittle="Persona">{}</OptionHeader>
+        <OptionBody>
+          <ContentCell gap="7px">
+            <InputText
+              label="Rut"
+              type="text"
+              placeholder="11.111.111-1"
+              width="300px"
+              onChange={handleOnChange}
+              onBlur={handleOnBlur}
+              value={form.rut.value}
+              name="rut"
+            />
 
-        <InputText
-          label="Nombre"
-          type="text"
-          placeholder="Nombre de la persona"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.name.value}
-          name="name"
-        />
+            <InputText
+              label="Nombre"
+              type="text"
+              placeholder="Nombre de la persona"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.name.value}
+              name="name"
+            />
 
-        <InputText
-          label="Apellido Paterno"
-          type="text"
-          placeholder="Rodriguez"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.paternalLastName.value}
-          name="paternalLastName"
-        />
+            <InputText
+              label="Apellido Paterno"
+              type="text"
+              placeholder="Rodriguez"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.paternalLastName.value}
+              name="paternalLastName"
+            />
 
-        <InputText
-          label="Apellido Materno"
-          type="text"
-          placeholder="Acevedo"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.maternalLastName.value}
-          name="maternalLastName"
-        />
+            <InputText
+              label="Apellido Materno"
+              type="text"
+              placeholder="Acevedo"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.maternalLastName.value}
+              name="maternalLastName"
+            />
 
-        <InputText
-          label="Dirección"
-          type="text"
-          placeholder="Av. Providencia 221..."
-          width="300px"
-          onChange={handleOnChange}
-          value={form.address.value}
-          name="address"
-        />
+            <InputText
+              label="Dirección"
+              type="text"
+              placeholder="Av. Providencia 221..."
+              width="300px"
+              onChange={handleOnChange}
+              value={form.address.value}
+              name="address"
+            />
 
-        <InputText
-          label="Comuna"
-          type="text"
-          placeholder="Providencia"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.district.value}
-          name="district"
-        />
+            <InputText
+              label="Comuna"
+              type="text"
+              placeholder="Providencia"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.district.value}
+              name="district"
+            />
 
-        <InputText
-          label="Correo electrónico"
-          type="text"
-          placeholder="julio@gmail.com"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.email.value}
-          name="email"
-        />
+            <InputText
+              label="Correo electrónico"
+              type="text"
+              placeholder="julio@gmail.com"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.email.value}
+              name="email"
+            />
 
-        <InputText
-          label="Teléfono"
-          type="phone"
-          placeholder="+569 9934 1234"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.phone.value}
-          name="phone"
-        />
-      </ContentCell>
-
-      <Button label="Crear" onClick={onClick} />
+            <InputText
+              label="Teléfono"
+              type="phone"
+              placeholder="+569 9934 1234"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.phone.value}
+              name="phone"
+            />
+            <Button label="Crear" onClick={onClick} />
+          </ContentCell>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

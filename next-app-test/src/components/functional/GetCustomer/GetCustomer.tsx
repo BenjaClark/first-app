@@ -4,9 +4,20 @@ import Option from "@/components/layout/Option";
 import { useCustomer } from "@/store/hooks";
 
 import styles from "./GetCustomer.module.scss";
-
+import { useRouter } from "next/navigation";
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
 const GetCustomer = () => {
   const { listCustomer, getAll } = useCustomer();
+
+  const router = useRouter();
+
+  const handleClick = (id: string) => {
+    router.push(`/register/customer/${id}`);
+  };
 
   useEffect(() => {
     getAll();
@@ -14,39 +25,29 @@ const GetCustomer = () => {
 
   return (
     <Option>
-      <div className={styles.customerListContainer}>
-        <h2>Listado de Customer</h2>
-        <ul className={styles.userList}>
-          {listCustomer?.map((customer: any, index: number) => (
-            <li className={styles.li} key={customer.id}>
-              <div className={styles.field}>
-                <span>ID:</span> {customer.id}
-              </div>
-              <div className={styles.field}>
-                <span>tipo:</span> {customer.type}
-              </div>
-              <div className={styles.field}>
-                <span>RUT:</span> {customer.rut}
-              </div>
-              <div className={styles.field}>
-                <span>Nombre:</span> {customer.name}
-              </div>
-              <div className={styles.field}>
-                <span>Dirección:</span> {customer.address}
-              </div>
-              <div className={styles.field}>
-                <span>Comuna:</span> {customer.district}
-              </div>
-              <div className={styles.field}>
-                <span>Correo electrónico:</span> {customer.email}
-              </div>
-              <div className={styles.field}>
-                <span>Teléfono:</span> {customer.phone}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <OptionOverlay>
+        <OptionHeader tittle="Cliente">{}</OptionHeader>
+        <OptionBody>
+          <div className={styles.customerListContainer}>
+            <h2>Listado de Clientes</h2>
+
+            <table className={styles.table}>
+              {listCustomer?.map((customer: any, index: number) => (
+                <tr key={index} onClick={() => handleClick(customer.id)}>
+                  <td>{customer.id}</td>
+                  <td>{customer.type}</td>
+                  <td>{customer.rut}</td>
+                  <td>{customer.name}</td>
+                  <td>{customer.address}</td>
+                  <td>{customer.district}</td>
+                  <td>{customer.email}</td>
+                  <td>{customer.phone}</td>
+                </tr>
+              ))}
+            </table>
+          </div>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

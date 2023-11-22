@@ -10,6 +10,12 @@ import { useCompany } from "@/store/hooks";
 
 import styles from "./Company.module.scss";
 
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
+
 const initData = {
   rut: { value: "", isValid: true },
   fantasyName: { value: "", isValid: true },
@@ -21,8 +27,9 @@ const initData = {
   district: { value: "", isValid: true },
 };
 
-const Company = () => {
-  const { company, isLoading, isError, error, upsert, getByRut } = useCompany();
+const Company = ({ id }: any) => {
+  const { company, isLoading, isError, error, upsert, getByRut, getById } =
+    useCompany();
 
   const [form, setForm] = useState(initData);
 
@@ -62,6 +69,23 @@ const Company = () => {
   };
 
   useEffect(() => {
+    getById(id);
+    if (company?.id) {
+      setForm({
+        ...form,
+        rut: { value: company.rut, isValid: true },
+        fantasyName: { value: company.fantasyName, isValid: true },
+        name: { value: company.name, isValid: true },
+        activity: { value: company.activity, isValid: true },
+        email: { value: company.email, isValid: true },
+        phone: { value: company.phone, isValid: true },
+        address: { value: company.address, isValid: true },
+        district: { value: company.district, isValid: true },
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (company) {
       setForm({
         ...form,
@@ -90,93 +114,94 @@ const Company = () => {
 
   return (
     <Option>
-      <div className={styles.header}>
-        <ul className={styles.left}>Empresa</ul>
-      </div>
-      <ContentCell gap="7px">
-        <InputText
-          label="Rut"
-          type="text"
-          placeholder="77.777.777-7"
-          width="300px"
-          onChange={handleOnChange}
-          onBlur={handleOnBlur}
-          value={form.rut.value}
-          name="rut"
-        />
+      <OptionOverlay>
+        <OptionHeader tittle="Empresa">{}</OptionHeader>
+        <OptionBody>
+          <ContentCell gap="7px">
+            <InputText
+              label="Rut"
+              type="text"
+              placeholder="77.777.777-7"
+              width="300px"
+              onChange={handleOnChange}
+              onBlur={handleOnBlur}
+              value={form.rut.value}
+              name="rut"
+            />
 
-        <InputText
-          label="Nombre de fantasía"
-          type="text"
-          placeholder="El Parrón - Norte 2"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.fantasyName.value}
-          name="fantasyName"
-        />
+            <InputText
+              label="Nombre de fantasía"
+              type="text"
+              placeholder="El Parrón - Norte 2"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.fantasyName.value}
+              name="fantasyName"
+            />
 
-        <InputText
-          label="Nombre"
-          type="text"
-          placeholder="El Parrón"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.name.value}
-          name="name"
-        />
+            <InputText
+              label="Nombre"
+              type="text"
+              placeholder="El Parrón"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.name.value}
+              name="name"
+            />
 
-        <InputText
-          label="Actividad"
-          type="text"
-          placeholder="Venta de..."
-          width="300px"
-          onChange={handleOnChange}
-          value={form.activity.value}
-          name="activity"
-        />
+            <InputText
+              label="Actividad"
+              type="text"
+              placeholder="Venta de..."
+              width="300px"
+              onChange={handleOnChange}
+              value={form.activity.value}
+              name="activity"
+            />
 
-        <InputText
-          label="Dirección"
-          type="text"
-          placeholder="Av. Providencia 221..."
-          width="300px"
-          onChange={handleOnChange}
-          value={form.address.value}
-          name="address"
-        />
+            <InputText
+              label="Dirección"
+              type="text"
+              placeholder="Av. Providencia 221..."
+              width="300px"
+              onChange={handleOnChange}
+              value={form.address.value}
+              name="address"
+            />
 
-        <InputText
-          label="Comuna"
-          type="text"
-          placeholder="Providencia"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.district.value}
-          name="district"
-        />
+            <InputText
+              label="Comuna"
+              type="text"
+              placeholder="Providencia"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.district.value}
+              name="district"
+            />
 
-        <InputText
-          label="Correo electrónico"
-          type="text"
-          placeholder="elparron@gmail.com"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.email.value}
-          name="email"
-        />
+            <InputText
+              label="Correo electrónico"
+              type="text"
+              placeholder="elparron@gmail.com"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.email.value}
+              name="email"
+            />
 
-        <InputText
-          label="Teléfono"
-          type="phone"
-          placeholder="+569 9934 1234"
-          width="300px"
-          onChange={handleOnChange}
-          value={form.phone.value}
-          name="phone"
-        />
-      </ContentCell>
-
-      <Button label="Crear" onClick={onClick} />
+            <InputText
+              label="Teléfono"
+              type="phone"
+              placeholder="+569 9934 1234"
+              width="300px"
+              onChange={handleOnChange}
+              value={form.phone.value}
+              name="phone"
+            />
+            <Button label="Crear" onClick={onClick} />
+          </ContentCell>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

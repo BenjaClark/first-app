@@ -1,21 +1,33 @@
 import React, { ReactNode } from "react";
 
-import Header from "@/components/ui/Header";
-
 import styles from "./OptionHeader.module.scss";
 
+interface IOptionOverlay {
+  children: ReactNode;
+}
 interface IOptionHeader {
   children: ReactNode;
-  label: string;
+  tittle: string;
+}
+interface IOptionBody {
+  children: ReactNode;
 }
 
-const OptionHeader = ({ children, label }: IOptionHeader) => {
+const OptionOverlay = ({ children }: IOptionOverlay) => {
+  return <div className={styles.overlay}>{children}</div>;
+};
+
+const OptionHeader = ({ children, tittle }: IOptionHeader) => {
   return (
-    <div className={styles.container}>
-      <Header label={label} />
-      <div className={styles.body}>{children}</div>
+    <div className={styles.header}>
+      <h1>{tittle}</h1>
+      <div className={styles.contentHeader}>{children}</div>
     </div>
   );
 };
 
-export default OptionHeader;
+const OptionBody = ({ children }: IOptionBody) => {
+  return <div className={styles.body}>{children}</div>;
+};
+
+export { OptionBody, OptionHeader, OptionOverlay };

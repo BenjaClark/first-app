@@ -5,14 +5,18 @@ import { useProduct } from "@/store/hooks";
 
 import styles from "./GetProduct.module.scss";
 import { useRouter } from "next/navigation";
-
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
 const GetProduct = () => {
   const { listProduct, getAll } = useProduct();
 
   const router = useRouter();
 
   const handleClick = (id: string) => {
-    router.push(`/register/person/${id}`);
+    router.push(`/register/product/${id}`);
   };
 
   useEffect(() => {
@@ -21,20 +25,25 @@ const GetProduct = () => {
 
   return (
     <Option>
-      <div className={styles.productListContainer}>
-        <h2>Listado de Productos</h2>
+      <OptionOverlay>
+        <OptionHeader tittle="Producto">{}</OptionHeader>
+        <OptionBody>
+          <div className={styles.productListContainer}>
+            <h2>Listado de Productos</h2>
 
-        <table className={styles.table}>
-          {listProduct?.map((product: any, index: number) => (
-            <tr key={index} onClick={() => handleClick(product.id)}>
-              <td>{product.id}</td>
-              <td>{product.code}</td>
-              <td>{product.name}</td>
-              <td>{product.price}</td>
-            </tr>
-          ))}
-        </table>
-      </div>
+            <table className={styles.table}>
+              {listProduct?.map((product: any, index: number) => (
+                <tr key={index} onClick={() => handleClick(product.id)}>
+                  <td>{product.id}</td>
+                  <td>{product.code}</td>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                </tr>
+              ))}
+            </table>
+          </div>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

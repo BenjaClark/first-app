@@ -4,9 +4,20 @@ import Option from "@/components/layout/Option";
 import { useCompany } from "@/store/hooks";
 
 import styles from "./GetCompany.module.scss";
-
+import { useRouter } from "next/navigation";
+import {
+  OptionBody,
+  OptionHeader,
+  OptionOverlay,
+} from "@/components/layout/OptionHeader";
 const GetCompany = () => {
   const { listCompany, getAll } = useCompany();
+
+  const router = useRouter();
+
+  const handleClick = (id: string) => {
+    router.push(`/register/company/${id}`);
+  };
 
   useEffect(() => {
     getAll();
@@ -14,42 +25,30 @@ const GetCompany = () => {
 
   return (
     <Option>
-      <div className={styles.companyListContainer}>
-        <h2>Listado de Empresas</h2>
-        <ul className={styles.companyList}>
-          {listCompany?.map((company: any, index: number) => (
-            <li className={styles.li} key={company.id}>
-              <div className={styles.field}>
-                <span>ID:</span> {company.id}
-              </div>
-              <div className={styles.field}>
-                <span>RUT:</span> {company.rut}
-              </div>
-              <div className={styles.field}>
-                <span>Nombre de fantasía:</span> {company.fantasyName}
-              </div>
-              <div className={styles.field}>
-                <span>Nombre:</span> {company.name}
-              </div>
-              <div className={styles.field}>
-                <span>Actividad:</span> {company.activity}
-              </div>
-              <div className={styles.field}>
-                <span>Dirección:</span> {company.address}
-              </div>
-              <div className={styles.field}>
-                <span>Comuna:</span> {company.district}
-              </div>
-              <div className={styles.field}>
-                <span>Email:</span> {company.email}
-              </div>
-              <div className={styles.field}>
-                <span>Teléfono:</span> {company.phone}
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <OptionOverlay>
+        <OptionHeader tittle="Empresa">{}</OptionHeader>
+        <OptionBody>
+          <div className={styles.companyListContainer}>
+            <h2>Listado de Empresas</h2>
+
+            <table className={styles.table}>
+              {listCompany?.map((company: any, index: number) => (
+                <tr key={index} onClick={() => handleClick(company.id)}>
+                  <td>{company.id}</td>
+                  <td>{company.rut}</td>
+                  <td>{company.fantasyName}</td>
+                  <td>{company.name}</td>
+                  <td>{company.activity}</td>
+                  <td>{company.address}</td>
+                  <td>{company.district}</td>
+                  <td>{company.email}</td>
+                  <td>{company.phone}</td>
+                </tr>
+              ))}
+            </table>
+          </div>
+        </OptionBody>
+      </OptionOverlay>
     </Option>
   );
 };

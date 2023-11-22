@@ -8,12 +8,15 @@
   font-size: 24px;
   padding: 10px;
   background-color: #fae890;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
   margin-bottom: 4px;
 
   .right {
     text-align: right;
     padding: 5px;
+    gap: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .left {
