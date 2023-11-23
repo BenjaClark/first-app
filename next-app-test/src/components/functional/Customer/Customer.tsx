@@ -89,6 +89,9 @@ const Customer = ({ id }: any) => {
 
   useEffect(() => {
     getById(id);
+
+    customer.fantasyName ? setSelectedType("C") : setSelectedType("P");
+
     if (customer) {
       setForm({
         ...form,

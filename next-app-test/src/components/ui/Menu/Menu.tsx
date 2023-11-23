@@ -52,17 +52,21 @@ const Menu = () => {
 
   return (
     <div className={styles.menu} style={{ left: showMenu ? "0px" : "-250px" }}>
-      {data.map((item, key) => (
+      {data.map((item, index) => (
         <>
-          <div key={key} className={styles.item}>
+          <div key={index} className={styles.item}>
             {item.title}
           </div>
 
-          {item.subTitle.map((subItem, key) => (
+          {item.subTitle.map((subItem, subIndex) => (
             <>
-              <Link className={styles.linkMenu} href={item.path + subItem.path}>
+              <Link
+                key={subIndex}
+                className={styles.linkMenu}
+                href={item.path + subItem.path}
+              >
                 <div
-                  key={key}
+                  key={subIndex}
                   className={styles.subItem}
                   onClick={handleItemClick}
                 >

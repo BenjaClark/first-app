@@ -70,19 +70,19 @@ const Company = ({ id }: any) => {
 
   useEffect(() => {
     getById(id);
-    if (company?.id) {
-      setForm({
-        ...form,
-        rut: { value: company.rut, isValid: true },
-        fantasyName: { value: company.fantasyName, isValid: true },
-        name: { value: company.name, isValid: true },
-        activity: { value: company.activity, isValid: true },
-        email: { value: company.email, isValid: true },
-        phone: { value: company.phone, isValid: true },
-        address: { value: company.address, isValid: true },
-        district: { value: company.district, isValid: true },
-      });
-    }
+    console.log(company);
+
+    setForm({
+      ...form,
+      rut: { value: company.rut, isValid: true },
+      name: { value: company.name, isValid: true },
+      fantasyName: { value: company.fantasyName, isValid: true },
+      activity: { value: company.activity, isValid: true },
+      email: { value: company.email, isValid: true },
+      phone: { value: company.phone, isValid: true },
+      address: { value: company.address, isValid: true },
+      district: { value: company.district, isValid: true },
+    });
   }, []);
 
   useEffect(() => {
