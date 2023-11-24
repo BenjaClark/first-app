@@ -142,7 +142,7 @@ export const personStore = create<personState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/person/deleteById/${id}`);
+      const { data } = await apiInstance.delete(`/person/deleteById/${id}`);
 
       set((state) => ({
         ...state,

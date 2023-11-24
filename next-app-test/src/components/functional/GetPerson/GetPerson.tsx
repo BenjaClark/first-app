@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-
-import Option from "@/components/layout/Option";
+import { useRouter } from "next/navigation";
 import { usePerson } from "@/store/hooks";
 
+import Option from "@/components/layout/Option";
+import Button from "@/components/ui/Button";
+
 import styles from "./GetPerson.module.scss";
-import { useRouter } from "next/navigation";
-import Header from "@/components/ui/Header";
+
 import {
   OptionBody,
   OptionHeader,
@@ -21,6 +22,10 @@ const GetPerson = () => {
     router.push(`/register/person/${id}`);
   };
 
+  const newHandleClick = () => {
+    router.push(`/register/person/${"new"}`);
+  };
+
   useEffect(() => {
     getAll();
   }, []);
@@ -31,8 +36,6 @@ const GetPerson = () => {
         <OptionHeader tittle="Persona">{}</OptionHeader>
         <OptionBody>
           <div className={styles.personListContainer}>
-            <h2>Listado de Personas</h2>
-
             <table className={styles.table}>
               {listPerson?.map((person: any, index: number) => (
                 <tr key={index} onClick={() => handleClick(person.id)}>
@@ -49,6 +52,7 @@ const GetPerson = () => {
                 </tr>
               ))}
             </table>
+            <Button label="Nuevo" onClick={newHandleClick}></Button>
           </div>
         </OptionBody>
       </OptionOverlay>

@@ -141,7 +141,7 @@ export const companyStore = create<companyState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/company/deleteById/${id}`);
+      const { data } = await apiInstance.delete(`/company/deleteById/${id}`);
 
       set((state) => ({
         ...state,

@@ -65,11 +65,7 @@ const Menu = () => {
                 className={styles.linkMenu}
                 href={item.path + subItem.path}
               >
-                <div
-                  key={subIndex}
-                  className={styles.subItem}
-                  onClick={handleItemClick}
-                >
+                <div className={styles.subItem} onClick={handleItemClick}>
                   {subItem.title}
                 </div>
               </Link>

@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 import Option from "@/components/layout/Option";
+import Button from "@/components/ui/Button";
+
+import { useRouter } from "next/navigation";
 import { useProduct } from "@/store/hooks";
 
 import styles from "./GetProduct.module.scss";
-import { useRouter } from "next/navigation";
+
 import {
   OptionBody,
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
+
 const GetProduct = () => {
   const { listProduct, getAll } = useProduct();
 
@@ -17,6 +21,10 @@ const GetProduct = () => {
 
   const handleClick = (id: string) => {
     router.push(`/register/product/${id}`);
+  };
+
+  const newHandleClick = () => {
+    router.push(`/register/product/new`);
   };
 
   useEffect(() => {
@@ -29,8 +37,6 @@ const GetProduct = () => {
         <OptionHeader tittle="Producto">{}</OptionHeader>
         <OptionBody>
           <div className={styles.productListContainer}>
-            <h2>Listado de Productos</h2>
-
             <table className={styles.table}>
               {listProduct?.map((product: any, index: number) => (
                 <tr key={index} onClick={() => handleClick(product.id)}>
@@ -41,6 +47,7 @@ const GetProduct = () => {
                 </tr>
               ))}
             </table>
+            <Button label="Nuevo" onClick={newHandleClick}></Button>
           </div>
         </OptionBody>
       </OptionOverlay>

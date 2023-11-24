@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
-
-import Option from "@/components/layout/Option";
+import { useRouter } from "next/navigation";
 import { useCustomer } from "@/store/hooks";
 
+import Option from "@/components/layout/Option";
+
 import styles from "./GetCustomer.module.scss";
-import { useRouter } from "next/navigation";
+
 import {
   OptionBody,
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
+import Button from "@/components/ui/Button";
+
 const GetCustomer = () => {
   const { listCustomer, getAll } = useCustomer();
 
@@ -17,6 +20,10 @@ const GetCustomer = () => {
 
   const handleClick = (id: string) => {
     router.push(`/register/customer/${id}`);
+  };
+
+  const newHandleClick = () => {
+    router.push(`/register/customer/new`);
   };
 
   useEffect(() => {
@@ -29,8 +36,6 @@ const GetCustomer = () => {
         <OptionHeader tittle="Cliente">{}</OptionHeader>
         <OptionBody>
           <div className={styles.customerListContainer}>
-            <h2>Listado de Clientes</h2>
-
             <table className={styles.table}>
               {listCustomer?.map((customer: any, index: number) => (
                 <tr key={index} onClick={() => handleClick(customer.id)}>
@@ -45,6 +50,7 @@ const GetCustomer = () => {
                 </tr>
               ))}
             </table>
+            <Button label="Nuevo" onClick={newHandleClick}></Button>
           </div>
         </OptionBody>
       </OptionOverlay>

@@ -136,7 +136,7 @@ export const productStore = create<productState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/product/deleteById/${id}`);
+      const { data } = await apiInstance.delete(`/product/deleteById/${id}`);
 
       set((state) => ({
         ...state,

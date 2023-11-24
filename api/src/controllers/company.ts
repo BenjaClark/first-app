@@ -69,7 +69,7 @@ const getById = async (req: any, res: any) => {
   const data = {
     id,
     rut,
-    fantasyname,
+    fantasyName: fantasyname,
     name,
     activity,
     address,

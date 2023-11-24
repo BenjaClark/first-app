@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { usePerson, useUser } from "@/store/hooks";
+
 import { ContentCell, ContentRow } from "@/components/layout/Content";
+import Option from "@/components/layout/Option";
+
+import Button from "@/components/ui/Button";
 import InputText from "@/components/ui/InputText";
 
-import Option from "@/components/layout/Option";
-import Button from "@/components/ui/Button";
 import styles from "./User.module.scss";
-import { usePerson, useUser } from "@/store/hooks";
 
 import {
   OptionBody,
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
+import { useRouter } from "next/navigation";
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -46,12 +48,20 @@ const User = ({ id }: any) => {
   } = useUser();
 
   const [form, setForm] = useState(initData);
+  const [buttonLabel, setButtonLabel] = useState("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "rut") {
       const rutValue = value.toUpperCase();
+      getByRut(rutValue);
+      if (!user?.rut) {
+        setForm({
+          ...form,
+          [e.target.name]: { value: e.target.value, isValid: true },
+        });
+      }
       setForm({
         ...form,
         rut: { value: rutValue, isValid: true },
@@ -69,6 +79,8 @@ const User = ({ id }: any) => {
     getByRut(rut);
   };
 
+  const router = useRouter();
+
   const onClick = () => {
     upsert({
       rut: form.rut.value,
@@ -80,6 +92,12 @@ const User = ({ id }: any) => {
       phone: form.phone.value,
       address: form.address.value,
     });
+    router.push("/register/user");
+  };
+
+  const deleteOnClick = () => {
+    deleteById(id);
+    router.push("/register/user");
   };
 
   const assignOnClick = () => {
@@ -112,6 +130,19 @@ const User = ({ id }: any) => {
   }, []);
 
   useEffect(() => {
+    setForm({
+      ...form,
+      name: { value: "", isValid: true },
+      paternalLastName: { value: "", isValid: true },
+      maternalLastName: { value: "", isValid: true },
+      email: { value: "", isValid: true },
+      phone: { value: "", isValid: true },
+      address: { value: "", isValid: true },
+      district: { value: "", isValid: true },
+      password: { value: "", isValid: true },
+      repeatPassword: { value: "", isValid: true },
+      newPassword: { value: "", isValid: true },
+    });
     if (user) {
       setForm({
         ...form,
@@ -123,20 +154,6 @@ const User = ({ id }: any) => {
         phone: { value: user.phone, isValid: true },
         address: { value: user.address, isValid: true },
         district: { value: user.district, isValid: true },
-      });
-    } else if (!user) {
-      setForm({
-        ...form,
-        name: { value: "", isValid: true },
-        paternalLastName: { value: "", isValid: true },
-        maternalLastName: { value: "", isValid: true },
-        email: { value: "", isValid: true },
-        phone: { value: "", isValid: true },
-        address: { value: "", isValid: true },
-        district: { value: "", isValid: true },
-        password: { value: "", isValid: true },
-        repeatPassword: { value: "", isValid: true },
-        newPassword: { value: "", isValid: true },
       });
     }
   }, [user]);
@@ -153,7 +170,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Rut"
                   type="text"
-                  placeholder="11.111.111-1"
+                  placeholder="Rut"
                   width="300px"
                   onChange={handleOnChange}
                   onBlur={handleOnBlur}
@@ -174,7 +191,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Apellido Paterno"
                   type="text"
-                  placeholder="Rodriguez"
+                  placeholder="Apellido paterno"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.paternalLastName.value}
@@ -184,7 +201,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Apellido Materno"
                   type="text"
-                  placeholder="Acevedo"
+                  placeholder="Apellido materno"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.maternalLastName.value}
@@ -194,7 +211,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Dirección"
                   type="text"
-                  placeholder="Av. Providencia 221..."
+                  placeholder="Dirección"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.address.value}
@@ -204,7 +221,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Comuna"
                   type="text"
-                  placeholder="Providencia"
+                  placeholder="Comuna"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.district.value}
@@ -214,7 +231,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Correo electrónico"
                   type="text"
-                  placeholder="julio@gmail.com"
+                  placeholder="ejemplo@ejemplo.com"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.email.value}
@@ -224,14 +241,17 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Teléfono"
                   type="phone"
-                  placeholder="+569 9934 1234"
+                  placeholder="+569"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.phone.value}
                   name="phone"
                 />
 
-                <Button label="Crear" onClick={onClick} />
+                <ContentRow>
+                  <Button label="Crear" onClick={onClick} />
+                  <Button label="Eliminar" onClick={deleteOnClick} />
+                </ContentRow>
               </ContentCell>
 
               <ContentCell gap="7.5px">
@@ -240,7 +260,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Correo electrónico"
                   type="text"
-                  placeholder="julio@gmail.com"
+                  placeholder="ejemplo@ejemplo.com"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.email.value}
@@ -272,7 +292,7 @@ const User = ({ id }: any) => {
                 <InputText
                   label="Correo electrónico"
                   type="text"
-                  placeholder="julio@gmail.com"
+                  placeholder="ejemplo@ejemplo.com"
                   width="300px"
                   onChange={handleOnChange}
                   value={form.email.value}

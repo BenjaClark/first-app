@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useCustomer } from "@/store/hooks";
+import { useRouter } from "next/navigation";
 
 import { ContentCell } from "@/components/layout/Content";
-
-import InputText from "@/components/ui/InputText";
 import Option from "@/components/layout/Option";
+
 import Button from "@/components/ui/Button";
-
-import { useCustomer } from "@/store/hooks";
-
-import styles from "./Customer.module.scss";
+import InputText from "@/components/ui/InputText";
 import InputSelect from "@/components/ui/InputSelect";
 
 import {
@@ -38,17 +36,33 @@ const dataSelect = [
 ];
 
 const Customer = ({ id }: any) => {
-  const { customer, isLoading, isError, error, upsert, getByRut, getById } =
-    useCustomer();
+  const {
+    customer,
+    isLoading,
+    isError,
+    error,
+    upsert,
+    getByRut,
+    getById,
+    deleteById,
+  } = useCustomer();
 
   const [form, setForm] = useState(initData);
   const [selectedType, setSelectedType] = useState<string>("");
+  const [buttonLabel, setButtonLabel] = useState("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "rut") {
       const rutValue = value.toUpperCase();
+      getByRut(rutValue);
+      if (!customer?.rut) {
+        setForm({
+          ...form,
+          [e.target.name]: { value: e.target.value, isValid: true },
+        });
+      }
       setForm({
         ...form,
         rut: { value: rutValue, isValid: true },
@@ -71,6 +85,8 @@ const Customer = ({ id }: any) => {
     setSelectedType(selectedValue);
   };
 
+  const router = useRouter();
+
   const onClick = () => {
     upsert({
       type: selectedType,
@@ -85,14 +101,22 @@ const Customer = ({ id }: any) => {
       phone: form.phone.value,
       address: form.address.value,
     });
+    router.push("/register/customer");
+  };
+
+  const deleteOnClick = () => {
+    deleteById(id);
+    router.push("/register/customer");
   };
 
   useEffect(() => {
-    getById(id);
+    if (id !== "new") {
+      getById(id);
+      setButtonLabel("Modificar");
+    }
+    setButtonLabel("Agregar");
 
-    customer.fantasyName ? setSelectedType("C") : setSelectedType("P");
-
-    if (customer) {
+    if (customer?.id) {
       setForm({
         ...form,
         rut: { value: customer.rut, isValid: true },
@@ -108,6 +132,18 @@ const Customer = ({ id }: any) => {
   }, []);
 
   useEffect(() => {
+    setForm({
+      ...form,
+      fantasyName: { value: "", isValid: true },
+      name: { value: "", isValid: true },
+      paternalLastName: { value: "", isValid: true },
+      maternalLastName: { value: "", isValid: true },
+      activity: { value: "", isValid: true },
+      email: { value: "", isValid: true },
+      phone: { value: "", isValid: true },
+      address: { value: "", isValid: true },
+      district: { value: "", isValid: true },
+    });
     if (customer) {
       setForm({
         ...form,
@@ -122,19 +158,6 @@ const Customer = ({ id }: any) => {
         phone: { value: customer.phone, isValid: true },
         address: { value: customer.address, isValid: true },
         district: { value: customer.district, isValid: true },
-      });
-    } else {
-      setForm({
-        ...form,
-        fantasyName: { value: "", isValid: true },
-        name: { value: "", isValid: true },
-        paternalLastName: { value: "", isValid: true },
-        maternalLastName: { value: "", isValid: true },
-        activity: { value: "", isValid: true },
-        email: { value: "", isValid: true },
-        phone: { value: "", isValid: true },
-        address: { value: "", isValid: true },
-        district: { value: "", isValid: true },
       });
     }
   }, [customer]);
@@ -261,6 +284,7 @@ const Customer = ({ id }: any) => {
               name="phone"
             />
             <Button label="Crear" onClick={onClick} />
+            <Button label="Eliminar" onClick={deleteOnClick} />
           </ContentCell>
         </OptionBody>
       </OptionOverlay>

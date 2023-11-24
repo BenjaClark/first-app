@@ -13,6 +13,7 @@ import {
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
+import { useRouter } from "next/navigation";
 
 const initData = {
   code: { value: "", isValid: true },
@@ -21,16 +22,31 @@ const initData = {
 };
 
 const Product = ({ id }: any) => {
-  const { product, isLoading, isError, error, upsert, getByCode, getById } =
-    useProduct();
+  const {
+    product,
+    isLoading,
+    isError,
+    error,
+    upsert,
+    getByCode,
+    getById,
+    deleteById,
+  } = useProduct();
 
   const [form, setForm] = useState(initData);
+  const [buttonLabel, setButtonLabel] = useState("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "code") {
       const codeValue = value.toUpperCase();
+      getByCode(parseInt(codeValue));
+      if (!product?.code)
+        setForm({
+          ...form,
+          [e.target.name]: { value: codeValue, isValid: true },
+        });
       setForm({
         ...form,
         code: { value: codeValue, isValid: true },
@@ -48,12 +64,20 @@ const Product = ({ id }: any) => {
     getByCode(parseInt(code));
   };
 
+  const router = useRouter();
+
   const onClick = () => {
     upsert({
       code: form.code.value,
       name: form.name.value,
       price: form.price.value,
     });
+    router.push("/register/product");
+  };
+
+  const deleteOnClick = () => {
+    deleteById(id);
+    router.push("/register/product");
   };
 
   useEffect(() => {
@@ -69,18 +93,17 @@ const Product = ({ id }: any) => {
   }, []);
 
   useEffect(() => {
+    setForm({
+      ...form,
+      name: { value: "", isValid: true },
+      price: { value: "", isValid: true },
+    });
     if (product) {
       setForm({
         ...form,
         code: { value: product.code, isValid: true },
         name: { value: product.name, isValid: true },
         price: { value: product.price, isValid: true },
-      });
-    } else if (!product) {
-      setForm({
-        ...form,
-        name: { value: "", isValid: true },
-        price: { value: "", isValid: true },
       });
     }
   }, [product]);
@@ -94,7 +117,7 @@ const Product = ({ id }: any) => {
             <InputText
               label="Codigo"
               type="text"
-              placeholder="111"
+              placeholder="Codigo"
               width="300px"
               onChange={handleOnChange}
               onBlur={handleOnBlur}
@@ -105,7 +128,7 @@ const Product = ({ id }: any) => {
             <InputText
               label="Nombre"
               type="text"
-              placeholder="Pastel de Limón"
+              placeholder="Nombre del producto"
               width="300px"
               onChange={handleOnChange}
               value={form.name.value}
@@ -115,13 +138,14 @@ const Product = ({ id }: any) => {
             <InputText
               label="Precio"
               type="number"
-              placeholder="$10.000"
+              placeholder="$0"
               width="300px"
               onChange={handleOnChange}
               value={form.price.value.toString()}
               name="price"
             />
             <Button label="Crear" onClick={onClick} />
+            <Button label="Eliminar" onClick={deleteOnClick} />
           </ContentCell>
         </OptionBody>
       </OptionOverlay>

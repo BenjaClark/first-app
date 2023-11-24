@@ -4,7 +4,8 @@ export const _getById = `
 
 export const _getAll = `
     SELECT  id, code, name, price 
-    FROM    app.product ORDER BY name`;
+    FROM    app.product WHERE isactive = true
+    ORDER BY name`;
 
 export const _getByCode = `
     SELECT  id, code, name, price 
@@ -20,4 +21,6 @@ export const _updateById = `
     WHERE   id = $1 RETURNING *`;
 
 export const _deleteById = `
-    DELETE FROM app.product WHERE id=$1`;
+    UPDATE  app.product 
+    SET     isactive = false
+    WHERE   id=$1`;

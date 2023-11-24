@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from "@/store/hooks";
+import { useRouter } from "next/navigation";
 
 import Option from "@/components/layout/Option";
-import { useUser } from "@/store/hooks";
 
 import styles from "./GetUser.module.scss";
-import { useRouter } from "next/navigation";
+
 import {
   OptionBody,
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
+import Button from "@/components/ui/Button";
+
 const GetUser = () => {
   const { listUser, getAll } = useUser();
 
@@ -17,6 +20,10 @@ const GetUser = () => {
 
   const handleClick = (id: string) => {
     router.push(`/register/user/${id}`);
+  };
+
+  const newHandleClick = () => {
+    router.push(`/register/user/new`);
   };
 
   useEffect(() => {
@@ -29,8 +36,6 @@ const GetUser = () => {
         <OptionHeader tittle="Usuarios">{}</OptionHeader>
         <OptionBody>
           <div className={styles.userListContainer}>
-            <h2>Listado de Usuarios</h2>
-
             <table className={styles.table}>
               {listUser?.map((user: any, index: number) => (
                 <tr key={index} onClick={() => handleClick(user.id)}>
@@ -47,6 +52,7 @@ const GetUser = () => {
                 </tr>
               ))}
             </table>
+            <Button label="Nuevo" onClick={newHandleClick}></Button>
           </div>
         </OptionBody>
       </OptionOverlay>

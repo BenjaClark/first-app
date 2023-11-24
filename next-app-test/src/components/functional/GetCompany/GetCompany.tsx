@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
-
-import Option from "@/components/layout/Option";
+import { useRouter } from "next/navigation";
 import { useCompany } from "@/store/hooks";
 
+import Option from "@/components/layout/Option";
+
+import Button from "@/components/ui/Button";
+
 import styles from "./GetCompany.module.scss";
-import { useRouter } from "next/navigation";
+
 import {
   OptionBody,
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
+
 const GetCompany = () => {
   const { listCompany, getAll } = useCompany();
 
@@ -17,6 +21,10 @@ const GetCompany = () => {
 
   const handleClick = (id: string) => {
     router.push(`/register/company/${id}`);
+  };
+
+  const newHandleClick = () => {
+    router.push(`/register/company/new`);
   };
 
   useEffect(() => {
@@ -29,8 +37,6 @@ const GetCompany = () => {
         <OptionHeader tittle="Empresa">{}</OptionHeader>
         <OptionBody>
           <div className={styles.companyListContainer}>
-            <h2>Listado de Empresas</h2>
-
             <table className={styles.table}>
               {listCompany?.map((company: any, index: number) => (
                 <tr key={index} onClick={() => handleClick(company.id)}>
@@ -46,6 +52,7 @@ const GetCompany = () => {
                 </tr>
               ))}
             </table>
+            <Button label="Nuevo" onClick={newHandleClick}></Button>
           </div>
         </OptionBody>
       </OptionOverlay>

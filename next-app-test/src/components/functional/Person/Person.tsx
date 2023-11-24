@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import { ContentCell } from "@/components/layout/Content";
-
-import InputText from "@/components/ui/InputText";
 import Option from "@/components/layout/Option";
-import Button from "@/components/ui/Button";
 
+import Button from "@/components/ui/Button";
+import InputText from "@/components/ui/InputText";
+
+import { useRouter } from "next/navigation";
 import { usePerson } from "@/store/hooks";
 
 import {
@@ -13,11 +14,6 @@ import {
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
-
-import styles from "./Person.module.scss";
-import Store from "@/components/ui/Store";
-import InputDate from "@/components/ui/InputDate";
-import InputSelect from "@/components/ui/InputSelect";
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -31,16 +27,32 @@ const initData = {
 };
 
 const Person = ({ id }: any) => {
-  const { person, isLoading, isError, error, upsert, getByRut, getById } =
-    usePerson();
+  const {
+    person,
+    isLoading,
+    isError,
+    error,
+    upsert,
+    getByRut,
+    getById,
+    deleteById,
+  } = usePerson();
 
   const [form, setForm] = useState(initData);
+  const [buttonLabel, setButtonLabel] = useState("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "rut") {
       const rutValue = value.toUpperCase();
+      getByRut(rutValue);
+      if (!person?.rut) {
+        setForm({
+          ...form,
+          [e.target.name]: { value: e.target.value, isValid: true },
+        });
+      }
       setForm({
         ...form,
         rut: { value: rutValue, isValid: true },
@@ -48,7 +60,7 @@ const Person = ({ id }: any) => {
     } else {
       setForm({
         ...form,
-        [e.target.name]: { value: e.target.value, isValid: true },
+        [e.target.name]: { value: "", isValid: true },
       });
     }
   };
@@ -57,6 +69,8 @@ const Person = ({ id }: any) => {
     const rut = e.target.value;
     getByRut(rut);
   };
+
+  const router = useRouter();
 
   const onClick = () => {
     upsert({
@@ -69,6 +83,12 @@ const Person = ({ id }: any) => {
       phone: form.phone.value,
       address: form.address.value,
     });
+    router.push("/register/person");
+  };
+
+  const deleteOnClick = () => {
+    deleteById(id);
+    router.push("/register/person");
   };
 
   useEffect(() => {
@@ -89,6 +109,16 @@ const Person = ({ id }: any) => {
   }, []);
 
   useEffect(() => {
+    setForm({
+      ...form,
+      name: { value: "", isValid: true },
+      paternalLastName: { value: "", isValid: true },
+      maternalLastName: { value: "", isValid: true },
+      email: { value: "", isValid: true },
+      phone: { value: "", isValid: true },
+      address: { value: "", isValid: true },
+      district: { value: "", isValid: true },
+    });
     if (person) {
       setForm({
         ...form,
@@ -100,17 +130,6 @@ const Person = ({ id }: any) => {
         phone: { value: person.phone, isValid: true },
         address: { value: person.address, isValid: true },
         district: { value: person.district, isValid: true },
-      });
-    } else if (!person) {
-      setForm({
-        ...form,
-        name: { value: "", isValid: true },
-        paternalLastName: { value: "", isValid: true },
-        maternalLastName: { value: "", isValid: true },
-        email: { value: "", isValid: true },
-        phone: { value: "", isValid: true },
-        address: { value: "", isValid: true },
-        district: { value: "", isValid: true },
       });
     }
   }, [person]);
@@ -124,7 +143,7 @@ const Person = ({ id }: any) => {
             <InputText
               label="Rut"
               type="text"
-              placeholder="11.111.111-1"
+              placeholder="Rut"
               width="300px"
               onChange={handleOnChange}
               onBlur={handleOnBlur}
@@ -145,7 +164,7 @@ const Person = ({ id }: any) => {
             <InputText
               label="Apellido Paterno"
               type="text"
-              placeholder="Rodriguez"
+              placeholder="Apellido Paterno"
               width="300px"
               onChange={handleOnChange}
               value={form.paternalLastName.value}
@@ -155,7 +174,7 @@ const Person = ({ id }: any) => {
             <InputText
               label="Apellido Materno"
               type="text"
-              placeholder="Acevedo"
+              placeholder="Apellido Materno"
               width="300px"
               onChange={handleOnChange}
               value={form.maternalLastName.value}
@@ -165,7 +184,7 @@ const Person = ({ id }: any) => {
             <InputText
               label="Dirección"
               type="text"
-              placeholder="Av. Providencia 221..."
+              placeholder="Dirección"
               width="300px"
               onChange={handleOnChange}
               value={form.address.value}
@@ -175,7 +194,7 @@ const Person = ({ id }: any) => {
             <InputText
               label="Comuna"
               type="text"
-              placeholder="Providencia"
+              placeholder="Comuna"
               width="300px"
               onChange={handleOnChange}
               value={form.district.value}
@@ -185,7 +204,7 @@ const Person = ({ id }: any) => {
             <InputText
               label="Correo electrónico"
               type="text"
-              placeholder="julio@gmail.com"
+              placeholder="ejemplo@gmail.com"
               width="300px"
               onChange={handleOnChange}
               value={form.email.value}
@@ -195,13 +214,14 @@ const Person = ({ id }: any) => {
             <InputText
               label="Teléfono"
               type="phone"
-              placeholder="+569 9934 1234"
+              placeholder="+569 ...."
               width="300px"
               onChange={handleOnChange}
               value={form.phone.value}
               name="phone"
             />
-            <Button label="Crear" onClick={onClick} />
+            <Button label={buttonLabel} onClick={onClick} />
+            <Button label="Eliminar" onClick={deleteOnClick} />
           </ContentCell>
         </OptionBody>
       </OptionOverlay>

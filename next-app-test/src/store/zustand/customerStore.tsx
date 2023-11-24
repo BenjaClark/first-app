@@ -146,7 +146,7 @@ export const customerStore = create<customerState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/customer/deleteById/${id}`);
+      const { data } = await apiInstance.delete(`/customer/deleteById/${id}`);
 
       set((state) => ({
         ...state,

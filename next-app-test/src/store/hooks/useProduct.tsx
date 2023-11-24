@@ -14,7 +14,7 @@ export const useProduct = () => {
     shallow
   );
 
-  const { upsert, getByCode, getById, getAll } = productStore();
+  const { upsert, getByCode, getById, getAll, deleteById } = productStore();
 
   return {
     listProduct,
@@ -26,5 +26,6 @@ export const useProduct = () => {
     getByCode,
     getById,
     getAll,
+    deleteById,
   };
 };

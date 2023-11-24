@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import { ContentCell } from "@/components/layout/Content";
+import Option from "@/components/layout/Option";
 
 import InputText from "@/components/ui/InputText";
-import Option from "@/components/layout/Option";
 import Button from "@/components/ui/Button";
 
+import { useRouter } from "next/navigation";
 import { useCompany } from "@/store/hooks";
-
-import styles from "./Company.module.scss";
 
 import {
   OptionBody,
@@ -28,16 +27,32 @@ const initData = {
 };
 
 const Company = ({ id }: any) => {
-  const { company, isLoading, isError, error, upsert, getByRut, getById } =
-    useCompany();
+  const {
+    company,
+    isLoading,
+    isError,
+    error,
+    upsert,
+    getByRut,
+    getById,
+    deleteById,
+  } = useCompany();
 
   const [form, setForm] = useState(initData);
+  const [buttonLabel, setButtonLabel] = useState("");
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "rut") {
       const rutValue = value.toUpperCase();
+      getByRut(rutValue);
+      if (!company?.rut) {
+        setForm({
+          ...form,
+          [e.target.name]: { value: e.target.value, isValid: true },
+        });
+      }
       setForm({
         ...form,
         rut: { value: rutValue, isValid: true },
@@ -55,6 +70,8 @@ const Company = ({ id }: any) => {
     getByRut(rut);
   };
 
+  const router = useRouter();
+
   const onClick = () => {
     upsert({
       rut: form.rut.value,
@@ -66,27 +83,22 @@ const Company = ({ id }: any) => {
       phone: form.phone.value,
       address: form.address.value,
     });
+    router.push("/register/company");
+  };
+
+  const deleteOnClick = () => {
+    deleteById(id);
+    router.push("/register/company");
   };
 
   useEffect(() => {
-    getById(id);
-    console.log(company);
-
-    setForm({
-      ...form,
-      rut: { value: company.rut, isValid: true },
-      name: { value: company.name, isValid: true },
-      fantasyName: { value: company.fantasyName, isValid: true },
-      activity: { value: company.activity, isValid: true },
-      email: { value: company.email, isValid: true },
-      phone: { value: company.phone, isValid: true },
-      address: { value: company.address, isValid: true },
-      district: { value: company.district, isValid: true },
-    });
-  }, []);
-
-  useEffect(() => {
+    if (id !== "new") {
+      getById(id);
+      setButtonLabel("Modificar");
+    }
+    setButtonLabel("Agregar");
     if (company) {
+      console.log(company);
       setForm({
         ...form,
         rut: { value: company.rut, isValid: true },
@@ -98,16 +110,31 @@ const Company = ({ id }: any) => {
         address: { value: company.address, isValid: true },
         district: { value: company.district, isValid: true },
       });
-    } else if (!company) {
+    }
+  }, []);
+
+  useEffect(() => {
+    setForm({
+      ...form,
+      name: { value: "", isValid: true },
+      fantasyName: { value: "", isValid: true },
+      activity: { value: "", isValid: true },
+      email: { value: "", isValid: true },
+      phone: { value: "", isValid: true },
+      address: { value: "", isValid: true },
+      district: { value: "", isValid: true },
+    });
+    if (company) {
       setForm({
         ...form,
-        fantasyName: { value: "", isValid: true },
-        name: { value: "", isValid: true },
-        activity: { value: "", isValid: true },
-        email: { value: "", isValid: true },
-        phone: { value: "", isValid: true },
-        address: { value: "", isValid: true },
-        district: { value: "", isValid: true },
+        rut: { value: company.rut, isValid: true },
+        name: { value: company.name, isValid: true },
+        fantasyName: { value: company.fantasyName, isValid: true },
+        activity: { value: company.activity, isValid: true },
+        email: { value: company.email, isValid: true },
+        phone: { value: company.phone, isValid: true },
+        address: { value: company.address, isValid: true },
+        district: { value: company.district, isValid: true },
       });
     }
   }, [company]);
@@ -121,7 +148,7 @@ const Company = ({ id }: any) => {
             <InputText
               label="Rut"
               type="text"
-              placeholder="77.777.777-7"
+              placeholder="Rut"
               width="300px"
               onChange={handleOnChange}
               onBlur={handleOnBlur}
@@ -132,7 +159,7 @@ const Company = ({ id }: any) => {
             <InputText
               label="Nombre de fantasía"
               type="text"
-              placeholder="El Parrón - Norte 2"
+              placeholder="Nombre"
               width="300px"
               onChange={handleOnChange}
               value={form.fantasyName.value}
@@ -142,7 +169,7 @@ const Company = ({ id }: any) => {
             <InputText
               label="Nombre"
               type="text"
-              placeholder="El Parrón"
+              placeholder="Nombre"
               width="300px"
               onChange={handleOnChange}
               value={form.name.value}
@@ -152,7 +179,7 @@ const Company = ({ id }: any) => {
             <InputText
               label="Actividad"
               type="text"
-              placeholder="Venta de..."
+              placeholder="Actividad"
               width="300px"
               onChange={handleOnChange}
               value={form.activity.value}
@@ -162,7 +189,7 @@ const Company = ({ id }: any) => {
             <InputText
               label="Dirección"
               type="text"
-              placeholder="Av. Providencia 221..."
+              placeholder="Dirección"
               width="300px"
               onChange={handleOnChange}
               value={form.address.value}
@@ -172,7 +199,7 @@ const Company = ({ id }: any) => {
             <InputText
               label="Comuna"
               type="text"
-              placeholder="Providencia"
+              placeholder="Comuna"
               width="300px"
               onChange={handleOnChange}
               value={form.district.value}
@@ -182,7 +209,7 @@ const Company = ({ id }: any) => {
             <InputText
               label="Correo electrónico"
               type="text"
-              placeholder="elparron@gmail.com"
+              placeholder="ejemplo@ejemplo.com"
               width="300px"
               onChange={handleOnChange}
               value={form.email.value}
@@ -192,13 +219,14 @@ const Company = ({ id }: any) => {
             <InputText
               label="Teléfono"
               type="phone"
-              placeholder="+569 9934 1234"
+              placeholder="+569"
               width="300px"
               onChange={handleOnChange}
               value={form.phone.value}
               name="phone"
             />
             <Button label="Crear" onClick={onClick} />
+            <Button label="Eliminar" onClick={deleteOnClick} />
           </ContentCell>
         </OptionBody>
       </OptionOverlay>

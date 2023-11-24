@@ -156,7 +156,7 @@ export const userStore = create<userState>((set) => ({
         isLoading: true,
       }));
 
-      const { data } = await apiInstance.get(`/user/deleteById/${id}`);
+      const { data } = await apiInstance.delete(`/user/deleteById/${id}`);
 
       set((state) => ({
         ...state,
