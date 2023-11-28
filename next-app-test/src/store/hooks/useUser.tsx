@@ -24,6 +24,7 @@ export const useUser = () => {
     assignPassword,
     validate,
     updatePassword,
+    resetUser,
   } = userStore();
 
   return {
@@ -41,5 +42,6 @@ export const useUser = () => {
     assignPassword,
     validate,
     updatePassword,
+    resetUser,
   };
 };

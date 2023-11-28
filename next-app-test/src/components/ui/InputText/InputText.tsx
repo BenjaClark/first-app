@@ -9,24 +9,32 @@ interface IText {
   width: string;
   onChange?: any;
   onBlur?: any;
+  onFocus?: any;
+  isValid?: boolean;
   value: string;
   name?: string;
 }
 
-const inputText = ({
+const InputText = ({
   label,
   type,
   placeholder,
   width,
   onChange,
   onBlur,
+  onFocus,
+  isValid,
   value,
   name,
 }: IText) => {
   return (
-    <div className={styles.InputText} style={{ width }}>
+    <div
+      className={isValid ? styles.inputText : styles.inputTextAlert}
+      style={{ width }}
+    >
       <label>{label}</label>
       <input
+        onFocus={onFocus}
         type={type}
         placeholder={placeholder}
         onChange={onChange}
@@ -38,4 +46,4 @@ const inputText = ({
   );
 };
 
-export default inputText;
+export default InputText;

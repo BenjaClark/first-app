@@ -15,6 +15,9 @@ import {
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
 
+import { isValidEmail, isValidPhone, isValidRut } from "@/utils/validate";
+import { formatRut, unFormatRut } from "@/utils/format";
+
 const initData = {
   rut: { value: "", isValid: true },
   name: { value: "", isValid: true },
@@ -45,9 +48,8 @@ const Person = ({ id }: any) => {
     const { name, value } = e.target;
 
     if (name === "rut") {
-      const rutValue = value.toUpperCase();
-      getByRut(rutValue);
-      if (!person?.rut) {
+      getByRut(formatRut(value));
+      if (person.rut) {
         setForm({
           ...form,
           [e.target.name]: { value: e.target.value, isValid: true },
@@ -55,25 +57,67 @@ const Person = ({ id }: any) => {
       }
       setForm({
         ...form,
-        rut: { value: rutValue, isValid: true },
+        rut: {
+          value: e.target.value.trim(),
+          isValid: isValidRut(e.target.value.trim()),
+        },
+      });
+    }
+    if (name === "email") {
+      setForm({
+        ...form,
+        email: {
+          value: e.target.value,
+          isValid: isValidEmail(e.target.value),
+        },
+      });
+    }
+    if (name === "phone") {
+      setForm({
+        ...form,
+        phone: {
+          value: e.target.value,
+          isValid: isValidPhone(e.target.value),
+        },
       });
     } else {
       setForm({
         ...form,
-        [e.target.name]: { value: "", isValid: true },
+        [e.target.name]: {
+          value: e.target.value,
+          isValid: e.target.value !== "" ? true : false,
+        },
       });
     }
   };
 
-  const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+  const handleOnBlurRut = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const rut = e.target.value;
-    getByRut(rut);
+    getByRut(formatRut(form.rut.value.trim()));
+    setForm({
+      ...form,
+      rut: {
+        value: formatRut(form.rut.value.trim()),
+        isValid: isValidRut(unFormatRut(e.target.value.trim())),
+      },
+    });
+  };
+
+  const handleOnBlurEmail = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      email: {
+        value: form.email.value,
+        isValid: isValidEmail(e.target.value),
+      },
+    });
   };
 
   const router = useRouter();
 
   const onClick = () => {
     upsert({
+      id: "",
       rut: form.rut.value,
       name: form.name.value,
       paternalLastName: form.paternalLastName.value,
@@ -86,14 +130,26 @@ const Person = ({ id }: any) => {
     router.push("/register/person");
   };
 
+  const handleOnFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      rut: {
+        value: unFormatRut(form.rut.value.trim()),
+        isValid: isValidRut(unFormatRut(e.target.value.trim())),
+      },
+    });
+  };
+
   const deleteOnClick = () => {
     deleteById(id);
     router.push("/register/person");
   };
 
   useEffect(() => {
-    getById(id);
-    if (person?.id) {
+    if (id !== "new") {
+      getById(id);
+    }
+    if (person.id) {
       setForm({
         ...form,
         rut: { value: person.rut, isValid: true },
@@ -119,7 +175,8 @@ const Person = ({ id }: any) => {
       address: { value: "", isValid: true },
       district: { value: "", isValid: true },
     });
-    if (person) {
+    if (person.id) {
+      setButtonLabel("Actualizar");
       setForm({
         ...form,
         rut: { value: person.rut, isValid: true },
@@ -131,6 +188,10 @@ const Person = ({ id }: any) => {
         address: { value: person.address, isValid: true },
         district: { value: person.district, isValid: true },
       });
+    }
+
+    if (!person.id) {
+      setButtonLabel("Crear");
     }
   }, [person]);
 
@@ -146,7 +207,9 @@ const Person = ({ id }: any) => {
               placeholder="Rut"
               width="300px"
               onChange={handleOnChange}
-              onBlur={handleOnBlur}
+              onBlur={handleOnBlurRut}
+              onFocus={handleOnFocus}
+              isValid={form.rut.isValid}
               value={form.rut.value}
               name="rut"
             />
@@ -157,6 +220,7 @@ const Person = ({ id }: any) => {
               placeholder="Nombre de la persona"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.name.isValid}
               value={form.name.value}
               name="name"
             />
@@ -167,6 +231,7 @@ const Person = ({ id }: any) => {
               placeholder="Apellido Paterno"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.paternalLastName.isValid}
               value={form.paternalLastName.value}
               name="paternalLastName"
             />
@@ -177,6 +242,7 @@ const Person = ({ id }: any) => {
               placeholder="Apellido Materno"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.maternalLastName.isValid}
               value={form.maternalLastName.value}
               name="maternalLastName"
             />
@@ -187,6 +253,7 @@ const Person = ({ id }: any) => {
               placeholder="Dirección"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.address.isValid}
               value={form.address.value}
               name="address"
             />
@@ -197,6 +264,7 @@ const Person = ({ id }: any) => {
               placeholder="Comuna"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.district.isValid}
               value={form.district.value}
               name="district"
             />
@@ -204,9 +272,11 @@ const Person = ({ id }: any) => {
             <InputText
               label="Correo electrónico"
               type="text"
-              placeholder="ejemplo@gmail.com"
+              placeholder="ejemplo@ejemplo.com"
               width="300px"
               onChange={handleOnChange}
+              onBlur={handleOnBlurEmail}
+              isValid={form.email.isValid}
               value={form.email.value}
               name="email"
             />
@@ -217,6 +287,7 @@ const Person = ({ id }: any) => {
               placeholder="+569 ...."
               width="300px"
               onChange={handleOnChange}
+              isValid={form.phone.isValid}
               value={form.phone.value}
               name="phone"
             />

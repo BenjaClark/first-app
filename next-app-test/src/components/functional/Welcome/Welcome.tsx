@@ -3,6 +3,7 @@ import * as React from "react";
 import { ContentCell, ContentRow } from "@/components/layout/Content";
 import Image from "@/components/ui/Image";
 import Option from "@/components/layout/Option";
+import Loader from "@/components/ui/Loader/Loader";
 
 const Welcome = () => {
   return (

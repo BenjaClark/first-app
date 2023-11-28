@@ -1,5 +1,5 @@
 export interface IPerson {
-  id?: string;
+  id: string;
   rut: string;
   name: string;
   paternalLastName: string;
@@ -9,3 +9,15 @@ export interface IPerson {
   email: string;
   phone: string;
 }
+
+export const initDataPerson = {
+  id: "",
+  rut: "",
+  name: "",
+  paternalLastName: "",
+  maternalLastName: "",
+  address: "",
+  district: "",
+  phone: "",
+  email: "",
+};

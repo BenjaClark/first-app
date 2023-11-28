@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import { apiInstance } from "@/utils/api";
 
-import { ICustomer } from "@/interfaces/customer";
+import { ICustomer, initDataCustomer } from "@/interfaces/customer";
 import { IListCustomer } from "@/interfaces/listCustomer";
 
 interface customerState {
@@ -16,26 +16,12 @@ interface customerState {
   getById: (id: string) => void;
   getAll: () => void;
   deleteById: (id: string) => void;
+  resetCustomer: () => void;
 }
 
 export const customerStore = create<customerState>((set) => ({
   listCustomer: [],
-  customer: {
-    id: "",
-    type: "",
-    person_id: "",
-    company_id: "",
-    rut: "",
-    fantasyName: "",
-    name: "",
-    paternalLastName: "",
-    maternalLastName: "",
-    activity: "",
-    address: "",
-    district: "",
-    email: "",
-    phone: "",
-  },
+  customer: initDataCustomer,
   isLoading: false,
   isError: false,
   error: "",
@@ -50,7 +36,7 @@ export const customerStore = create<customerState>((set) => ({
 
       set((state) => ({
         ...state,
-        customer: data.data,
+        customer: data.data || initDataCustomer,
         isLoading: false,
         isError: true,
         error: "",
@@ -75,7 +61,7 @@ export const customerStore = create<customerState>((set) => ({
 
       set((state) => ({
         ...state,
-        customer: data.data,
+        customer: data.data || initDataCustomer,
         isLoading: false,
         isError: false,
         error: "",
@@ -100,7 +86,7 @@ export const customerStore = create<customerState>((set) => ({
 
       set((state) => ({
         ...state,
-        customer: data.data,
+        customer: data.data || initDataCustomer,
         isLoading: false,
         isError: false,
         error: "",
@@ -125,7 +111,7 @@ export const customerStore = create<customerState>((set) => ({
 
       set((state) => ({
         ...state,
-        listCustomer: data.data,
+        listCustomer: data.data || [],
         isLoading: false,
         isError: false,
         error: "",
@@ -162,5 +148,11 @@ export const customerStore = create<customerState>((set) => ({
         error: (e as Error).message,
       }));
     }
+  },
+  resetCustomer: () => {
+    set((state) => ({
+      ...state,
+      customer: initDataCustomer,
+    }));
   },
 }));

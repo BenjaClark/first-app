@@ -1,5 +1,5 @@
 export interface ICustomer {
-  id?: string;
+  id: string;
   type: string;
   rut: string;
   fantasyName: string;
@@ -12,3 +12,20 @@ export interface ICustomer {
   email: string;
   phone: string;
 }
+
+export const initDataCustomer = {
+  id: "",
+  type: "",
+  person_id: "",
+  company_id: "",
+  rut: "",
+  fantasyName: "",
+  name: "",
+  paternalLastName: "",
+  maternalLastName: "",
+  activity: "",
+  address: "",
+  district: "",
+  email: "",
+  phone: "",
+};

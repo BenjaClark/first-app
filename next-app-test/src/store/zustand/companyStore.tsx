@@ -4,9 +4,10 @@ import { apiInstance } from "@/utils/api";
 
 import { ICompany } from "@/interfaces/company";
 import { IListCompany } from "@/interfaces/listCompany";
+import { initDataCompany } from "@/interfaces/company";
 
 interface companyState {
-  listCompany?: IListCompany[];
+  listCompany: IListCompany[];
   company: ICompany;
   isLoading: boolean;
   isError: boolean;
@@ -16,21 +17,12 @@ interface companyState {
   getById: (id: string) => void;
   getAll: () => void;
   deleteById: (id: string) => void;
+  resetCompany: () => void;
 }
 
 export const companyStore = create<companyState>((set) => ({
   listCompany: [],
-  company: {
-    id: "",
-    rut: "",
-    fantasyName: "",
-    name: "",
-    activity: "",
-    address: "",
-    district: "",
-    email: "",
-    phone: "",
-  },
+  company: initDataCompany,
   isLoading: false,
   isError: false,
   error: "",
@@ -45,7 +37,7 @@ export const companyStore = create<companyState>((set) => ({
 
       set((state) => ({
         ...state,
-        company: data.data,
+        company: data.data || initDataCompany,
         isLoading: false,
         isError: true,
         error: "",
@@ -70,7 +62,7 @@ export const companyStore = create<companyState>((set) => ({
 
       set((state) => ({
         ...state,
-        company: data.data,
+        company: data.data || initDataCompany,
         isLoading: false,
         isError: false,
         error: "",
@@ -95,7 +87,7 @@ export const companyStore = create<companyState>((set) => ({
 
       set((state) => ({
         ...state,
-        company: data.data,
+        company: data.data || initDataCompany,
         isLoading: false,
         isError: false,
         error: "",
@@ -120,7 +112,7 @@ export const companyStore = create<companyState>((set) => ({
 
       set((state) => ({
         ...state,
-        listCompany: data.data,
+        listCompany: data.data || [],
         isLoading: false,
         isError: false,
         error: "",
@@ -157,5 +149,11 @@ export const companyStore = create<companyState>((set) => ({
         error: (e as Error).message,
       }));
     }
+  },
+  resetCompany: () => {
+    set((state) => ({
+      ...state,
+      company: initDataCompany,
+    }));
   },
 }));

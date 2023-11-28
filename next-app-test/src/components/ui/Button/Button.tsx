@@ -9,12 +9,23 @@ interface IButton {
   onClick?: () => void;
   value?: string;
   width?: string;
+  isLoading?: boolean;
+  backgroundColor?: string;
 }
 
-const Button = ({ label, onClick, value, width }: IButton) => {
+const Button = ({
+  label,
+  onClick,
+  value,
+  width,
+  isLoading,
+  backgroundColor,
+}: IButton) => {
   return (
     <div className={styles.button} style={{ width }}>
-      <button onClick={onClick}>{label}</button>
+      <button style={{ backgroundColor }} onClick={onClick}>
+        {isLoading ? "Espere..." : label}
+      </button>
     </div>
   );
 };

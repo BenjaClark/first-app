@@ -15,6 +15,9 @@ import {
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
 
+import { isValidEmail, isValidPhone, isValidRut } from "@/utils/validate";
+import { formatRut, unFormatRut } from "@/utils/format";
+
 const initData = {
   type: { value: "", isValid: true },
   rut: { value: "", isValid: true },
@@ -55,9 +58,8 @@ const Customer = ({ id }: any) => {
     const { name, value } = e.target;
 
     if (name === "rut") {
-      const rutValue = value.toUpperCase();
-      getByRut(rutValue);
-      if (!customer?.rut) {
+      getByRut(formatRut(value));
+      if (customer.rut) {
         setForm({
           ...form,
           [e.target.name]: { value: e.target.value, isValid: true },
@@ -65,21 +67,61 @@ const Customer = ({ id }: any) => {
       }
       setForm({
         ...form,
-        rut: { value: rutValue, isValid: true },
+        rut: {
+          value: e.target.value.trim(),
+          isValid: isValidRut(e.target.value.trim()),
+        },
+      });
+    }
+    if (name === "email") {
+      setForm({
+        ...form,
+        email: {
+          value: e.target.value,
+          isValid: isValidEmail(e.target.value),
+        },
+      });
+    }
+    if (name === "phone") {
+      setForm({
+        ...form,
+        phone: {
+          value: e.target.value,
+          isValid: isValidPhone(e.target.value),
+        },
       });
     } else {
       setForm({
         ...form,
-        [e.target.name]: { value: e.target.value, isValid: true },
+        [e.target.name]: {
+          value: e.target.value,
+          isValid: e.target.value !== "" ? true : false,
+        },
       });
     }
   };
 
-  const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+  const handleOnBlurRut = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const rut = e.target.value;
-    getByRut(rut);
+    getByRut(formatRut(form.rut.value.trim()));
+    setForm({
+      ...form,
+      rut: {
+        value: formatRut(form.rut.value.trim()),
+        isValid: isValidRut(unFormatRut(e.target.value.trim())),
+      },
+    });
   };
 
+  const handleOnBlurEmail = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      email: {
+        value: form.email.value,
+        isValid: isValidEmail(e.target.value),
+      },
+    });
+  };
   const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     setSelectedType(selectedValue);
@@ -89,6 +131,7 @@ const Customer = ({ id }: any) => {
 
   const onClick = () => {
     upsert({
+      id: "",
       type: selectedType,
       rut: form.rut.value,
       fantasyName: form.fantasyName.value,
@@ -104,6 +147,16 @@ const Customer = ({ id }: any) => {
     router.push("/register/customer");
   };
 
+  const handleOnFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      rut: {
+        value: unFormatRut(form.rut.value.trim()),
+        isValid: isValidRut(unFormatRut(e.target.value.trim())),
+      },
+    });
+  };
+
   const deleteOnClick = () => {
     deleteById(id);
     router.push("/register/customer");
@@ -112,11 +165,8 @@ const Customer = ({ id }: any) => {
   useEffect(() => {
     if (id !== "new") {
       getById(id);
-      setButtonLabel("Modificar");
     }
-    setButtonLabel("Agregar");
-
-    if (customer?.id) {
+    if (customer.id) {
       setForm({
         ...form,
         rut: { value: customer.rut, isValid: true },
@@ -145,6 +195,7 @@ const Customer = ({ id }: any) => {
       district: { value: "", isValid: true },
     });
     if (customer) {
+      setButtonLabel("Actualizar");
       setForm({
         ...form,
         type: { value: customer.type, isValid: true },
@@ -159,6 +210,9 @@ const Customer = ({ id }: any) => {
         address: { value: customer.address, isValid: true },
         district: { value: customer.district, isValid: true },
       });
+    }
+    if (!customer.id) {
+      setButtonLabel("Crear");
     }
   }, [customer]);
 
@@ -180,10 +234,12 @@ const Customer = ({ id }: any) => {
             <InputText
               label="Rut"
               type="text"
-              placeholder="11.111.111-1"
+              placeholder="Rut"
               width="300px"
               onChange={handleOnChange}
-              onBlur={handleOnBlur}
+              onBlur={handleOnBlurRut}
+              onFocus={handleOnFocus}
+              isValid={form.rut.isValid}
               value={form.rut.value}
               name="rut"
             />
@@ -194,6 +250,7 @@ const Customer = ({ id }: any) => {
               placeholder="Nombre"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.name.isValid}
               value={form.name.value}
               name="name"
             />
@@ -203,9 +260,10 @@ const Customer = ({ id }: any) => {
                 <InputText
                   label="Nombre de fantasía"
                   type="text"
-                  placeholder="El Parrón - Norte 2"
+                  placeholder="Nombre de fantasía"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.fantasyName.isValid}
                   value={form.fantasyName.value}
                   name="fantasyName"
                 />
@@ -213,9 +271,10 @@ const Customer = ({ id }: any) => {
                 <InputText
                   label="Actividad"
                   type="text"
-                  placeholder="Venta de..."
+                  placeholder="Actividad"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.activity.isValid}
                   value={form.activity.value}
                   name="activity"
                 />
@@ -226,9 +285,10 @@ const Customer = ({ id }: any) => {
                 <InputText
                   label="Apellido Paterno"
                   type="text"
-                  placeholder="Rodriguez"
+                  placeholder="Apellido Paterno"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.paternalLastName.isValid}
                   value={form.paternalLastName.value}
                   name="paternalLastName"
                 />
@@ -236,9 +296,10 @@ const Customer = ({ id }: any) => {
                 <InputText
                   label="Apellido Materno"
                   type="text"
-                  placeholder="Acevedo"
+                  placeholder="Apellido Materno"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.maternalLastName.isValid}
                   value={form.maternalLastName.value}
                   name="maternalLastName"
                 />
@@ -247,9 +308,10 @@ const Customer = ({ id }: any) => {
             <InputText
               label="Dirección"
               type="text"
-              placeholder="Av. Providencia 221..."
+              placeholder="Dirección"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.address.isValid}
               value={form.address.value}
               name="address"
             />
@@ -257,9 +319,10 @@ const Customer = ({ id }: any) => {
             <InputText
               label="Comuna"
               type="text"
-              placeholder="Providencia"
+              placeholder="Comuna"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.district.isValid}
               value={form.district.value}
               name="district"
             />
@@ -267,9 +330,11 @@ const Customer = ({ id }: any) => {
             <InputText
               label="Correo electrónico"
               type="text"
-              placeholder="julio@gmail.com"
+              placeholder="ejemplo@ejemplo.com"
               width="300px"
               onChange={handleOnChange}
+              onBlur={handleOnBlurEmail}
+              isValid={form.email.isValid}
               value={form.email.value}
               name="email"
             />
@@ -277,9 +342,10 @@ const Customer = ({ id }: any) => {
             <InputText
               label="Teléfono"
               type="phone"
-              placeholder="+569 9934 1234"
+              placeholder="+569..."
               width="300px"
               onChange={handleOnChange}
+              isValid={form.phone.isValid}
               value={form.phone.value}
               name="phone"
             />

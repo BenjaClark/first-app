@@ -3,6 +3,7 @@ import { create } from "zustand";
 import { apiInstance } from "@/utils/api";
 import { IUser } from "@/interfaces/user";
 import { IListUser } from "@/interfaces/listUser";
+import { initDataUser } from "@/interfaces/user";
 
 interface userState {
   listUser: IListUser[];
@@ -23,23 +24,12 @@ interface userState {
     password: string,
     newPassword: string
   ) => void;
+  resetUser: () => void;
 }
 
 export const userStore = create<userState>((set) => ({
   listUser: [],
-  user: {
-    id: "",
-    person_id: "",
-    login: "",
-    rut: "",
-    name: "",
-    paternalLastName: "",
-    maternalLastName: "",
-    address: "",
-    district: "",
-    phone: "",
-    email: "",
-  },
+  user: initDataUser,
   isLoading: false,
   isError: false,
   error: "",
@@ -56,7 +46,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data.data,
+        user: data.data || initDataUser,
         isLoading: false,
         isError: false,
         error: "",
@@ -82,7 +72,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data.data,
+        user: data.data || initDataUser,
         isLoading: false,
         isError: false,
         error: "",
@@ -108,7 +98,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data.data,
+        user: data.data || initDataUser,
         isLoading: false,
         isError: false,
         error: "",
@@ -134,7 +124,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        listUser: data.data,
+        listUser: data.data || [],
         isLoading: false,
         isError: false,
         error: "",
@@ -185,7 +175,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data.data,
+        user: data.data || initDataUser,
         isLoading: false,
         isError: true,
         error: "",
@@ -242,7 +232,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data.data,
+        user: data.data || initDataUser,
         isLoading: false,
         isError: false,
         error: "",
@@ -276,7 +266,7 @@ export const userStore = create<userState>((set) => ({
 
       set((state) => ({
         ...state,
-        user: data.data,
+        user: data.data || initDataUser,
         isLoading: false,
         isError: true,
         error: "",
@@ -289,5 +279,11 @@ export const userStore = create<userState>((set) => ({
         error: (e as Error).message,
       }));
     }
+  },
+  resetUser: () => {
+    set((state) => ({
+      ...state,
+      user: initDataUser,
+    }));
   },
 }));

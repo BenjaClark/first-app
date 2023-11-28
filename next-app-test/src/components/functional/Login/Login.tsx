@@ -52,6 +52,7 @@ const Login = () => {
           placeholder="claudio@matus.cl"
           width="300px"
           onChange={handleOnChange}
+          isValid={form.email.isValid}
           value={form.email.value}
           name="email"
         />
@@ -61,6 +62,7 @@ const Login = () => {
           placeholder="**********"
           width="300px"
           onChange={handleOnChange}
+          isValid={form.password.isValid}
           value={form.password.value}
           name="password"
         />

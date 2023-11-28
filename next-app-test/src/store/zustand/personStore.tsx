@@ -4,10 +4,11 @@ import { apiInstance } from "@/utils/api";
 
 import { IPerson } from "@/interfaces/person";
 import { IListPerson } from "@/interfaces/listPerson";
+import { initDataPerson } from "@/interfaces/person";
 
 interface personState {
-  listPerson?: IListPerson[];
-  person?: IPerson;
+  listPerson: IListPerson[];
+  person: IPerson;
   isLoading: boolean;
   isError: boolean;
   error: string;
@@ -16,21 +17,12 @@ interface personState {
   getById: (id: string) => void;
   getAll: () => void;
   deleteById: (id: string) => void;
+  resetPerson: () => void;
 }
 
 export const personStore = create<personState>((set) => ({
   listPerson: [],
-  person: {
-    id: "",
-    rut: "",
-    name: "",
-    paternalLastName: "",
-    maternalLastName: "",
-    address: "",
-    district: "",
-    phone: "",
-    email: "",
-  },
+  person: initDataPerson,
   isLoading: false,
   isError: false,
   error: "",
@@ -46,7 +38,7 @@ export const personStore = create<personState>((set) => ({
 
       set((state) => ({
         ...state,
-        person: data.data,
+        person: data.data || initDataPerson,
         isLoading: false,
         isError: true,
         error: "",
@@ -71,7 +63,7 @@ export const personStore = create<personState>((set) => ({
 
       set((state) => ({
         ...state,
-        person: data.data,
+        person: data.data || initDataPerson,
         isLoading: false,
         isError: false,
         error: "",
@@ -96,7 +88,7 @@ export const personStore = create<personState>((set) => ({
 
       set((state) => ({
         ...state,
-        person: data.data,
+        person: data.data || initDataPerson,
         isLoading: false,
         isError: false,
         error: "",
@@ -121,7 +113,7 @@ export const personStore = create<personState>((set) => ({
 
       set((state) => ({
         ...state,
-        listPerson: data.data,
+        listPerson: data.data || [],
         isLoading: false,
         isError: false,
         error: "",
@@ -158,5 +150,11 @@ export const personStore = create<personState>((set) => ({
         error: (e as Error).message,
       }));
     }
+  },
+  resetPerson: () => {
+    set((state) => ({
+      ...state,
+      person: initDataPerson,
+    }));
   },
 }));

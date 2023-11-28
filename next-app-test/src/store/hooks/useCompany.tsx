@@ -14,7 +14,8 @@ export const useCompany = () => {
     shallow
   );
 
-  const { upsert, getByRut, getById, getAll, deleteById } = companyStore();
+  const { upsert, getByRut, getById, getAll, deleteById, resetCompany } =
+    companyStore();
 
   return {
     listCompany,
@@ -27,5 +28,6 @@ export const useCompany = () => {
     getById,
     getAll,
     deleteById,
+    resetCompany,
   };
 };

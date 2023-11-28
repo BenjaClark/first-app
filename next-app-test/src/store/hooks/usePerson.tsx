@@ -14,7 +14,8 @@ export const usePerson = () => {
     shallow
   );
 
-  const { upsert, getByRut, getById, getAll, deleteById } = personStore();
+  const { upsert, getByRut, getById, getAll, deleteById, resetPerson } =
+    personStore();
 
   return {
     listPerson,
@@ -27,5 +28,6 @@ export const usePerson = () => {
     getById,
     getAll,
     deleteById,
+    resetPerson,
   };
 };

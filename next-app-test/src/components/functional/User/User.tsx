@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { usePerson, useUser } from "@/store/hooks";
 
 import { ContentCell, ContentRow } from "@/components/layout/Content";
 import Option from "@/components/layout/Option";
@@ -7,14 +6,17 @@ import Option from "@/components/layout/Option";
 import Button from "@/components/ui/Button";
 import InputText from "@/components/ui/InputText";
 
-import styles from "./User.module.scss";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/store/hooks";
 
 import {
   OptionBody,
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
-import { useRouter } from "next/navigation";
+
+import { isValidEmail, isValidPhone, isValidRut } from "@/utils/validate";
+import { formatRut, unFormatRut } from "@/utils/format";
 
 const initData = {
   rut: { value: "", isValid: true },
@@ -54,9 +56,8 @@ const User = ({ id }: any) => {
     const { name, value } = e.target;
 
     if (name === "rut") {
-      const rutValue = value.toUpperCase();
-      getByRut(rutValue);
-      if (!user?.rut) {
+      getByRut(formatRut(value));
+      if (user.rut) {
         setForm({
           ...form,
           [e.target.name]: { value: e.target.value, isValid: true },
@@ -64,25 +65,67 @@ const User = ({ id }: any) => {
       }
       setForm({
         ...form,
-        rut: { value: rutValue, isValid: true },
+        rut: {
+          value: e.target.value.trim(),
+          isValid: isValidRut(e.target.value.trim()),
+        },
+      });
+    }
+    if (name === "email") {
+      setForm({
+        ...form,
+        email: {
+          value: e.target.value,
+          isValid: isValidEmail(e.target.value),
+        },
+      });
+    }
+    if (name === "phone") {
+      setForm({
+        ...form,
+        phone: {
+          value: e.target.value,
+          isValid: isValidPhone(e.target.value),
+        },
       });
     } else {
       setForm({
         ...form,
-        [e.target.name]: { value: e.target.value, isValid: true },
+        [e.target.name]: {
+          value: e.target.value,
+          isValid: e.target.value !== "" ? true : false,
+        },
       });
     }
   };
 
-  const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+  const handleOnBlurRut = (e: React.FocusEvent<HTMLTextAreaElement>) => {
     const rut = e.target.value;
-    getByRut(rut);
+    getByRut(formatRut(form.rut.value.trim()));
+    setForm({
+      ...form,
+      rut: {
+        value: formatRut(form.rut.value.trim()),
+        isValid: isValidRut(unFormatRut(e.target.value.trim())),
+      },
+    });
+  };
+
+  const handleOnBlurEmail = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      email: {
+        value: form.email.value,
+        isValid: isValidEmail(e.target.value),
+      },
+    });
   };
 
   const router = useRouter();
 
   const onClick = () => {
     upsert({
+      id: "",
       rut: form.rut.value,
       name: form.name.value,
       paternalLastName: form.paternalLastName.value,
@@ -93,6 +136,16 @@ const User = ({ id }: any) => {
       address: form.address.value,
     });
     router.push("/register/user");
+  };
+
+  const handleOnFocus = (e: React.FocusEvent<HTMLTextAreaElement>) => {
+    setForm({
+      ...form,
+      rut: {
+        value: unFormatRut(form.rut.value.trim()),
+        isValid: isValidRut(unFormatRut(e.target.value.trim())),
+      },
+    });
   };
 
   const deleteOnClick = () => {
@@ -113,8 +166,10 @@ const User = ({ id }: any) => {
   };
 
   useEffect(() => {
-    getById(id);
-    if (user?.id) {
+    if (id !== "new") {
+      getById(id);
+    }
+    if (user.id) {
       setForm({
         ...form,
         rut: { value: user.rut, isValid: true },
@@ -144,6 +199,7 @@ const User = ({ id }: any) => {
       newPassword: { value: "", isValid: true },
     });
     if (user) {
+      setButtonLabel("Actualizar");
       setForm({
         ...form,
         rut: { value: user.rut, isValid: true },
@@ -156,6 +212,9 @@ const User = ({ id }: any) => {
         district: { value: user.district, isValid: true },
       });
     }
+    if (!user.id) {
+      setButtonLabel("Crear");
+    }
   }, [user]);
 
   return (
@@ -166,14 +225,16 @@ const User = ({ id }: any) => {
           <ContentRow>
             <ContentRow gap="20px">
               <ContentCell gap="12px">
-                <ul className={styles.ul}>Agregar Usuario</ul>
+                <ul>Cambiar Contraseña</ul>
                 <InputText
                   label="Rut"
                   type="text"
                   placeholder="Rut"
                   width="300px"
                   onChange={handleOnChange}
-                  onBlur={handleOnBlur}
+                  onBlur={handleOnBlurRut}
+                  onFocus={handleOnFocus}
+                  isValid={form.rut.isValid}
                   value={form.rut.value}
                   name="rut"
                 />
@@ -184,6 +245,7 @@ const User = ({ id }: any) => {
                   placeholder="Nombre de la persona"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.name.isValid}
                   value={form.name.value}
                   name="name"
                 />
@@ -194,6 +256,7 @@ const User = ({ id }: any) => {
                   placeholder="Apellido paterno"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.paternalLastName.isValid}
                   value={form.paternalLastName.value}
                   name="paternalLastName"
                 />
@@ -204,6 +267,7 @@ const User = ({ id }: any) => {
                   placeholder="Apellido materno"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.maternalLastName.isValid}
                   value={form.maternalLastName.value}
                   name="maternalLastName"
                 />
@@ -214,6 +278,7 @@ const User = ({ id }: any) => {
                   placeholder="Dirección"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.address.isValid}
                   value={form.address.value}
                   name="address"
                 />
@@ -224,6 +289,7 @@ const User = ({ id }: any) => {
                   placeholder="Comuna"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.district.isValid}
                   value={form.district.value}
                   name="district"
                 />
@@ -234,6 +300,8 @@ const User = ({ id }: any) => {
                   placeholder="ejemplo@ejemplo.com"
                   width="300px"
                   onChange={handleOnChange}
+                  onBlur={handleOnBlurEmail}
+                  isValid={form.email.isValid}
                   value={form.email.value}
                   name="email"
                 />
@@ -244,18 +312,19 @@ const User = ({ id }: any) => {
                   placeholder="+569"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.phone.isValid}
                   value={form.phone.value}
                   name="phone"
                 />
 
                 <ContentRow>
-                  <Button label="Crear" onClick={onClick} />
+                  <Button label={buttonLabel} onClick={onClick} />
                   <Button label="Eliminar" onClick={deleteOnClick} />
                 </ContentRow>
               </ContentCell>
 
               <ContentCell gap="7.5px">
-                <ul className={styles.ul}>Crear Contraseña</ul>
+                <ul>Crear Contraseña</ul>
 
                 <InputText
                   label="Correo electrónico"
@@ -263,6 +332,8 @@ const User = ({ id }: any) => {
                   placeholder="ejemplo@ejemplo.com"
                   width="300px"
                   onChange={handleOnChange}
+                  onBlur={handleOnBlurEmail}
+                  isValid={form.email.isValid}
                   value={form.email.value}
                   name="email"
                 />
@@ -273,6 +344,7 @@ const User = ({ id }: any) => {
                   placeholder="********"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.password.isValid}
                   value={form.password.value}
                   name="password"
                 />
@@ -283,18 +355,21 @@ const User = ({ id }: any) => {
                   placeholder="********"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.repeatPassword.isValid}
                   value={form.repeatPassword.value}
                   name="repeatPassword"
                 />
 
                 <Button label="Crear Contraseña" onClick={assignOnClick} />
-                <ul className={styles.ul}>Cambiar Contraseña</ul>
+                <ul>Cambiar Contraseña</ul>
                 <InputText
                   label="Correo electrónico"
                   type="text"
                   placeholder="ejemplo@ejemplo.com"
                   width="300px"
                   onChange={handleOnChange}
+                  onBlur={handleOnBlurEmail}
+                  isValid={form.email.isValid}
                   value={form.email.value}
                   name="email"
                 />
@@ -305,6 +380,7 @@ const User = ({ id }: any) => {
                   placeholder="********"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.password.isValid}
                   value={form.password.value}
                   name="password"
                 />
@@ -315,6 +391,7 @@ const User = ({ id }: any) => {
                   placeholder="********"
                   width="300px"
                   onChange={handleOnChange}
+                  isValid={form.newPassword.isValid}
                   value={form.newPassword.value}
                   name="newPassword"
                 />

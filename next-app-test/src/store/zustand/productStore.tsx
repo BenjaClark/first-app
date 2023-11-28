@@ -4,6 +4,7 @@ import { apiInstance } from "@/utils/api";
 
 import { IProduct } from "@/interfaces/product";
 import { IListProduct } from "@/interfaces/listProduct";
+import { initDataProduct } from "@/interfaces/product";
 
 interface productState {
   listProduct: IListProduct[];
@@ -16,16 +17,12 @@ interface productState {
   getById: (id: string) => void;
   getAll: () => void;
   deleteById: (id: string) => void;
+  resetProduct: () => void;
 }
 
 export const productStore = create<productState>((set) => ({
   listProduct: [],
-  product: {
-    id: "",
-    code: "",
-    name: "",
-    price: "",
-  },
+  product: initDataProduct,
   isLoading: false,
   isError: false,
   error: "",
@@ -40,7 +37,7 @@ export const productStore = create<productState>((set) => ({
 
       set((state) => ({
         ...state,
-        product: data.data,
+        product: data.data || initDataProduct,
         isLoading: false,
         isError: true,
         error: "",
@@ -65,7 +62,7 @@ export const productStore = create<productState>((set) => ({
 
       set((state) => ({
         ...state,
-        product: data.data,
+        product: data.data || initDataProduct,
         isLoading: false,
         isError: false,
         error: "",
@@ -90,7 +87,7 @@ export const productStore = create<productState>((set) => ({
 
       set((state) => ({
         ...state,
-        product: data.data,
+        product: data.data || initDataProduct,
         isLoading: false,
         isError: false,
         error: "",
@@ -115,7 +112,7 @@ export const productStore = create<productState>((set) => ({
 
       set((state) => ({
         ...state,
-        listProduct: data.data,
+        listProduct: data.data || [],
         isLoading: false,
         isError: false,
         error: "",
@@ -152,5 +149,11 @@ export const productStore = create<productState>((set) => ({
         error: (e as Error).message,
       }));
     }
+  },
+  resetProduct: () => {
+    set((state) => ({
+      ...state,
+      product: initDataProduct,
+    }));
   },
 }));

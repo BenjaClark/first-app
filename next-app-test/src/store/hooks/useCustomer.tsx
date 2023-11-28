@@ -14,7 +14,8 @@ export const useCustomer = () => {
     shallow
   );
 
-  const { upsert, getByRut, getById, getAll, deleteById } = customerStore();
+  const { upsert, getByRut, getById, getAll, deleteById, resetCustomer } =
+    customerStore();
 
   return {
     listCustomer,
@@ -27,5 +28,6 @@ export const useCustomer = () => {
     getById,
     getAll,
     deleteById,
+    resetCustomer,
   };
 };

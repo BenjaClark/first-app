@@ -1,5 +1,5 @@
 export interface ICompany {
-  id?: string;
+  id: string;
   rut: string;
   fantasyName: string;
   name: string;
@@ -9,3 +9,15 @@ export interface ICompany {
   email: string;
   phone: string;
 }
+
+export const initDataCompany = {
+  id: "",
+  rut: "",
+  fantasyName: "",
+  name: "",
+  activity: "",
+  address: "",
+  district: "",
+  email: "",
+  phone: "",
+};

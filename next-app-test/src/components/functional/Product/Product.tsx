@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import { ContentCell } from "@/components/layout/Content";
-
-import InputText from "@/components/ui/InputText";
 import Option from "@/components/layout/Option";
-import Button from "@/components/ui/Button";
 
+import Button from "@/components/ui/Button";
+import InputText from "@/components/ui/InputText";
+
+import { useRouter } from "next/navigation";
 import { useProduct } from "@/store/hooks";
 
 import {
@@ -13,7 +14,9 @@ import {
   OptionHeader,
   OptionOverlay,
 } from "@/components/layout/OptionHeader";
-import { useRouter } from "next/navigation";
+
+import { isValidEmail, isValidPhone, isValidRut } from "@/utils/validate";
+import { formatRut, unFormatRut } from "@/utils/format";
 
 const initData = {
   code: { value: "", isValid: true },
@@ -42,7 +45,7 @@ const Product = ({ id }: any) => {
     if (name === "code") {
       const codeValue = value.toUpperCase();
       getByCode(parseInt(codeValue));
-      if (!product?.code)
+      if (!product.code)
         setForm({
           ...form,
           [e.target.name]: { value: codeValue, isValid: true },
@@ -68,6 +71,7 @@ const Product = ({ id }: any) => {
 
   const onClick = () => {
     upsert({
+      id: "",
       code: form.code.value,
       name: form.name.value,
       price: form.price.value,
@@ -81,8 +85,10 @@ const Product = ({ id }: any) => {
   };
 
   useEffect(() => {
-    getById(id);
-    if (product?.id) {
+    if (id !== "new") {
+      getById(id);
+    }
+    if (product.id) {
       setForm({
         ...form,
         code: { value: product.code, isValid: true },
@@ -98,13 +104,17 @@ const Product = ({ id }: any) => {
       name: { value: "", isValid: true },
       price: { value: "", isValid: true },
     });
-    if (product) {
+    if (product.code) {
+      setButtonLabel("Actualizar");
       setForm({
         ...form,
         code: { value: product.code, isValid: true },
         name: { value: product.name, isValid: true },
         price: { value: product.price, isValid: true },
       });
+    }
+    if (!product.id) {
+      setButtonLabel("Crear");
     }
   }, [product]);
 
@@ -121,6 +131,7 @@ const Product = ({ id }: any) => {
               width="300px"
               onChange={handleOnChange}
               onBlur={handleOnBlur}
+              isValid={form.code.isValid}
               value={form.code.value.toString()}
               name="code"
             />
@@ -131,6 +142,7 @@ const Product = ({ id }: any) => {
               placeholder="Nombre del producto"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.name.isValid}
               value={form.name.value}
               name="name"
             />
@@ -141,10 +153,11 @@ const Product = ({ id }: any) => {
               placeholder="$0"
               width="300px"
               onChange={handleOnChange}
+              isValid={form.price.isValid}
               value={form.price.value.toString()}
               name="price"
             />
-            <Button label="Crear" onClick={onClick} />
+            <Button label={buttonLabel} onClick={onClick} />
             <Button label="Eliminar" onClick={deleteOnClick} />
           </ContentCell>
         </OptionBody>

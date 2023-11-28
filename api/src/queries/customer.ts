@@ -91,7 +91,8 @@ export const _insert = `
 export const _deleteById = `
     UPDATE  app.customer 
     SET     isactive = false 
-    WHERE   id= $1`;
+    WHERE   person_id= $1
+    OR      company_id= $1`;
 
 export const _updateById = `
     UPDATE  app.customer 
